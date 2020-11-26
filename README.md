@@ -115,14 +115,27 @@ Object.values(protoFile).filter(isService).reduce((group, thiz) => {
 
 
 
-```yaml
-//Definition to print
+```js
+//Get service from protofile 
+var protoLoader = require('@grpc/proto-loader');
 
-{name: "SayHello", type: "Service", request: "HelloRequest", resply: "HelloReply" },
+var loadServices = (protoFilePath) => {
+  const protofile = protoLoader.loadSync(
+    protoFilePath,
+    {keepCase: true,
+      longs: String,
+      enums: String,
+      defaults: true,
+      oneofs: true
+    });
+  var isService = member => ! member.format;
 
-{name: "HelloRequest", type: "Service", request: "HelloRequest", resply: "HelloReply" }
+  return Object.values(protofile).filter(isService).reduce((group, thiz) => {
+    return [...group, ...Object.values(thiz)]
+  }, []);
+}
 
-
+loadServices('./protos/greet.proto');
 ```
 
 
