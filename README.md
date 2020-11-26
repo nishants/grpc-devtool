@@ -1,15 +1,20 @@
 Todo 
 
+- [ ] Create endpoint handler
+  - [ ] dynmically capture the endpoint requests
+  - [ ] return custom data
+  - [ ] for streaming response
+  - [ ] for streaming requests
 - [x] creat two set of protofiles
   - [x] single request - single response
   - [x] single request - streaming response
 - [x] print protofile definitions for simple protobufs
-- [ ] Infer followign details for a proto file
+- [x] Infer followign details for a proto file
   - [x] request field and types
   - [x] reply field and types
-  - [ ] request is streamin ?
-  - [ ] response is streamin ?
-  - [ ] endpoint name.
+  - [x] request is streamin ?
+  - [x] response is streamin ?
+  - [x] endpoint name.
 - [ ] add jest
 - [ ] print protofile definitions with proto packages
 - [ ] print protofile definitions for complex (includes proto file). e.g. saxo
@@ -184,6 +189,61 @@ var server = new grpc.Server();
 server.addService(hello_proto.Greeter.service, {sayHello: sayHello});
 server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
 server.start();
+```
+
+
+
+```bash
+npx miraje -port 3002 -config ./config -protos ../src/protos
+```
+
+
+
+|                  | Map by protofile                                             | Map by procedure path                                        |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Example          | `protofile: $proto/greet.proto`                              | `procedure : package.service.methodname`                     |
+| Ease of creation | very simple, but user will still have to read through the protobuf if creating there own response defintion | Needs user to look into proto files and understand before defining results |
+| recording        |                                                              | even for procudure path we can generate mapping while recording |
+| integritiy       | can cause issues and complexity for smartly matching a request by file type only | **ROBUST**                                                   |
+
+### Mapping defintion
+
+```yaml
+# Profile file path relative to proto home
+# proto home passed as runtimg parameter
+# protofile: $proto/greet.proto
+
+
+# Mapping files are applied in specified order 
+# till there is a match
+package.service.methodname : [
+	"greet/rohit.js.yaml",
+  "greet/virat.js.yaml",
+  "greet/default.js.yaml",
+]
+
+# any number for related/unreleated methods names in a single mapping file
+package.service.methodname2 : [
+  "common/message.js.yaml",
+]
+```
+
+- defined in `config` dir passed at runtime (directly inside it)
+
+```yaml
+# Sample directory structure : 
+
+stub/
+	- config/
+		- mappings.yaml
+		- greet/
+			- default.js.yaml
+      - rohit.js.yaml
+      - virat.js.yaml
+		- prices/
+    	- defualt.js.yaml
+    - common/
+    	- message/js.yml
 ```
 
 

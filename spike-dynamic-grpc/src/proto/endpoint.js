@@ -10,9 +10,11 @@ module.exports = {
     const path = e.path.split("/")[1].split('.');
     const serviceName = path.pop();
     const packageName = path.join(".");
-    ///prices.Pricing/Subscribe
+
+    const endpointId = e.path.replace("/", "");
 
     return {
+      getId : () => endpointId,
       getName : () => name,
       getServiceName : () => serviceName,
       getPackageName : () => packageName,
