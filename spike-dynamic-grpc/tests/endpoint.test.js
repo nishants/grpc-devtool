@@ -14,4 +14,20 @@ describe('endpoint.test.js', () => {
 
     expect(result[0].getName()).toBe("Subscribe");
   });
+
+  test('should get service name for endpoint', () => {
+    const greeter = analyzer.readProto(unaryRequestResponseProtoFile).pop();
+    const prices = analyzer.readProto(streamResponseProtoFile).pop();
+
+    expect(greeter.getServiceName()).toBe("Greeter");
+    expect(prices.getServiceName()).toBe("Pricing");
+  });
+
+  test('should get package name for endpoint', () => {
+    const greeter = analyzer.readProto(unaryRequestResponseProtoFile).pop();
+    const prices = analyzer.readProto(streamResponseProtoFile).pop();
+
+    expect(greeter.getPackageName()).toBe("greet");
+    expect(prices.getPackageName()).toBe("prices");
+  });
 });
