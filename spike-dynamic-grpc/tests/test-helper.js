@@ -1,8 +1,9 @@
 const protoLoader = require('@grpc/proto-loader');
 const path = require('path');
 
-const greetProtoFile = path.join(__dirname , '../protos/greet.proto');
-const pricesProtoFile = path.join(__dirname , '../protos/prices.proto');
+const greetProtoFile  = path.join(__dirname, '../protos/greet.proto');
+const pricesProtoFile = path.join(__dirname, '../protos/prices.proto');
+const helloProtoFilePath  = path.join(__dirname, '../protos/helloworld.proto');
 
 const loadFile = (protoFilePath) => {
   return protoLoader.loadSync(
@@ -18,5 +19,7 @@ const loadFile = (protoFilePath) => {
 
 module.exports = {
   greetProto: loadFile(greetProtoFile),
-  pricesProto: loadFile(pricesProtoFile)
+  pricesProto: loadFile(pricesProtoFile),
+  helloProto: loadFile(helloProtoFilePath),
+  helloProtoFilePath
 }

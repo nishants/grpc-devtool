@@ -1,8 +1,9 @@
 Todo 
 
-- [ ] Create endpoint handler
-  - [ ] dynmically capture the endpoint requests
-  - [ ] return custom data
+- [ ] Create test for server
+- [x] Create endpoint handler
+  - [x] dynmically capture the endpoint requests
+  - [x] return custom data
   - [ ] for streaming response
   - [ ] for streaming requests
 - [x] creat two set of protofiles
