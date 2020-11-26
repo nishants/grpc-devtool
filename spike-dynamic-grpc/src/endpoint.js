@@ -1,13 +1,13 @@
 const message = require("./message");
 
 module.exports = {
-  create : ({name, request, response}) => {
+  create : (e) => {
 
-    const requestType = message.create(request);
-    const responseType = message.create(response);
+    const requestType = message.create(e.requestType, e.requestStream );
+    const responseType = message.create(e.responseType, e.responseStream );
 
     return {
-      getName : () => name,
+      getName : () => e.originalName,
       getRequest : () => requestType,
       getResponse : () => responseType,
     }

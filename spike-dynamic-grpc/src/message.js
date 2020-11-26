@@ -11,12 +11,13 @@ const createField = ({name, type}) => {
 };
 
 module.exports = {
-  create : (protoMessage) => {
+  create : (protoMessage, isStream) => {
     const fields = protoMessage.type.field.map(createField);
 
     return {
       getName : () => protoMessage.type.name,
       getFields : () => fields,
+      isStream : () => isStream,
     };
   }
 };

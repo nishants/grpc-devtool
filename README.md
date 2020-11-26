@@ -5,8 +5,8 @@ Todo
   - [x] single request - streaming response
 - [x] print protofile definitions for simple protobufs
 - [ ] Infer followign details for a proto file
-  - [ ] request field and types
-  - [ ] reply field and types
+  - [x] request field and types
+  - [x] reply field and types
   - [ ] request is streamin ?
   - [ ] response is streamin ?
   - [ ] endpoint name.

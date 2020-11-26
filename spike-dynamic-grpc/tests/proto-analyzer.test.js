@@ -2,6 +2,7 @@ const path = require('path');
 const analyzer = require('../src/proto-analyzer');
 
 const unaryRequestResponseProtoFile = path.join(__dirname , '../protos/greet.proto');
+const streamResponseProtoFile = path.join(__dirname , '../protos/prices.proto');
 
 test('should find service in a protofile', () => {
   const result = analyzer.readProto(unaryRequestResponseProtoFile);
@@ -39,4 +40,27 @@ test('should read response fields from protofile endpoint', () => {
 
   expect(nameField.getName()).toBe("message");
   expect(nameField.getType()).toBe("string");
+});
+
+
+describe('message.isStreaming', () => {
+  test('for non streaming', () => {
+    const result  = analyzer.readProto(unaryRequestResponseProtoFile);
+
+    const request = result[0].getRequest();
+    const response = result[0].getResponse();
+
+    expect(response.isStream()).toBe(false);
+    expect(request.isStream()).toBe(false);
+  });
+
+  test('should find when request  or response is streaming', () => {
+    const result  = analyzer.readProto(streamResponseProtoFile);
+
+    const request = result[0].getRequest();
+    const response = result[0].getResponse();
+
+    expect(response.isStream()).toBe(true);
+    expect(request.isStream()).toBe(false);
+  });
 });

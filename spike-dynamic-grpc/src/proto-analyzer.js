@@ -16,11 +16,7 @@ var readProto = (protoFilePath) => {
   let endpoints = Object.values(protofile).filter(isService).reduce((group, thiz) => {
     return [...group, ...Object.values(thiz)]
   }, []);
-  return endpoints.map(e => Endpoint.create({
-    name    : e.originalName,
-    request : e.requestType,
-    response: e.responseType,
-  }));
+  return endpoints.map(e => Endpoint.create(e));
 }
 
 readProto('./protos/greet.proto');
