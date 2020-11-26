@@ -5,6 +5,7 @@ module.exports = {
 
     const requestType = message.create(e.requestType, e.requestStream );
     const responseType = message.create(e.responseType, e.responseStream );
+    ///prices.Pricing/Subscribe
 
     return {
       getName : () => e.originalName,
