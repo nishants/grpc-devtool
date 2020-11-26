@@ -1,5 +1,5 @@
 syntax = "proto3";
-package prices;
+package prices.streaming;
 
 // Code will be generated in this namespace
 option csharp_namespace = "Service";

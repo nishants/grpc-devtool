@@ -28,6 +28,6 @@ describe('endpoint.test.js', () => {
     const prices = analyzer.readProto(streamResponseProtoFile).pop();
 
     expect(greeter.getPackageName()).toBe("greet");
-    expect(prices.getPackageName()).toBe("prices");
+    expect(prices.getPackageName()).toBe("prices.streaming");
   });
 });
