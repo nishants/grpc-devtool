@@ -1,6 +1,6 @@
-const {unaryRequestResponseProtoFile, streamResponseProtoFile} = require('./test-helper');
+const {unaryRequestResponseProtoFile, streamResponseProtoFile} = require('../test-helper');
 
-const analyzer = require('../src/proto-analyzer');
+const analyzer = require('../../src/proto/proto-analyzer');
 
 describe('endpoint.test.js', () => {
   test('should find service in a protofile', () => {
