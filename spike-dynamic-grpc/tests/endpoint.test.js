@@ -6,10 +6,10 @@ describe('endpoint.test.js', () => {
   test('should find service in a protofile', () => {
     const result = analyzer.readProto(unaryRequestResponseProtoFile);
 
-    expect(result[0].getName()).toBe("sayHello");
+    expect(result[0].getName()).toBe("SayHello");
   });
 
-  test.skip('should find service in a streaming protofile', () => {
+  test('should find service in a streaming protofile', () => {
     const result = analyzer.readProto(streamResponseProtoFile);
 
     expect(result[0].getName()).toBe("Subscribe");

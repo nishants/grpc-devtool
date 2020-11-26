@@ -5,10 +5,11 @@ module.exports = {
 
     const requestType = message.create(e.requestType, e.requestStream );
     const responseType = message.create(e.responseType, e.responseStream );
+    const name = e.path.split("/").pop();
     ///prices.Pricing/Subscribe
 
     return {
-      getName : () => e.originalName,
+      getName : () => name,
       getRequest : () => requestType,
       getResponse : () => responseType,
     }
