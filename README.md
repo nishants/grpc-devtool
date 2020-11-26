@@ -4,6 +4,12 @@ Todo
   - [x] single request - single response
   - [x] single request - streaming response
 - [x] print protofile definitions for simple protobufs
+- [ ] Infer followign details for a proto file
+  - [ ] request field and types
+  - [ ] reply field and types
+  - [ ] request is streamin ?
+  - [ ] response is streamin ?
+  - [ ] endpoint name.
 - [ ] add jest
 - [ ] print protofile definitions with proto packages
 - [ ] print protofile definitions for complex (includes proto file). e.g. saxo

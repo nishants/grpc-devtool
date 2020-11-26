@@ -1,4 +1,5 @@
 var protoLoader = require('@grpc/proto-loader');
+const Endpoint = require('./Endpoint');
 
 var readProto = (protoFilePath) => {
   const protofile = protoLoader.loadSync(
@@ -12,9 +13,14 @@ var readProto = (protoFilePath) => {
 
   var isService = member => ! member.format;
 
-  return Object.values(protofile).filter(isService).reduce((group, thiz) => {
+  let endpoints = Object.values(protofile).filter(isService).reduce((group, thiz) => {
     return [...group, ...Object.values(thiz)]
   }, []);
+  return endpoints.map(e => Endpoint.create({
+    name    : e.originalName,
+    request : e.requestType,
+    response: e.responseType,
+  }));
 }
 
 readProto('./protos/greet.proto');
