@@ -3,10 +3,11 @@ Todo
 - [x] creat two set of protofiles
   - [x] single request - single response
   - [x] single request - streaming response
-- [ ] print protofile definitions for simple protobufs
+- [x] print protofile definitions for simple protobufs
+- [ ] add jest
+- [ ] print protofile definitions with proto packages
 - [ ] print protofile definitions for complex (includes proto file). e.g. saxo
 - [ ] read a directory of proto files
-- [ ] 
 - [ ] generate a dynamic handler for each endpoint in each proto file and return random data 
 - [ ] add a streaming endpoint
 - [ ] Use this to analyze the dynamically generated client components : https://esprima.org/
@@ -143,6 +144,41 @@ loadServices('./protos/greet.proto');
 ### Finding
 
 - service protobuf memtber also contains the request and response.
+
+
+
+### Dynamic gRPC endpoint
+
+```
+npm install --save grpc
+```
+
+
+
+```javascript
+
+var grpc = require('grpc');
+var protoLoader = require('@grpc/proto-loader');
+var protofilePath =  './protos/greet.proto';
+var protoFile = protoLoader.loadSync(
+    protofilePath,
+    {keepCase: true,
+     longs: String,
+     enums: String,
+     defaults: true,
+     oneofs: true
+    });
+
+var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+function sayHello(call, callback) {
+  callback(null, {message: 'Hello ' + call.request.name});
+}
+
+var server = new grpc.Server();
+server.addService(hello_proto.Greeter.service, {sayHello: sayHello});
+server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
+server.start();
+```
 
 
 
