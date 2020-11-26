@@ -1,0 +1,22 @@
+syntax = "proto3";
+package prices;
+
+// Code will be generated in this namespace
+option csharp_namespace = "Service";
+
+// The gRPC interface definition
+service Pricing {
+  // Note that it returns "stream" of PriceResponse
+  rpc Subscribe (PriceRequest) returns (stream PriceResponse);
+}
+
+// The request message
+message PriceRequest {
+  string uic = 1;
+  string assetType = 2;
+}
+
+// The response message
+message PriceResponse {
+  string quote = 1;
+}
