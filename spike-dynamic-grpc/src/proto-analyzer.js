@@ -1,5 +1,5 @@
 var protoLoader = require('@grpc/proto-loader');
-const Endpoint = require('./Endpoint');
+const Endpoint = require('./endpoint');
 
 var readProto = (protoFilePath) => {
   const protofile = protoLoader.loadSync(
