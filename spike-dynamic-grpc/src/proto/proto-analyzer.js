@@ -1,16 +1,6 @@
-var protoLoader = require('@grpc/proto-loader');
 const Endpoint = require('./endpoint');
 
-var readProto = (protoFilePath) => {
-  const protofile = protoLoader.loadSync(
-    protoFilePath,
-    {keepCase: true,
-      longs: String,
-      enums: String,
-      defaults: true,
-      oneofs: true
-    });
-
+var readProto = (protofile) => {
   var isService = member => ! member.format;
 
   let endpoints = Object.values(protofile).filter(isService).reduce((group, thiz) => {
@@ -18,7 +8,5 @@ var readProto = (protoFilePath) => {
   }, []);
   return endpoints.map(e => Endpoint.create(e));
 }
-
-readProto('./protos/greet.proto');
 
 module.exports.readProto = readProto;
