@@ -1,9 +1,9 @@
 const path = require('path');
 
-const unaryRequestResponseProtoFile = path.join(__dirname , '../protos/greet.proto');
-const streamResponseProtoFile = path.join(__dirname , '../protos/prices.proto');
+const greetProtoFile = path.join(__dirname , '../protos/greet.proto');
+const pricesProtoFile = path.join(__dirname , '../protos/prices.proto');
 
 module.exports = {
-  unaryRequestResponseProtoFile,
-  streamResponseProtoFile
+  greetProtoFile: greetProtoFile,
+  pricesProtoFile: pricesProtoFile
 }
