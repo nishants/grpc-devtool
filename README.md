@@ -5,15 +5,21 @@ Refer : https://grpc.io/docs/languages/node/basics/
 Todo 
 
 - [ ] Define matchers definition `js.yaml`
-- [ ] Create matchers from json
+- [ ] e2e tests
+- [ ] create mapping file reader
+- [x] Create matchers from json
   - [x] for flat object with static fields
   - [x] for flat object with matchers
     - [x] `@any`
     - [x] `@any!`
     - [x] ~~`@ignoreOther`~~
+    - [ ] list of values
+    - [ ] custom matchers
+    - [ ] custom script
+    - [ ] custom script with empty body
     - [x] ~~js regex~~
-  - [ ] for nested objects
-  - [ ] for arrays
+  - [ ] ~~for nested objects~~
+  - [ ] ~~for arrays~~
 - [ ] Handle request headers in matchers
 - [x] Create test for server
 - [x] Create endpoint handler dynamically
@@ -214,7 +220,7 @@ server.start();
 
 
 ```bash
-npx miraje -port 3002 -config ./config -protos ../src/protos
+npx miraje -host 0.0.0.0 -port 3002 -config ./config -protos ../src/protos
 ```
 
 
