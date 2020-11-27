@@ -64,7 +64,7 @@ describe("matchers", ()=> {
       const data = {
         name : "nishant",
         age: 34,
-        info: {address: {location: "india"}}
+        info: {address: {location: "india", since: "2017"}}
       };
 
       const matcher = matchers.create({definition});
@@ -76,14 +76,10 @@ describe("matchers", ()=> {
 
     test("should fail if sub object does not match", () => {
       const definition = {
-        name : "nishant",
-        age: 34,
         info: {address: {location: "india"}}
       };
 
       const data = {
-        name : "nishant",
-        age: 34,
         info: {address: {location: "us"}}
       };
 
@@ -93,6 +89,27 @@ describe("matchers", ()=> {
 
       expect(actual).toBe(false);
     });
+
+    // test("should apply matcher in nested object", () => {
+    //   const definition = {
+    //     name : "nishant",
+    //     age: 34,
+    //     info: {address: {location: "any@"}}
+    //   };
+    //
+    //   const data = {
+    //     name : "nishant",
+    //     age: 34,
+    //     info: {address: {location: "us"}}
+    //   };
+    //
+    //   const matcher = matchers.create({definition});
+    //
+    //   const actual = matcher.matches(data);
+    //
+    //   expect(actual).toBe(false);
+    // });
+
   });
 
 });

@@ -1,9 +1,14 @@
-module.exports = {
+const isObject = (object) =>
+  object != null && typeof object === 'object';
+
+const ObjectMatcher = {
   create : ({definition, matchers}) => {
     const matcherObject = {};
     for(let key in definition){
       const fieldDefinition = definition[key];
-      matcherObject[key] = matchers.find(m => m.appliesTo(fieldDefinition))
+      matcherObject[key] = isObject(fieldDefinition) ?
+        ObjectMatcher.create({definition: fieldDefinition, matchers})
+        :  matchers.find(m => m.appliesTo(fieldDefinition))
     }
 
     const matches = (data) => {
@@ -18,4 +23,5 @@ module.exports = {
 
     return { matches};
   }
-}
+};
+module.exports = ObjectMatcher
