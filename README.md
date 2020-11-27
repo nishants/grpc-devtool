@@ -284,7 +284,7 @@ Matcher keywords
 |         |                            |      |
 |         |                            |      |
 
-
+For complex stuff, like a tar array should container a field that starts with _, use the script part.
 
 ```yaml
 request@ : {

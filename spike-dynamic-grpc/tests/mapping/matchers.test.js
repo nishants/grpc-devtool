@@ -74,6 +74,25 @@ describe("matchers", ()=> {
       expect(actual).toBe(true);
     });
 
+    test("should fail if sub object does not match", () => {
+      const definition = {
+        name : "nishant",
+        age: 34,
+        info: {address: {location: "india"}}
+      };
+
+      const data = {
+        name : "nishant",
+        age: 34,
+        info: {address: {location: "us"}}
+      };
+
+      const matcher = matchers.create({definition});
+
+      const actual = matcher.matches(data);
+
+      expect(actual).toBe(false);
+    });
   });
 
 });
