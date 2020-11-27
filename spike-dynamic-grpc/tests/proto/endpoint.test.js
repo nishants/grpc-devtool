@@ -5,7 +5,7 @@ const analyzer = require('../../src/proto/proto-analyzer');
 describe('endpoint.test.js', () => {
   test('should generate Ids for procedure as <package>.<service>.<procedure-name>', () => {
     const result = analyzer.readProto(pricesProto);
-    expect(result[0].getId()).toBe("prices.streaming.Pricing/Subscribe");
+    expect(result[0].getId()).toBe("prices.streaming.Pricing.Subscribe");
   });
 
   test('should get service name  <package>.<service>', () => {

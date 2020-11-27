@@ -11,7 +11,7 @@ module.exports = {
     const serviceName = path.pop();
     const packageName = path.join(".");
 
-    const endpointId = e.path.replace("/", "");
+    const endpointId = e.path.replace("/", "").replace("/", ".");
 
     return {
       getId : () => endpointId,
