@@ -89,26 +89,37 @@ describe("matchers", ()=> {
 
       expect(actual).toBe(false);
     });
+    test("should apply matchers in nested objects for notnull", () => {
+      const definition = {
+        info: {address: {location: "any!@"}}
+      };
 
-    // test("should apply matcher in nested object", () => {
-    //   const definition = {
-    //     name : "nishant",
-    //     age: 34,
-    //     info: {address: {location: "any@"}}
-    //   };
-    //
-    //   const data = {
-    //     name : "nishant",
-    //     age: 34,
-    //     info: {address: {location: "us"}}
-    //   };
-    //
-    //   const matcher = matchers.create({definition});
-    //
-    //   const actual = matcher.matches(data);
-    //
-    //   expect(actual).toBe(false);
-    // });
+      const data = {
+        info: {address: {location: null}}
+      };
+
+      const matcher = matchers.create({definition});
+
+      const actual = matcher.matches(data);
+
+      expect(actual).toBe(false);
+    });
+
+    test("should apply matchers in nested objects", () => {
+      const definition = {
+        info: {address: {location: "any!@"}}
+      };
+
+      const data = {
+        info: {address: {location: "us"}}
+      };
+
+      const matcher = matchers.create({definition});
+
+      const actual = matcher.matches(data);
+
+      expect(actual).toBe(true);
+    });
 
   });
 

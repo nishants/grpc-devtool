@@ -5,7 +5,7 @@ const isEqual = {
   appliesTo : () => true,
   matches : (data, definition) =>  {
     return {
-      failed : !areEqual(data, definition)
+      failed : !!data && !areEqual(data, definition)
     };
   }
 };
