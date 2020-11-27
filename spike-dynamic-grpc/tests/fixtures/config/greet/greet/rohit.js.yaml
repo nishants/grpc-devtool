@@ -1,0 +1,7 @@
+request@ : {
+  name: "rohit"
+}
+
+response@ : {
+  message : "Hello rohit"
+}

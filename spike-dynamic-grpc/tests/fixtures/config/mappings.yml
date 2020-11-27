@@ -1,0 +1,6 @@
+helloworld.greet.Greeter.SayHello : [
+  "greet/rohit.js.yaml",
+  "greet/virat.js.yaml",
+  "greet/default.js.yaml",
+]
+
