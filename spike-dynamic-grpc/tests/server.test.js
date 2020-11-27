@@ -50,8 +50,8 @@ describe('server.test.js', () => {
   });
 
   test('should handle a streaming response', async () => {
-    const responeOne = {quote: "quote:one"};
-    const responseTwo = {quote: "quote:two"};
+    const responeOne    = {quote: "quote:one"};
+    const responseTwo   = {quote: "quote:two"};
     const responseThree = {quote: "quote:three"};
 
     const expected = [responeOne, responseTwo, responseThree];

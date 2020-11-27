@@ -1,12 +1,20 @@
+Refer : https://grpc.io/docs/languages/node/basics/
+
+
+
 Todo 
 
+- [ ] Create matchers from json
 - [x] Create test for server
 - [x] Create endpoint handler dynamically
 - [x] Create endpoint handler
   - [x] dynmically capture the endpoint requests
   - [x] return custom data
-  - [ ] for streaming response
+  - [x] for streaming response
   - [ ] for streaming requests
+  - [ ] for two way streaming
+  - [ ] test for all protobus types
+  - [ ] add protobuf include type
 - [x] creat two set of protofiles
   - [x] single request - single response
   - [x] single request - streaming response
