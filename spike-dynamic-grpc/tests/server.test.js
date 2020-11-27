@@ -29,7 +29,7 @@ describe('server.test.js', () => {
 
     const  endpoint = analyzer.readProto(helloProto).pop();
 
-    service.add({protoPath: helloProto, endpoint , onRequest: handler});
+    service.add({protoFile: helloProto, endpoint , onRequest: handler});
     service.start();
 
     const hello_proto = grpc.loadPackageDefinition(helloProto).helloworld.greet;

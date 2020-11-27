@@ -1,4 +1,5 @@
 const grpc = require('grpc');
+const {get} = require('./getServiceByEndpointId');
 
 module.exports = {
   create: ({host, port}) => {
@@ -6,15 +7,16 @@ module.exports = {
     server.bind(`${host}:${port}`, grpc.ServerCredentials.createInsecure());
 
     return {
-      add : ({protoPath: packageDefinition, endpoint, onRequest}) => {
-        const serviceDefinition = grpc.loadPackageDefinition(packageDefinition);
-        const procedure = serviceDefinition.helloworld.greet.Greeter.service;
+      add : ({protoFile: packageDefinition, endpoint, onRequest}) => {
+        const definition = grpc.loadPackageDefinition(packageDefinition);
+        const procedure = get({definition, endpoint});
 
         const requestHandler = (call, callback) => {
           onRequest(call, callback, endpoint);
         };
 
-        server.addService(procedure, {sayHello: requestHandler});
+        const methodName = endpoint.getName();
+        server.addService(procedure.service, {[methodName]: requestHandler});
       },
       start: () => {
         server.start();

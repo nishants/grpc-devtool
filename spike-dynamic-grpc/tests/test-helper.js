@@ -21,5 +21,4 @@ module.exports = {
   greetProto: loadFile(greetProtoFile),
   pricesProto: loadFile(pricesProtoFile),
   helloProto: loadFile(helloProtoFilePath),
-  helloProtoFilePath
 }

@@ -8,6 +8,11 @@ describe('endpoint.test.js', () => {
     expect(result[0].getId()).toBe("prices.streaming.Pricing/Subscribe");
   });
 
+  test('should get service name  <package>.<service>', () => {
+    const result = analyzer.readProto(pricesProto);
+    expect(result[0].getService()).toBe("prices.streaming.Pricing");
+  });
+
   test('should find service in a protofile', () => {
     const result = analyzer.readProto(greetProto);
 

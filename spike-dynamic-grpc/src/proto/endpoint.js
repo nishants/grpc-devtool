@@ -15,6 +15,7 @@ module.exports = {
 
     return {
       getId : () => endpointId,
+      getService: () => `${packageName}.${serviceName}`,
       getName : () => name,
       getServiceName : () => serviceName,
       getPackageName : () => packageName,
