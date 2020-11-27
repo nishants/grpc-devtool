@@ -7,13 +7,13 @@ module.exports = {
     }
 
     const matches = (data) => {
+      const nextMatchers = [];
       for(let key in matcherObject){
         const fieldMatcher = matcherObject[key];
-        if(fieldMatcher.matches(data[key], definition[key]).failed){
-          return false;
-        }
+        const fieldData = data[key];
+        nextMatchers.push({matcher:fieldMatcher , data: fieldData, definition: definition[key]})
       }
-      return true;
+      return {failed: false, nextMatchers};
     };
 
     return { matches};

@@ -1,11 +1,16 @@
 const ObjectMatcher = require('./object-matcher');
 const {getAll} = require('./field-matchers');
+const {reduce} = require('./reducer');
 
 module.exports = {
   create :({definition, script}) => {
     const matchers = getAll();
     const objectMatcher = ObjectMatcher.create({definition, matchers});
 
-    return objectMatcher;
+    return {
+      matches: (data) => {
+        return reduce ({matcher: objectMatcher, data: data});
+      }
+    };
   }
 }
