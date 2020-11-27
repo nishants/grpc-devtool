@@ -9,7 +9,7 @@ module.exports = {
     const matches = (data) => {
       for(let key in matcherObject){
         const fieldMatcher = matcherObject[key];
-        if(!fieldMatcher.matches(data[key], definition[key])){
+        if(fieldMatcher.matches(data[key], definition[key]).failed){
           return false;
         }
       }

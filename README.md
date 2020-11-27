@@ -309,6 +309,41 @@ request@ : {
 
 
 
+Matchers algorithm
+
+```typescript
+interface Matcher{
+  MatchResult match(Any data)
+};
+  
+class MatchResult {
+  bool success;
+  Matcher[] next;
+}
+
+
+
+const reducer = (objectMatchers, request) => {
+  return objectMatchers.find(m => reduce(m, request));
+};
+
+const reduce = (matcher, data) => {
+	let matchers = [{matcher, data}];
+  while(matchers.length){
+    const netxt = matchers.pop();
+    const result = netxt.match(netxt.data);
+    if(result.failed){
+      return false;
+    }
+    matchers = [...result.nextMatchers];
+  }
+  return true;
+};
+
+```
+
+
+
 
 
 In Future : 
