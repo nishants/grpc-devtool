@@ -1,4 +1,5 @@
 const config = require('../config');
+const objectMatcher = require('./object-matcher');
 
 // Always returns true
 const isAny = {
@@ -18,7 +19,6 @@ const matchers = [
   isAny,
   isEqual
 ];
-
 const match = (matcherObject, data, ignoreOther, definition) => {
   // Check if missing fields
   // if(!ignoreOther && Object.keys(definition).length !== Object.keys(data).length){
@@ -36,12 +36,7 @@ const match = (matcherObject, data, ignoreOther, definition) => {
 
 module.exports = {
   create :({definition, script}) => {
-    const matcherObject = {};
-
-    for(let key in definition){
-      const fieldDefinition = definition[key];
-      matcherObject[key] = matchers.find(m => m.appliesTo(fieldDefinition))
-    }
+    const matcherObject = objectMatcher.create({definition, matchers});
 
     return {
       matches: (data) => match(matcherObject, data, false, definition)
