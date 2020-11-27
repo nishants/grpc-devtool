@@ -4,7 +4,17 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 Todo 
 
+- [ ] Define matchers definition `js.yaml`
 - [ ] Create matchers from json
+  - [ ] for flat object with static fields
+  - [ ] for flat object with matchers
+    - [ ] `@any`
+    - [ ] `@any!`
+    - [ ] `@ignoreOther`
+    - [ ] js regex
+  - [ ] for nested objects
+  - [ ] for arrays
+- [ ] Handle request headers in matchers
 - [x] Create test for server
 - [x] Create endpoint handler dynamically
 - [x] Create endpoint handler
@@ -216,7 +226,7 @@ npx miraje -port 3002 -config ./config -protos ../src/protos
 | recording        |                                                              | even for procudure path we can generate mapping while recording |
 | integritiy       | can cause issues and complexity for smartly matching a request by file type only | **ROBUST**                                                   |
 
-### Mapping defintion
+### Config file
 
 ```yaml
 # Profile file path relative to proto home
@@ -236,6 +246,11 @@ package.service.methodname : [
 package.service.methodname2 : [
   "common/message.js.yaml",
 ]
+
+# intial value of session (should be seprate file ?)
+session: {
+	knonwnUsers: [{id: "hello", token: "abc"}],
+}
 ```
 
 - defined in `config` dir passed at runtime (directly inside it)
@@ -254,6 +269,42 @@ stub/
     	- defualt.js.yaml
     - common/
     	- message/js.yml
+```
+
+
+
+### A sample matcher definition
+
+Matcher keywords
+
+|         |                            |      |
+| ------- | -------------------------- | ---- |
+| `any@`  | Any value (including null) |      |
+| `any!@` | Any non null value         |      |
+|         |                            |      |
+|         |                            |      |
+
+
+
+```yaml
+request@ : {
+	ignoreOther@ : true # ignore fields in data not defined here
+	name    : "any@"    # any string value 
+  lastName: /^Singh/  # regex field
+  age     : "any@"    # any integer value
+  location: "India"   # fixed value  
+  address : {
+  	city  : 'varanasi' # fixed nested object 
+		pin   : "any@"     # nested directive
+  },
+  header@ : {
+  	token : 'any!@',  # any value but not null
+  }
+  # applied if rest of body matches
+  js@: `
+  	return request.matches && request.body.age > 18 
+  `
+}
 ```
 
 

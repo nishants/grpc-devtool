@@ -1,19 +1,50 @@
-const deepEqual = require('./deepEqual');
+const config = require('../config');
 
-const isStatic = (definition) => {
-  return true;
+// Always returns true
+const isAny = {
+  appliesTo : (definitionField) => {
+    return config.isKeyWord(definitionField, 'any')
+  },
+  matches : () => true
+};
+
+// Performs static comparison of values
+const isEqual = {
+  appliesTo : () => true,
+  matches : (data, definition) =>  data === definition
 };
 
 const matchers = [
-  {appliesTo : isStatic, match : deepEqual.areEqual }
+  isAny,
+  isEqual
 ];
+
+const match = (matcherObject, data, ignoreOther, definition) => {
+  // Check if missing fields
+  // if(!ignoreOther && Object.keys(definition).length !== Object.keys(data).length){
+  //   return false;
+  // }
+
+  for(let key in matcherObject){
+    const fieldMatcher = matcherObject[key];
+    if(!fieldMatcher.matches(data[key], definition[key])){
+      return false;
+    }
+  }
+  return true;
+};
 
 module.exports = {
   create :({definition, script}) => {
-    const matcher = matchers.find(m => m.appliesTo(definition));
+    const matcherObject = {};
+
+    for(let key in definition){
+      const fieldDefinition = definition[key];
+      matcherObject[key] = matchers.find(m => m.appliesTo(fieldDefinition))
+    }
 
     return {
-      match: (data) => matcher.match(definition, data)
+      matches: (data) => match(matcherObject, data, false, definition)
     };
   }
 }

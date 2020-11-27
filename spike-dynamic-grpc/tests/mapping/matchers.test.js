@@ -10,8 +10,30 @@ describe("matchers", ()=> {
 
     const matcher = matchers.create({definition});
 
-    const actual = matcher.match({...definition});
+    const actual = matcher.matches({...definition});
 
     expect(actual).toBe(true);
   });
+
+  test("should support any@ matcher", () => {
+    const definition = {
+      name : 'any@',
+      age: 'any@',
+      male: 'any@',
+      location: 'any@'
+    };
+
+    const data = {
+      name : "nishant",
+      age: 34,
+      location: "india"
+    };
+
+    const matcher = matchers.create({definition});
+
+    const actual = matcher.matches(data);
+
+    expect(actual).toBe(true);
+  });
+
 });
