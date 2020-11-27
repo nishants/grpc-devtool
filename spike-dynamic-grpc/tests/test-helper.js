@@ -1,5 +1,6 @@
 const protoLoader = require('@grpc/proto-loader');
 const path = require('path');
+var grpc = require('grpc');
 
 const greetProtoFile  = path.join(__dirname, '../protos/greet.proto');
 const pricesProtoFile = path.join(__dirname, '../protos/prices.proto');
@@ -17,8 +18,24 @@ const loadFile = (protoFilePath) => {
 };
 
 
+const helloProto = loadFile(helloProtoFilePath);
+
 module.exports = {
   greetProto: loadFile(greetProtoFile),
   pricesProto: loadFile(pricesProtoFile),
-  helloProto: loadFile(helloProtoFilePath),
+  helloProto,
+
+  clients: {
+    sayHelloWorld : (url, request) => new Promise(async (resolve, reject) => {
+      const protoDefinition = grpc.loadPackageDefinition(helloProto).helloworld.greet;
+      const client = new protoDefinition.Greeter(url, grpc.credentials.createInsecure());
+
+      client.sayHello(request, function(err, response) {
+        if(err) {
+          return reject(err);
+        }
+        resolve(response);
+      });
+    })
+  }
 }

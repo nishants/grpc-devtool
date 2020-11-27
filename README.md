@@ -1,7 +1,7 @@
 Todo 
 
 - [x] Create test for server
-- [ ] Create endpoint handler dynamically
+- [x] Create endpoint handler dynamically
 - [x] Create endpoint handler
   - [x] dynmically capture the endpoint requests
   - [x] return custom data
