@@ -1,6 +1,4 @@
 const grpc = require('grpc');
-const protoLoader = require('@grpc/proto-loader');
-
 
 module.exports = {
   create: ({host, port}) => {
@@ -8,24 +6,15 @@ module.exports = {
     server.bind(`${host}:${port}`, grpc.ServerCredentials.createInsecure());
 
     return {
-      add : ({protoPath, endpoint, onRequest}) => {
-        const packageDefinition = protoLoader.loadSync(
-          protoPath,
-          {keepCase: true,
-            longs: String,
-            enums: String,
-            defaults: true,
-            oneofs: true
-          });
-
-        const protofile = grpc.loadPackageDefinition(packageDefinition);
-        const hello_proto = protofile.helloworld.greet;
+      add : ({protoPath: packageDefinition, endpoint, onRequest}) => {
+        const serviceDefinition = grpc.loadPackageDefinition(packageDefinition);
+        const procedure = serviceDefinition.helloworld.greet.Greeter.service;
 
         const requestHandler = (call, callback) => {
           onRequest(call, callback, endpoint);
         };
 
-        server.addService(hello_proto.Greeter.service, {sayHello: requestHandler});
+        server.addService(procedure, {sayHello: requestHandler});
       },
       start: () => {
         server.start();
