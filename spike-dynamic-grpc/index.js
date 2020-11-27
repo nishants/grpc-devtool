@@ -4,9 +4,9 @@ const protoLoader = require('@grpc/proto-loader');
 const server = require('./src/server/endpoint-server');
 const analyzer = require('./src/proto/proto-analyzer');
 
-const greet = path.join(__dirname , './protos/helloworld.proto');
+const pricesProtoFile = path.join(__dirname , './protos/prices.proto');
 
-const protoFiles = [greet];
+const protoFiles = [pricesProtoFile];
 
 const loadFile = (protoFilePath) => {
   return protoLoader.loadSync(
@@ -21,10 +21,10 @@ const loadFile = (protoFilePath) => {
 
 const createEnpointHandler = (endpoint) => {
   const handler = (call, send, endpoint) => {
-    const compiledMessage = {message: 'path: '+ endpoint.getId()+ ', request : ' +  call.request.name};
-    send(null, compiledMessage);
+    let i = 0;
+    setInterval(() => call.write({quote : `quote${i++}`}), 1000)
   };
-  service.add({protoPath: greet, endpoint, onRequest: handler});
+  service.add({protoFile: loadFile(pricesProtoFile), endpoint, onRequest: handler});
 };
 
 var service = server.create({host: "0.0.0.0", port: "50053"});
