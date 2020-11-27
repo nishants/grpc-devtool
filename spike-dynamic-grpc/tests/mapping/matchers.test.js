@@ -36,4 +36,14 @@ describe("matchers", ()=> {
     expect(actual).toBe(true);
   });
 
+  test("should support any!@ matcher", () => {
+    const definition = {
+      name : 'any!@',
+    };
+
+    const matcher = matchers.create({definition});
+
+    expect(matcher.matches({name : null,})).toBe(false);
+    expect(matcher.matches({name : "x",})).toBe(true);
+  });
 });

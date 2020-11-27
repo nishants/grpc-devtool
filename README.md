@@ -8,7 +8,7 @@ Todo
 - [ ] Create matchers from json
   - [ ] for flat object with static fields
   - [ ] for flat object with matchers
-    - [ ] `@any`
+    - [x] `@any`
     - [ ] `@any!`
     - [ ] `@ignoreOther`
     - [ ] js regex
