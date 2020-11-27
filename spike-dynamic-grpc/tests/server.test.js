@@ -1,8 +1,7 @@
-const {helloProto, clients} = require('./test-helper');
+const {helloProto, createClient} = require('./test-helper');
 
 const server = require('../src/server/endpoint-server');
 const analyzer = require('../src/proto/proto-analyzer');
-
 
 const host= "0.0.0.0";
 const port= "50053";
@@ -11,7 +10,8 @@ const url = `${host}:${port}`;
 describe('server.test.js', () => {
   let service ;
   const responses = {};
-  const  endpoint = analyzer.readProto(helloProto).pop();
+  const helloWorldEndpoint = analyzer.readProto(helloProto).pop();
+  const client = createClient(url);
 
   beforeEach(() => {
     service = server.create({host, port});
@@ -19,7 +19,11 @@ describe('server.test.js', () => {
       send(null, responses[endpoint.getId()](context));
     };
 
-    service.add({protoFile: helloProto, endpoint , onRequest: handler});
+    service.add({
+      protoFile: helloProto,
+      endpoint: helloWorldEndpoint ,
+      onRequest: handler});
+
     service.start();
   });
 
@@ -30,12 +34,12 @@ describe('server.test.js', () => {
   test('should handle a unary request', async () => {
     const expectedResponseMessage = 'hello world message';
 
-    responses[endpoint.getId()] = (context)=> {
+    responses[helloWorldEndpoint.getId()] = (context)=> {
       expect(context.request.name).toBe("nishant")
       return {message: expectedResponseMessage}
     };
 
-    const response = await clients.sayHelloWorld(url, {name: "nishant"});
+    const response = await client.sayHelloWorld({name: "nishant"});
     expect(response.message).toBe(expectedResponseMessage)
   });
 });

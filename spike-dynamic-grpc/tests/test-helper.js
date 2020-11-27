@@ -25,17 +25,19 @@ module.exports = {
   pricesProto: loadFile(pricesProtoFile),
   helloProto,
 
-  clients: {
-    sayHelloWorld : (url, request) => new Promise(async (resolve, reject) => {
-      const protoDefinition = grpc.loadPackageDefinition(helloProto).helloworld.greet;
-      const client = new protoDefinition.Greeter(url, grpc.credentials.createInsecure());
+  createClient: (url) => {
+    return {
+      sayHelloWorld : (request) => new Promise(async (resolve, reject) => {
+        const protoDefinition = grpc.loadPackageDefinition(helloProto).helloworld.greet;
+        const client = new protoDefinition.Greeter(url, grpc.credentials.createInsecure());
 
-      client.sayHello(request, function(err, response) {
-        if(err) {
-          return reject(err);
-        }
-        resolve(response);
-      });
-    })
+        client.sayHello(request, function(err, response) {
+          if(err) {
+            return reject(err);
+          }
+          resolve(response);
+        });
+      })
+    };
   }
 }
