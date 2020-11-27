@@ -19,8 +19,7 @@ module.exports = {
           });
 
         const protofile = grpc.loadPackageDefinition(packageDefinition);
-        const hello_proto = protofile.helloworld;
-
+        const hello_proto = protofile.helloworld.greet;
 
         const requestHandler = (call, callback) => {
           onRequest(call, callback, endpoint);

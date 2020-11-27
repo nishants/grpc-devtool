@@ -32,10 +32,10 @@ describe('server.test.js', () => {
     service.add({protoPath: helloProtoFilePath, endpoint , onRequest: handler});
     service.start();
 
-    const hello_proto = grpc.loadPackageDefinition(helloProto).helloworld;
+    const hello_proto = grpc.loadPackageDefinition(helloProto).helloworld.greet;
     const client = new hello_proto.Greeter(url, grpc.credentials.createInsecure());
 
-    const expectedResponseMessage = 'helloworld.Greeter/SayHello : hello nishant';
+    const expectedResponseMessage = 'helloworld.greet.Greeter/SayHello : hello nishant';
 
     await new Promise((resolve) => {
       client.sayHello({name: "nishant"}, function(err, response) {
