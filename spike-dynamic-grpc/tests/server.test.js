@@ -1,4 +1,4 @@
-const {helloProto, createClient} = require('./test-helper');
+const {helloProto, pricesProto, createClient} = require('./test-helper');
 
 const server = require('../src/server/endpoint-server');
 const analyzer = require('../src/proto/proto-analyzer');
@@ -11,12 +11,13 @@ describe('server.test.js', () => {
   let service ;
   const responses = {};
   const helloWorldEndpoint = analyzer.readProto(helloProto).pop();
+  const pricesEndpoint = analyzer.readProto(pricesProto).pop();
   const client = createClient(url);
 
-  beforeEach(() => {
+  beforeAll(() => {
     service = server.create({host, port});
     const handler = (context, send, endpoint) => {
-      send(null, responses[endpoint.getId()](context));
+      responses[endpoint.getId()](context, send)
     };
 
     service.add({
@@ -24,22 +25,50 @@ describe('server.test.js', () => {
       endpoint: helloWorldEndpoint ,
       onRequest: handler});
 
+    service.add({
+      protoFile: pricesProto,
+      endpoint: pricesEndpoint ,
+      onRequest: handler});
+
     service.start();
   });
 
-  afterEach(() => {
+  afterAll(() => {
     service.stop();
   });
 
-  test('should handle a unary request', async () => {
+  test('should handle a unary endpoint', async () => {
     const expectedResponseMessage = 'hello world message';
 
-    responses[helloWorldEndpoint.getId()] = (context)=> {
-      expect(context.request.name).toBe("nishant")
-      return {message: expectedResponseMessage}
+    responses[helloWorldEndpoint.getId()] = (context, send)=> {
+      expect(context.request.name).toBe("nishant");
+      send(null, {message: expectedResponseMessage});
     };
 
     const response = await client.sayHelloWorld({name: "nishant"});
     expect(response.message).toBe(expectedResponseMessage)
   });
+
+  test('should handle a streaming response', async () => {
+    const responeOne = {quote: "quote:one"};
+    const responseTwo = {quote: "quote:two"};
+    const responseThree = {quote: "quote:three"};
+
+    const expected = [responeOne, responseTwo, responseThree];
+
+    responses[pricesEndpoint.getId()] = (context)=> {
+      expect(context.request.uic).toBe('211');
+      expect(context.request.assetType).toBe('Stock');
+
+      context.write(responeOne);
+      context.write(responseTwo);
+      context.write(responseThree);
+
+      context.end();
+    };
+
+    const actual = await client.readPricesStream({uic: 211, assetType: 'Stock'});
+    expect(actual).toEqual(expected)
+  });
+
 });

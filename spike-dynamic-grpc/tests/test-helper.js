@@ -19,10 +19,11 @@ const loadFile = (protoFilePath) => {
 
 
 const helloProto = loadFile(helloProtoFilePath);
+const pricesProto = loadFile(pricesProtoFile);
 
 module.exports = {
   greetProto: loadFile(greetProtoFile),
-  pricesProto: loadFile(pricesProtoFile),
+  pricesProto,
   helloProto,
 
   createClient: (url) => {
@@ -37,7 +38,28 @@ module.exports = {
           }
           resolve(response);
         });
+      }),
+      readPricesStream : (request) => new Promise(async (resolve, reject) => {
+        const protoDefinition = grpc.loadPackageDefinition(pricesProto).prices.streaming;
+        const client = new protoDefinition.Pricing(url, grpc.credentials.createInsecure());
+
+        const data = [];
+        const call = client.Subscribe(request);
+
+        call.on('data', function(response) {
+          data.push(response);
+        });
+
+        call.on('end', function() {
+          resolve(data);
+        });
+
+        call.on('error', function(error) {
+          reject({data, error});
+        });
+
       })
+
     };
   }
 }
