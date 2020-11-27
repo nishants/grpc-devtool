@@ -1,24 +1,6 @@
-const config = require('../config');
 const objectMatcher = require('./object-matcher');
+const {getAll} = require('./field-matchers');
 
-// Always returns true
-const isAny = {
-  appliesTo : (definitionField) => {
-    return config.isKeyWord(definitionField, 'any')
-  },
-  matches : () => true
-};
-
-// Performs static comparison of values
-const isEqual = {
-  appliesTo : () => true,
-  matches : (data, definition) =>  data === definition
-};
-
-const matchers = [
-  isAny,
-  isEqual
-];
 const match = (matcherObject, data, ignoreOther, definition) => {
   // Check if missing fields
   // if(!ignoreOther && Object.keys(definition).length !== Object.keys(data).length){
@@ -36,6 +18,7 @@ const match = (matcherObject, data, ignoreOther, definition) => {
 
 module.exports = {
   create :({definition, script}) => {
+    const matchers = getAll();
     const matcherObject = objectMatcher.create({definition, matchers});
 
     return {
