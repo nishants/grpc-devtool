@@ -6,12 +6,12 @@ Todo
 
 - [ ] Define matchers definition `js.yaml`
 - [ ] Create matchers from json
-  - [ ] for flat object with static fields
-  - [ ] for flat object with matchers
+  - [x] for flat object with static fields
+  - [x] for flat object with matchers
     - [x] `@any`
-    - [ ] `@any!`
-    - [ ] `@ignoreOther`
-    - [ ] js regex
+    - [x] `@any!`
+    - [x] ~~`@ignoreOther`~~
+    - [x] ~~js regex~~
   - [ ] for nested objects
   - [ ] for arrays
 - [ ] Handle request headers in matchers

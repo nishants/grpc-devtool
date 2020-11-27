@@ -8,9 +8,15 @@ describe("matchers", ()=> {
       location: "india"
     };
 
+    const data = {
+      name : "nishant",
+      age: 34,
+      location: "india"
+    };
+
     const matcher = matchers.create({definition});
 
-    const actual = matcher.matches({...definition});
+    const actual = matcher.matches(data);
 
     expect(actual).toBe(true);
   });
@@ -46,4 +52,28 @@ describe("matchers", ()=> {
     expect(matcher.matches({name : null,})).toBe(false);
     expect(matcher.matches({name : "x",})).toBe(true);
   });
+
+  // describe("nested objects", () => {
+  //   test("should create matcher for static json", () => {
+  //     const definition = {
+  //       name : "nishant",
+  //       age: 34,
+  //       info: {address: {location: "india"}}
+  //     };
+  //
+  //     const data = {
+  //       name : "nishant",
+  //       age: 34,
+  //       info: {address: {location: "india"}}
+  //     };
+  //
+  //     const matcher = matchers.create({definition});
+  //
+  //     const actual = matcher.matches(data);
+  //
+  //     expect(actual).toBe(true);
+  //   });
+  //
+  // });
+
 });
