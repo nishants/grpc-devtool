@@ -2,6 +2,7 @@ const mappingsReader = require('./mappingsReader');
 const protosReader = require('./protosReader');
 const endpointsLoader = require('./endpointsLoader');
 const endpointMappingResolver = require('./endpointMappingResolver');
+const TemplateReader = require('./templateReader');
 
 module.exports = {
   run : async ({host, port, configPath, protosPath, extensionsPath}) => {
@@ -11,7 +12,8 @@ module.exports = {
    const mappings   = await mappingsReader.readFrom(configPath);
    const protoFiles = await protosReader.readFrom(protosPath);
    const endpoints  = await endpointsLoader.loadFiles(protoFiles);
-   const resolver   = await endpointMappingResolver.createResolvers({endpoints, mappings, configPath})
+   const templates = TemplateReader.create({configPath});
+   const resolver   = await endpointMappingResolver.createResolvers({endpoints, mappings, templates})
 
    console.log({mappings});
    console.log({protoFiles});
@@ -22,7 +24,6 @@ module.exports = {
      console.log('response for ' + name, response);
    }
 
-   console.log({resolver});
    return () => console.log("App exited.")
   }
 };

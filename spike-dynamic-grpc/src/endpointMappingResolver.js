@@ -1,8 +1,7 @@
-const {readYamlFileInDir} = require('./utils/files');
 const matchers = require('./mapping/matchers');
 
 module.exports = {
-  createResolvers : async ({endpoints, mappings, configPath}) => {
+  createResolvers : async ({endpoints, mappings, templates}) => {
     const endpointMatchers = {};
 
     for(const endpoint of endpoints){
@@ -10,8 +9,8 @@ module.exports = {
       const mappingFiles = mappings[endpoint.getId()] || [];
 
       for(const file of mappingFiles){
-        const template = await readYamlFileInDir(configPath, file);
-        const matcher = matchers.create({definition: template['request@']});
+        const template = await templates.get(file)
+        const matcher = matchers.create({definition: template.getRequest()});
 
         endpointFileMatcher.push({matcher, file});
       }
