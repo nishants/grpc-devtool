@@ -21,6 +21,10 @@ module.exports = {
     return {
       getResponseFile : (endpointId, request) => {
         const matcher = endpointMatchers[endpointId].find(m => m.matcher.matches(request));
+        if(!matcher){
+          console.error(`No response found for ${endpointId} when requested : `, request);
+          return null;
+        }
         return matcher.file;
       }
     };

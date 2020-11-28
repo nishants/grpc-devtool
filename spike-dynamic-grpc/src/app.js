@@ -16,10 +16,6 @@ module.exports = {
    const templates = TemplateReader.create({configPath});
    const resolver   = await endpointMappingResolver.createResolvers({endpoints, mappings, templates})
 
-   console.log({mappings});
-   console.log({protoFiles});
-   console.log({endpoints: endpoints.map(e => `${e.getService()} : ${e.getResponse().isStream() ? "stream stresponse" : "unary"}`)});
-
    const compileResponseFile = async (file, callContext)=> {
      const template = await templates.get(file);
      const response = template.getResponse();
@@ -29,6 +25,9 @@ module.exports = {
     const endpointResponder = {
       getResponse: async (endpointId, callContext) => {
         const responseFile = resolver.getResponseFile(endpointId, callContext.request);
+        if(!responseFile){
+          return null;
+        }
         return compileResponseFile(responseFile, callContext);
       }
     };
