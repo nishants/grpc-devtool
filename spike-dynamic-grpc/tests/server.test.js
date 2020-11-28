@@ -12,10 +12,17 @@ describe('server.test.js', () => {
   const responses = {};
   const helloWorldEndpoint = analyzer.readProto(helloProto).pop();
   const pricesEndpoint = analyzer.readProto(pricesProto).pop();
+
+  const endpointResponder = {
+    getResponse: async (endpointId, callContext) => {
+      return responses[endpointId](callContext)
+    }
+  };
+
   const client = createClient(url);
 
   beforeAll(() => {
-    service = server.create({host, port});
+    service = server.create({host, port, endpointResponder});
     const handler = (context, send, endpoint) => {
       responses[endpoint.getId()](context, send)
     };
@@ -40,9 +47,9 @@ describe('server.test.js', () => {
   test('should handle a unary endpoint', async () => {
     const expectedResponseMessage = 'hello world message';
 
-    responses[helloWorldEndpoint.getId()] = (context, send)=> {
+    responses[helloWorldEndpoint.getId()] = (context)=> {
       expect(context.request.name).toBe("nishant");
-      send(null, {message: expectedResponseMessage});
+      return {message: expectedResponseMessage};
     };
 
     const response = await client.sayHelloWorld({name: "nishant"});
@@ -56,15 +63,11 @@ describe('server.test.js', () => {
 
     const expected = [responeOne, responseTwo, responseThree];
 
-    responses[pricesEndpoint.getId()] = (context)=> {
+    responses[pricesEndpoint.getId()] = ()=> {
       expect(context.request.uic).toBe('211');
       expect(context.request.assetType).toBe('Stock');
 
-      context.write(responeOne);
-      context.write(responseTwo);
-      context.write(responseThree);
-
-      context.end();
+      return {stream : [responeOne, responseTwo, responseThree]};
     };
 
     const actual = await client.readPricesStream({uic: 211, assetType: 'Stock'});

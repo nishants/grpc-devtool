@@ -49,32 +49,27 @@ const getHandler = (endpoint) => {
   return handlerTypes[type];
 }
 
-const endpointResponseReader = (endpointId) => {
+const endpointResponseReader = async (endpointId) => {
   const mappings = {
-    'helloworld.greet.Greeter.SayHello' : (call) => {
+    'helloworld.greet.Greeter.SayHello' : async (call) => {
       return {message : `hello ${call.request.name}`};
     },
-    'prices.streaming.Pricing.Subscribe' : (call) => {
+    'prices.streaming.Pricing.Subscribe' : async (call) => {
       return {stream: [{quote: "quote:one"}, {quote: "quote:two"}, {quote: "quote:three"}]};
     }
   };
   return mappings[endpointId];
 };
 
-const createEnpointHandler = ({endpoint, loadedProtofile}) => {
-  const handler = async (call, send, endpoint) => {
-    const responseCompiler = endpointResponseReader(endpoint.getId());
-    const responseSender = getHandler(endpoint);
-
-    const response = responseCompiler(call);
-    await responseSender(response)(call, send);
-  };
-
-  service.add({protoFile: loadedProtofile, endpoint, onRequest: handler});
+const endpointResponder = {
+  getResponse: async (endpointId, callContext) => {
+    const responseCompiler = await endpointResponseReader(endpointId);
+    const response = await responseCompiler(callContext);
+    return response;
+  }
 };
 
-var service = server.create({host: "0.0.0.0", port: "50053"});
-
+var service = server.create({host: "0.0.0.0", port: "50053", endpointResponder});
 
 // Add handler for each endpoint in each proto file,
 protoFiles
@@ -86,6 +81,8 @@ protoFiles
     }));
   })
   .reduce((arr, files) => [...arr, ...files], [])
-  .forEach(createEnpointHandler);
+  .forEach(d => {
+    service.add({protoFile: d.loadedProtofile, endpoint: d.endpoint});
+  });
 
 service.start();

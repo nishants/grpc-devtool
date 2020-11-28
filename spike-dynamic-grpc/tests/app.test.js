@@ -13,7 +13,7 @@ const appParameters = {
   protosPath : path.join(__dirname, './fixtures/protos')
 };
 
-describe('app.js', () => {
+describe.skip('app.js', () => {
   let closeApp;
   let client;
 
