@@ -1,4 +1,4 @@
-const {helloProto, pricesProto, createClient} = require('./test-helper');
+const {createClient} = require('./test-helper');
 const path = require('path');
 
 const app = require('../src/app');
@@ -26,8 +26,18 @@ describe('app.js', () => {
     await closeApp();
   });
 
-  test('should serve a mapping', async () => {
+  test('should serve a unary response', async () => {
     const response = await client.sayHelloWorld({name: "rohit"});
     expect(response).toEqual({message : "hello rohit"});
   });
+
+  test('should serve a streaming response', async () => {
+    const responeOne    = {quote: "quote:one"};
+    const responseTwo   = {quote: "quote:two"};
+    const responseThree = {quote: "quote:three"};
+
+    const expected = [responeOne, responseTwo, responseThree];
+
+    const actual = await client.readPricesStream({uic: 211, assetType: 'Stock'});
+    expect(actual).toEqual(expected)  });
 });

@@ -4,3 +4,6 @@ helloworld.greet.Greeter.SayHello : [
   "greet/default.js.yaml",
 ]
 
+prices.streaming.Pricing.Subscribe : [
+  "prices/211-Stock.js.yaml",
+]

@@ -7,6 +7,7 @@ Todo
 - [ ] Define matchers definition `js.yaml`
 - [ ] e2e tests
 - [ ] create mapping file reader
+- [ ] run with node 10.
 - [x] Create matchers from json
   - [x] for flat object with static fields
   - [x] for flat object with matchers

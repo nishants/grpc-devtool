@@ -24,9 +24,18 @@ const handlers = {
   'helloworld.greet.Greeter.SayHello' : (call, send) => {
     send(null, {message : `hello ${call.request.name}`});
   },
-  'prices.streaming.Pricing.Subscribe' : (call) => {
-    let i = 0;
-    setInterval(() => call.write({quote : `quote${i++}`}), 1000);
+  'prices.streaming.Pricing.Subscribe' : async (call) => {
+    const responses = [{quote: "quote:one"}, {quote: "quote:two"}, {quote: "quote:three"}, {end: true}];
+    for(let i =0; i < responses.length; i++){
+      await new Promise((resolve => setTimeout(resolve, 500)));
+      const response = responses[i];
+      if(response.end) {
+        call.end();
+      }
+      else {
+        call.write(response);
+      }
+    }
   }
 };
 
