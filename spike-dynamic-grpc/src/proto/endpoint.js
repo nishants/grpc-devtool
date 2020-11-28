@@ -1,7 +1,7 @@
 const message = require("./message");
 
 module.exports = {
-  create : (e) => {
+  create : (e, protoFile) => {
 
     const requestType = message.create(e.requestType, e.requestStream );
     const responseType = message.create(e.responseType, e.responseStream );
@@ -21,6 +21,7 @@ module.exports = {
       getPackageName : () => packageName,
       getRequest : () => requestType,
       getResponse : () => responseType,
+      getLoadedProto: () => protoFile
     }
   }
 };

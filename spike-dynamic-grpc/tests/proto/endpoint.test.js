@@ -40,4 +40,9 @@ describe('endpoint.test.js', () => {
     expect(greeter.getPackageName()).toBe("greet");
     expect(prices.getPackageName()).toBe("prices.streaming");
   });
+
+  test('should encapsulate the endpoint protobuf', () => {
+    const result = analyzer.readProto(pricesProto).pop();
+    expect(result.getLoadedProto()).toBe(pricesProto);
+  });
 });
