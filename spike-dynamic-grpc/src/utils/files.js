@@ -1,5 +1,6 @@
 const glob = require('glob');
 const fs = require('fs');
+const path = require('path');
 var yaml = require("yaml");
 
 const getFilesFromDir = (pattern) => {
@@ -30,7 +31,12 @@ const readYamlFile = (filePath) => {
   return readTextFile(filePath).then(data => yaml.parse(data));
 };
 
+const readYamlFileInDir = (dir, filePath) => {
+  return readTextFile(path.join(dir, filePath)).then(data => yaml.parse(data));
+};
+
 module.exports = {
   getFilesFromDir,
-  readYamlFile
+  readYamlFile,
+  readYamlFileInDir
 };

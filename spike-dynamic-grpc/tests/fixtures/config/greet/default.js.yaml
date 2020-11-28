@@ -1,0 +1,7 @@
+request@ : {
+  name: "any@"
+}
+
+response@ : {
+  message : "I dont know your buddy !"
+}
