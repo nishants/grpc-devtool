@@ -7,6 +7,7 @@ Todo
 - [x] Define matchers definition `js.yaml`
 - [x] e2e tests
 - [x] create mapping file reader
+- [ ] run and check on windows.
 - [ ] handle when no matcher are foudn for a request.
 - [ ] run with node 10.
 - [x] Create matchers from json
