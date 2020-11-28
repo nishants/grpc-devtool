@@ -1,16 +1,12 @@
-
-
-### Setup project 
-
-We will setup the project using the tool https://github.com/formium/tsdx#quick-start. This will save us time setting up unit test, prettier, linter, babel e.t.c
+Using **node** `v14.5.0`
 
 ```bash
-npx tsdx create miraze
+node -v
+# v14.5.0
+
+# Create project template
+npx oclif single miraze
 ```
 
-Open the new project : 
-
-```bash
-cd miraze
-```
+We have use this tool : https://oclif.io/docs/single.html to create a boileplate. This saves us time by creating 
 
