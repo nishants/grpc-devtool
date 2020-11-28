@@ -4,9 +4,10 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 Todo 
 
-- [ ] Define matchers definition `js.yaml`
-- [ ] e2e tests
-- [ ] create mapping file reader
+- [x] Define matchers definition `js.yaml`
+- [x] e2e tests
+- [x] create mapping file reader
+- [ ] handle when no matcher are foudn for a request.
 - [ ] run with node 10.
 - [x] Create matchers from json
   - [x] for flat object with static fields
