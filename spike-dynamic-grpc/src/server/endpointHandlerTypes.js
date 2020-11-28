@@ -11,7 +11,6 @@ const getHandlerFor = (endpoint) => {
     },
     "response-stream" : (response) => {
       return async (call) => {
-
         const responses = [...response.stream, {end: true}];
         const streamingDelay = response.streamInterval || DEFAULT_STREAMING_DELAY;
 

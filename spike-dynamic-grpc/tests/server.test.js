@@ -4,7 +4,7 @@ const server = require('../src/server/endpoint-server');
 const analyzer = require('../src/proto/proto-analyzer');
 
 const host= "0.0.0.0";
-const port= "50053";
+const port= "50055";
 const url = `${host}:${port}`;
 
 describe('server.test.js', () => {
@@ -27,15 +27,8 @@ describe('server.test.js', () => {
       responses[endpoint.getId()](context, send)
     };
 
-    service.add({
-      protoFile: helloProto,
-      endpoint: helloWorldEndpoint ,
-      onRequest: handler});
-
-    service.add({
-      protoFile: pricesProto,
-      endpoint: pricesEndpoint ,
-      onRequest: handler});
+    service.add(helloWorldEndpoint);
+    service.add(pricesEndpoint);
 
     service.start();
   });
@@ -63,7 +56,7 @@ describe('server.test.js', () => {
 
     const expected = [responeOne, responseTwo, responseThree];
 
-    responses[pricesEndpoint.getId()] = ()=> {
+    responses[pricesEndpoint.getId()] = (context)=> {
       expect(context.request.uic).toBe('211');
       expect(context.request.assetType).toBe('Stock');
 

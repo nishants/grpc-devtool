@@ -8,8 +8,8 @@ module.exports = {
     server.bind(`${host}:${port}`, grpc.ServerCredentials.createInsecure());
 
     return {
-      add : ({protoFile: packageDefinition, endpoint}) => {
-        const definition = grpc.loadPackageDefinition(packageDefinition);
+      add : (endpoint) => {
+        const definition = grpc.loadPackageDefinition(endpoint.getLoadedProto());
         const procedure = get({definition, endpoint});
 
 
