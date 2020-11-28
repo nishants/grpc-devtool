@@ -4,8 +4,7 @@ module.exports = {
   readFrom: async (configPath) => {
     const expectedMappingsFilePath = `${configPath}/mappings.yaml`;
     try {
-      const mappings = await readYamlFile(expectedMappingsFilePath);
-      console.log({mappings})
+      return await readYamlFile(expectedMappingsFilePath);
     }catch(exception) {
       console.error(`Failed to load : "${expectedMappingsFilePath}"`);
       throw exception;

@@ -3,7 +3,7 @@ const fs = require('fs');
 var yaml = require("yaml");
 
 const getFilesFromDir = (pattern) => {
-  return new Promise((resole, reject) => {
+  return new Promise((resolve, reject) => {
     const callback = (error, files) => {
       if(error){
         return reject(error);
