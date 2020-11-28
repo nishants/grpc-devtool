@@ -3,6 +3,7 @@ const protosReader = require('./protosReader');
 const endpointsLoader = require('./endpointsLoader');
 const endpointMappingResolver = require('./endpointMappingResolver');
 const TemplateReader = require('./templateReader');
+const Server = require('./server/endpoint-server');
 
 module.exports = {
   run : async ({host, port, configPath, protosPath, extensionsPath}) => {
@@ -19,11 +20,27 @@ module.exports = {
    console.log({protoFiles});
    console.log({endpoints: endpoints.map(e => `${e.getService()} : ${e.getResponse().isStream() ? "stream stresponse" : "unary"}`)});
 
-   for(const name of ['default', 'virat', 'rohit']){
-     const response = resolver.getResponseFile('helloworld.greet.Greeter.SayHello', {name});
-     console.log('response for ' + name, response);
-   }
+   const compileResponseFile = async (file, callContext)=> {
+     const template = await templates.get(file);
+     const response = template.getResponse();
+     return response.compile();
+   };
 
-   return () => console.log("App exited.")
+    const endpointResponder = {
+      getResponse: async (endpointId, callContext) => {
+        const responseFile = resolver.getResponseFile(endpointId, callContext.request);
+        return compileResponseFile(responseFile, callContext);
+      }
+    };
+
+   const server = Server.create({host, port, endpointResponder});
+
+   endpoints.forEach(endpoint => {
+     server.add(endpoint);
+   })
+
+    server.start();
+
+   return () => server.stop();
   }
 };

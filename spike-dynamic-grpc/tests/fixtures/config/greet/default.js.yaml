@@ -3,5 +3,5 @@ request@ : {
 }
 
 response@ : {
-  message : "I dont know your buddy !"
+  message : "Glad to meet you {{request.body.name}}"
 }

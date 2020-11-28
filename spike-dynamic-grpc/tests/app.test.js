@@ -13,7 +13,7 @@ const appParameters = {
   protosPath : path.join(__dirname, './fixtures/protos')
 };
 
-describe.skip('app.js', () => {
+describe('app.js', () => {
   let closeApp;
   let client;
 
@@ -27,8 +27,14 @@ describe.skip('app.js', () => {
   });
 
   test('should serve a unary response', async () => {
-    const response = await client.sayHelloWorld({name: "rohit"});
-    expect(response).toEqual({message : "hello rohit"});
+    const responseOne = await client.sayHelloWorld({name: "rohit"});
+    expect(responseOne).toEqual({message : "Hello Rohit"});
+
+    const responseTwo = await client.sayHelloWorld({name: "virat"});
+    expect(responseTwo).toEqual({message : "Hello virat"});
+
+    const responseThree = await client.sayHelloWorld({name: "nishant"});
+    expect(responseThree).toEqual({message : "Glad to meet you {{request.body.name}}"});
   });
 
   test('should serve a streaming response', async () => {

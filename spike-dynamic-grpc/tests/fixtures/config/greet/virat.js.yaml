@@ -3,5 +3,5 @@ request@ : {
 }
 
 response@ : {
-  message : "Hello Virat. I know you too!"
+  message : "Hello virat"
 }
