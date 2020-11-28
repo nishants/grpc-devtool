@@ -31,9 +31,3 @@
       
       </div>
   </details>
-
-  ```
-  <details>
-      <summary>Advanced Topics</summary>
-  </details>
-  ```
