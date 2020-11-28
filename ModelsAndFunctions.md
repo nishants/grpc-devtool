@@ -37,21 +37,3 @@
       <summary>Advanced Topics</summary>
   </details>
   ```
-
-- `get`
-
-
-
-```protobuf
-service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply);
-}
-
-message HelloRequest {
-  string name = 1;
-}
-
-message HelloReply {
-  string message = 1;
-}
-```
