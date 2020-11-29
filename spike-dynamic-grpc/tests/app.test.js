@@ -1,4 +1,4 @@
-const {createClient} = require('./test-helper');
+const {createClient} = require('./helpers');
 const path = require('path');
 
 const app = require('../src/app');

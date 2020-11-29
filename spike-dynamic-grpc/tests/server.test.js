@@ -1,4 +1,4 @@
-const {helloProto, pricesProto, createClient} = require('./test-helper');
+const {helloProto, pricesProto, createClient} = require('./helpers');
 
 const server = require('../src/server/endpoint-server');
 const analyzer = require('../src/proto/proto-analyzer');

@@ -7,6 +7,9 @@ Todo
 - [x] Define matchers definition `js.yaml`
 - [x] e2e tests
 - [x] create mapping file reader
+- [ ] create dynamic client from endpoint
+  - [ ] for unary
+  - [ ] for streaming client
 - [ ] run recorder
 - [ ] define model 
 - [ ] run and check on windows.

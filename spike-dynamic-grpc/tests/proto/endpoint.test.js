@@ -1,4 +1,4 @@
-const {greetProto, pricesProto} = require('../test-helper');
+const {greetProto, pricesProto} = require('../helpers');
 
 const analyzer = require('../../src/proto/proto-analyzer');
 
