@@ -175,6 +175,35 @@ Methods
 
 
 
+### DynamicClient
+
+Creates a gRPC client based on endpoint. It is of four type based on endpoint : 
+
+- Unary Client
+- Client Streaming Client
+- Server Streaming Client
+- Both way streaming Client
+
+Constructor
+
+ClientFactory.create({host, port, endpoints})
+
+Methods
+
+- handle()
+
+
+
+### Template Builder
+
+Used to create new template
+
+**Constructor**
+
+`TemplateBuilder(endpointId)
+
+
+
 **Matcher**
 
 It is used internally by the template to map to a grpc request. It is an interface with methods
