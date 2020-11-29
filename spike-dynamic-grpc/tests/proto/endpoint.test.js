@@ -45,4 +45,10 @@ describe('endpoint.test.js', () => {
     const result = analyzer.readProto(pricesProto).pop();
     expect(result.getLoadedProto()).toBe(pricesProto);
   });
+
+  test('should have streaming request or reponse', () => {
+    const result = analyzer.readProto(pricesProto).pop();
+    expect(result.isStreamingRequest()).toBe(false);
+    expect(result.isStreamingResponse()).toBe(true);
+  });
 });

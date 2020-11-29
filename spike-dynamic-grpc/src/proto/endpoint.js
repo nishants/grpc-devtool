@@ -12,6 +12,7 @@ module.exports = {
     const packageName = path.join(".");
 
     const endpointId = e.path.replace("/", "").replace("/", ".");
+    const {requestStream, responseStream} = e;
 
     return {
       getId : () => endpointId,
@@ -21,7 +22,9 @@ module.exports = {
       getPackageName : () => packageName,
       getRequest : () => requestType,
       getResponse : () => responseType,
-      getLoadedProto: () => protoFile
+      getLoadedProto: () => protoFile,
+      isStreamingRequest : () => requestStream,
+      isStreamingResponse: () => responseStream
     }
   }
 };
