@@ -28,7 +28,7 @@ const clientTypeHandlers = {
       });
 
       call.on('end', function() {
-        resolve(data);
+        resolve({stream: data});
       });
 
       call.on('error', function(error) {

@@ -41,7 +41,7 @@ describe('client.js', () => {
 
     const actual  = await client.execute({endpoint: pricesEndpoint, request: {uic: "211", assetType : "Stock"}});
 
-    expect(actual).toEqual(expected);
+    expect(actual.stream).toEqual(expected);
   });
 });
 
