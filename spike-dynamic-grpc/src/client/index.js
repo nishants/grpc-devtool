@@ -1,4 +1,6 @@
 const grpc = require('grpc');
+const {getPathFromObject} = require('../../src/utils/objects');
+
 const {
   Unary,
   ServerStreaming,
@@ -27,8 +29,10 @@ module.exports = {
     const credentials = grpc.credentials.createInsecure();
 
     const createGrpcClient = async (endpoint) => {
-      const protoDefinition = grpc.loadPackageDefinition(endpoint.getLoadedProto()).helloworld.greet;
-      const client = new protoDefinition.Greeter(`${host}:${port}`, credentials);
+      const protoDefinition = grpc.loadPackageDefinition(endpoint.getLoadedProto());
+      const servicePackage = getPathFromObject({object: protoDefinition, path : endpoint.getPackageName()})
+      const client = new servicePackage[endpoint.getServiceName()](`${host}:${port}`, credentials);
+
       return client;
     };
 
