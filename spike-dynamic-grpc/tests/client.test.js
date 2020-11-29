@@ -7,7 +7,7 @@ const app = require('../src/app');
 const analyzer = require('../src/proto/proto-analyzer');
 
 const host= "0.0.0.0";
-const port= "50053";
+const port= "50057";
 
 const parameters = {
   host,
@@ -16,7 +16,7 @@ const parameters = {
   protosPath : path.join(__dirname, './fixtures/protos')
 };
 
-describe('app.js', () => {
+describe('client.js', () => {
   let closeApp;
   let client;
   const helloWorldEndpoint = analyzer.readProto(helloProto).pop();
@@ -24,7 +24,7 @@ describe('app.js', () => {
 
   beforeAll(async () => {
     closeApp = await app.run(parameters);
-    client   = await Client.create({host,port , endpoints: [helloWorldEndpoint]});
+    client   = await Client.create({host,port , endpoints: [helloWorldEndpoint, pricesEndpoint]});
   });
 
   afterAll(async () => {
@@ -34,6 +34,14 @@ describe('app.js', () => {
   test('should create unary endpoint client', async () => {
     const reply = await client.execute({endpoint: helloWorldEndpoint, request: {name: "rohit"}});
     expect(reply).toEqual({message : "Hello Rohit"});
+  });
+
+  test('should create unary endpoint client', async () => {
+    const expected = [{quote: "quote:one"}, {quote: "quote:two"}, {quote: "quote:three"}];
+
+    const actual  = await client.execute({endpoint: pricesEndpoint, request: {uic: "211", assetType : "Stock"}});
+
+    expect(actual).toEqual(expected);
   });
 });
 

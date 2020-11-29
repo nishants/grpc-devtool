@@ -18,8 +18,23 @@ const clientTypeHandlers = {
       });
     });
   },
-  [ServerStreaming] : (endpoint, request)=> {
+  [ServerStreaming] : ({endpointClient, request, endpoint})=> {
+    return new Promise((resolve, reject) => {
+      const data = [];
+      const call = endpointClient[endpoint.getName()](request);
 
+      call.on('data', function(response) {
+        data.push(response);
+      });
+
+      call.on('end', function() {
+        resolve(data);
+      });
+
+      call.on('error', function(error) {
+        reject({data, error});
+      });
+    });
   }
 };
 
@@ -31,9 +46,8 @@ module.exports = {
     const createGrpcClient = async (endpoint) => {
       const protoDefinition = grpc.loadPackageDefinition(endpoint.getLoadedProto());
       const servicePackage = getPathFromObject({object: protoDefinition, path : endpoint.getPackageName()})
-      const client = new servicePackage[endpoint.getServiceName()](`${host}:${port}`, credentials);
 
-      return client;
+      return new servicePackage[endpoint.getServiceName()](`${host}:${port}`, credentials);
     };
 
     for(const endpoint of endpoints){
