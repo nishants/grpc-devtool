@@ -1,5 +1,5 @@
 const grpc = require('grpc');
-const {get} = require('./getServiceByEndpointId');
+const {getPathFromObject} = require('../utils/objects');
 const {getHandlerFor} = require('./endpointHandlerTypes');
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
     return {
       add : (endpoint) => {
         const definition = grpc.loadPackageDefinition(endpoint.getLoadedProto());
-        const procedure = get({definition, endpoint});
+        const procedure = getPathFromObject({object: definition, path: endpoint.getService()});
 
 
         const requestHandler = async (call, callback) => {
