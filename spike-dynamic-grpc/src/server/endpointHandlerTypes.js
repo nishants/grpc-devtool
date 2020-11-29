@@ -1,15 +1,23 @@
 const DEFAULT_STREAMING_DELAY = 500;
 
+const {
+  Unary,
+  ServerStreaming,
+  getType
+} = require('../proto/EndpointTypes');
+
 const getHandlerFor = (endpoint) => {
-  const type = endpoint.getResponse().isStream() ? "response-stream" : "unary";
+  const type = getType(endpoint);
 
   const handlerTypes = {
-    "unary" : (response) => {
+
+    [Unary] : (response) => {
       return (call, send) => {
         send(null, response);
       };
     },
-    "response-stream" : (response) => {
+
+    [ServerStreaming] : (response) => {
       return async (call) => {
         if(!response){
           return call.end();

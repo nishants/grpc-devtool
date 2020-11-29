@@ -13,7 +13,7 @@ module.exports = {
    const mappings   = await mappingsReader.readFrom(configPath);
    const protoFiles = await protosReader.readFrom(protosPath);
    const endpoints  = await endpointsLoader.loadFiles(protoFiles);
-   const templates = TemplateReader.create({configPath});
+   const templates  = TemplateReader.create({configPath});
    const resolver   = await endpointMappingResolver.createResolvers({endpoints, mappings, templates})
 
    const compileResponseFile = async (file, callContext)=> {
