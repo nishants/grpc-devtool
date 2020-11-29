@@ -1,4 +1,25 @@
-var grpc = require('grpc');
+const grpc = require('grpc');
+const {
+  Unary,
+  ServerStreaming,
+  getType
+} = require('../proto/EndpointTypes');
+
+const clientTypeHandlers = {
+  [Unary] : ({endpointClient, request, endpoint})=> {
+    return new Promise((resolve, reject) => {
+      endpointClient[endpoint.getName()](request, function(err, response) {
+        if(err) {
+          return reject(err);
+        }
+        resolve(response);
+      });
+    });
+  },
+  [ServerStreaming] : (endpoint, request)=> {
+
+  }
+};
 
 module.exports = {
   create: async ({host, port, endpoints}) => {
@@ -16,17 +37,10 @@ module.exports = {
     }
 
     return {
-      execute : async ({endpoint, request}) => new Promise((resolve, reject) => {
+      execute : async ({endpoint, request}) =>{
         const endpointClient = endpointClients[endpoint.getId()];
-        const clientMethod = endpointClient[endpoint.getName()];
-
-        endpointClient[endpoint.getName()](request, function(err, response) {
-          if(err) {
-            return reject(err);
-          }
-          resolve(response);
-        });
-      })
+        return await clientTypeHandlers[getType(endpoint)]({endpointClient, request, endpoint});
+      }
     }
   }
 }
