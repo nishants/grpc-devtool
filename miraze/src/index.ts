@@ -1,4 +1,5 @@
 import {Command, flags} from '@oclif/command'
+import {run} from './run'
 
 class Miraze extends Command {
   static description = 'describe the command here'
@@ -19,6 +20,7 @@ class Miraze extends Command {
     const {args, flags} = this.parse(Miraze)
 
     const name = flags.name ?? 'world'
+    run();
     this.log(`hello ${name} from ./src/index.ts`)
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`)

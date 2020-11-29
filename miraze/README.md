@@ -10,3 +10,13 @@ npx oclif single miraze
 
 We have use this tool : https://oclif.io/docs/single.html to create a boileplate. This saves us time by creating 
 
+
+
+Run project : 
+
+```
+node bin/run
+```
+
+
+

@@ -1,0 +1,7 @@
+request@ : {
+  name: "any@"
+}
+
+response@ : {
+  message : "Glad to meet you {{request.body.name}}"
+}
