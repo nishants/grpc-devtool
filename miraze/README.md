@@ -17,6 +17,3 @@ Run project :
 ```
 node bin/run
 ```
-
-
-

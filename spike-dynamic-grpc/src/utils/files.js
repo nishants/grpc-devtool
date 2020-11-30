@@ -1,7 +1,7 @@
 const glob = require('glob');
 const fs = require('fs');
 const path = require('path');
-var yaml = require("yaml");
+const yaml = require("yaml");
 
 const getFilesFromDir = (pattern) => {
   return new Promise((resolve, reject) => {
@@ -35,8 +35,26 @@ const readYamlFileInDir = (dir, filePath) => {
   return readTextFile(path.join(dir, filePath)).then(data => yaml.parse(data));
 };
 
+const writeFile = (dir, file, content) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dir, { recursive: true }, (error) => {
+      if(error){
+        return reject(error);
+      }
+      fs.writeFile(path.join(dir, file), content, 'utf8', (error) => {
+        if(error){
+          return reject(error);
+        }
+        resolve();
+      });
+
+    });
+  });
+}
+
 module.exports = {
   getFilesFromDir,
   readYamlFile,
-  readYamlFileInDir
+  readYamlFileInDir,
+  writeFile
 };
