@@ -82,6 +82,24 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 # Blueprint
 
+About it.
+
+Features 
+
+- record and playback gRPC endpoints
+- custom matchers and templates
+- sessoin support
+- run as docker image, cli command or as node module.
+
+
+
+Kinds of gRPC API supported
+
+- single request- single response
+- single request - streaming response
+- streaming request - single response
+- streaming request - streaming response
+
 
 
 ### Installation
@@ -161,12 +179,23 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 
 
-Kinds of gRPC API supported
+**Sample strucuture of config folder**
 
-- single request- single response
-- single request - streaming response
-- streaming request - single response
-- streaming request - streaming response
+```yaml
+# Sample directory structure : 
+
+stub/
+	- config/
+		- mappings.yaml
+		- greet/
+			- default.js.yaml
+      - rohit.js.yaml
+      - virat.js.yaml
+		- prices/
+    	- defualt.js.yaml
+    - common/
+    	- message/js.yml
+```
 
 
 
