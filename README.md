@@ -2,29 +2,51 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 
 
-Todo 
+### Todo 
+
+- [ ] Add manual
+- [ ] All api types
+  - [ ] streaming request
+  - [ ] both-way-streaming
+- [ ] Saxo Setup
+  - [ ] npm install on saxo
+  - [ ] build node docker image
+  - [ ] record and playback with prices services
+- [ ] test with complex protofile definitions for complex (includes proto file). e.g. saxo
+- [ ] use numbers in yaml file (fix proto reader)
+- [ ] list of values (enums)
+- [ ] custom matchers
+- [ ] custom script in mapping file
+- [ ] custom script with empty body
+- [ ] templating language
+- [ ] include partial templates
+- [ ] read response only when required (do not keep in memory)
+- [ ] add flag to limit number for responses to capture
+- [ ] add config file
+- [ ] add session initialization file
+- [ ] handle sessions
+- [ ] make keyword configurable
+- [ ] handle when no matcher are found for a request.
+
+
+
+### Done
 
 - [x] Define matchers definition `js.yaml`
 - [x] e2e tests
 - [x] create mapping file reader
-- [ ] create dynamic client from endpoint
-  - [ ] for unary
-  - [ ] for streaming client
-- [ ] run recorder
-- [ ] define model 
-- [ ] run and check on windows.
-- [ ] handle when no matcher are foudn for a request.
-- [ ] run with node 10.
+- [x] create dynamic client from endpoint
+  - [x] for unary
+  - [x] for streaming client
+- [x] run recorder
+- [x] define model 
+- [ ] ~~run with node 10.~~
 - [x] Create matchers from json
   - [x] for flat object with static fields
   - [x] for flat object with matchers
     - [x] `@any`
     - [x] `@any!`
     - [x] ~~`@ignoreOther`~~
-    - [ ] list of values
-    - [ ] custom matchers
-    - [ ] custom script
-    - [ ] custom script with empty body
     - [x] ~~js regex~~
   - [ ] ~~for nested objects~~
   - [ ] ~~for arrays~~
@@ -49,272 +71,240 @@ Todo
   - [x] request is streamin ?
   - [x] response is streamin ?
   - [x] endpoint name.
-- [ ] add jest
-- [ ] print protofile definitions with proto packages
-- [ ] print protofile definitions for complex (includes proto file). e.g. saxo
-- [ ] read a directory of proto files
-- [ ] generate a dynamic handler for each endpoint in each proto file and return random data 
-- [ ] add a streaming endpoint
-- [ ] Use this to analyze the dynamically generated client components : https://esprima.org/
+- [x] add jest
+- [x] print protofile definitions with proto packages
+- [x] read a directory of proto files
+- [x] generate a dynamic handler for each endpoint in each proto file and return random data 
+- [x] add a streaming endpoint
+- [x] ~~Use this to analyze the dynamically generated client components : https://esprima.org~~
 
 
 
-### Loading and analyzing proto files
-
-```
-npm install --save @grpc/proto-loader
-```
-
-```javascript
-var protoLoader = require('@grpc/proto-loader');
-var protofilePath =  './protos/greet.proto';
-var protoFile = protoLoader.loadSync(
-    protofilePath,
-    {keepCase: true,
-     longs: String,
-     enums: String,
-     defaults: true,
-     oneofs: true
-    });
-
-Object.keys(protoFile)
-// [ 'greet.Greeter', 'greet.HelloRequest', 'greet.HelloReply' ]
-
-Object.keys(protoFile['greet.Greeter'])
-// [ 'SayHello' ]
-
-protoFile['greet.Greeter'].SayHello
-/*
-{
-  SayHello: {
-    path: '/greet.Greeter/SayHello',
-    requestStream: false,
-    responseStream: false,
-    requestSerialize: [Function: serialize],
-    requestDeserialize: [Function: deserialize],
-    responseSerialize: [Function: serialize],
-    responseDeserialize: [Function: deserialize],
-    originalName: 'sayHello',
-    requestType: {
-      format: 'Protocol Buffer 3 DescriptorProto',
-      type: [Object],
-      fileDescriptorProtos: [Array]
-    },
-    responseType: {
-      format: 'Protocol Buffer 3 DescriptorProto',
-      type: [Object],
-      fileDescriptorProtos: [Array]
-    }
-  }
-}
-*/
-
-protoFile['greet.HelloRequest']
-/*
-{
-  format: 'Protocol Buffer 3 DescriptorProto',
-  type: {
-    field: [ [Object] ],
-    nestedType: [],
-    enumType: [],
-    extensionRange: [],
-    extension: [],
-    oneofDecl: [],
-    reservedRange: [],
-    reservedName: [],
-    name: 'HelloRequest',
-    options: null
-  },
-  fileDescriptorProtos: [
-    <Buffer 0a 0b 67 72 65 65 74 2e 70 72 6f 74 6f 12 05 67 72 65 65 74 22 1c 0a 0c 48 65 6c 6c 6f 52 65 71 75 65 73 74 12 0c 0a 04 6e 61 6d 65 18 01 20 01 28 09 ... 102 more bytes>
-  ]
-}
-*/
-
-protoFile['greet.HelloReply']
-/*
-{
-  format: 'Protocol Buffer 3 DescriptorProto',
-  type: {
-    field: [ [Object] ],
-    nestedType: [],
-    enumType: [],
-    extensionRange: [],
-    extension: [],
-    oneofDecl: [],
-    reservedRange: [],
-    reservedName: [],
-    name: 'HelloReply',
-    options: null
-  },
-  fileDescriptorProtos: [
-    <Buffer 0a 0b 67 72 65 65 74 2e 70 72 6f 74 6f 12 05 67 72 65 65 74 22 1c 0a 0c 48 65 6c 6c 6f 52 65 71 75 65 73 74 12 0c 0a 04 6e 61 6d 65 18 01 20 01 28 09 ... 102 more bytes>
-  ]
-}
-*/
-
-// Get all services 
-Object.values(protoFile).filter(isService).reduce((group, thiz) => {
-    return [...group, ...Object.values(thiz)]
-}, []);
-```
+# Blueprint
 
 
 
-```js
-//Get service from protofile 
-var protoLoader = require('@grpc/proto-loader');
+### Installation
 
-var loadServices = (protoFilePath) => {
-  const protofile = protoLoader.loadSync(
-    protoFilePath,
-    {keepCase: true,
-      longs: String,
-      enums: String,
-      defaults: true,
-      oneofs: true
-    });
-  var isService = member => ! member.format;
+- Run as node module
 
-  return Object.values(protofile).filter(isService).reduce((group, thiz) => {
-    return [...group, ...Object.values(thiz)]
-  }, []);
-}
+  ```bash
+  # Run with default options
+  npx miraje 
+  
+  # Server mappings from config directory
+  npx miraje -port 3000 -host 0.0.0.0 -config ./config -protos ./protos
+  
+  # Record and save responses from remote to ./config/recoding@ 
+  npx miraje -port 3000 -host 0.0.0.0 -config ./config -protos ./protos -recording -remotehost: 0.0.0.0 remoteport: 8080
+  ```
 
-loadServices('./protos/greet.proto');
-```
+  Default values : 
+
+  - config : `./config`
+  - protos : `./protos`
+  - port : `5055`
+  - host : `0.0.0.0`
+
+  
+
+- Run as docker image
+
+  ```bash
+  # Server mappings from /path/to/config directory
+  docker run -p 3000:80 -v /path/to/config:/config saxolab/miraje -host 0.0.0.0 -protos ./protos
+  
+  # Record and save responses from remote to /path/to/config/recoding@ 
+  docker run -p 3000:80 -v /path/to/config:/config saxolab/miraje -host 0.0.0.0 -recording -remotehost: 0.0.0.0 remoteport: 8080 -protos ./protos
+  ```
+
+- Install as node module and use api in node tests
+
+  ```bash
+  npm install --save miraje
+  ```
+
+	Run in player mode: 
+  ```javascript
+  const app = require('miraze/app');
+  
+  // Server mappings from /path/to/config directory
+  const parameters = {
+    host : "0.0.0.0",
+    port : "3000",
+    configPath : `${process.cwd()}/config`,
+    protosPath : `${process.cwd()}/protos`,
+  };
+  
+  app.run(parameters);
+  ```
+
+  Run in recorder mode
+
+  ```javascript
+  const app = require('miraze/app');
+  
+  // run in recoding mode
+  const parameters = {
+    host : "0.0.0.0",
+    port : "50054",
+    configPath : `${process.cwd()}/tests/fixtures/config`,
+    protosPath : `${process.cwd()}/tests/fixtures/protos`,
+    recording: true,
+    remoteHost : "localhost",
+    remotePort : "3000"
+  };
+  
+  app.run(parameters);
+  ```
 
 
 
-### Finding
 
-- service protobuf memtber also contains the request and response.
+Kinds of gRPC API supported
 
-
-
-### Dynamic gRPC endpoint
-
-```
-npm install --save grpc
-```
+- single request- single response
+- single request - streaming response
+- streaming request - single response
+- streaming request - streaming response
 
 
 
-```javascript
+### Configurations
 
-var grpc = require('grpc');
-var protoLoader = require('@grpc/proto-loader');
-var protofilePath =  './protos/greet.proto';
-var protoFile = protoLoader.loadSync(
-    protofilePath,
-    {keepCase: true,
-     longs: String,
-     enums: String,
-     defaults: true,
-     oneofs: true
-    });
+Configuration file shoud be placed in the `config` dir and named as `config.yaml`
 
-var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
-function sayHello(call, callback) {
-  callback(null, {message: 'Hello ' + call.request.name});
-}
-
-var server = new grpc.Server();
-server.addService(hello_proto.Greeter.service, {sayHello: sayHello});
-server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
-server.start();
-```
-
-
-
-```bash
-npx miraje -host 0.0.0.0 -port 3002 -config ./config -protos ../src/protos
-```
-
-
-
-|                  | Map by protofile                                             | Map by procedure path                                        |
-| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Example          | `protofile: $proto/greet.proto`                              | `procedure : package.service.methodname`                     |
-| Ease of creation | very simple, but user will still have to read through the protobuf if creating there own response defintion | Needs user to look into proto files and understand before defining results |
-| recording        |                                                              | even for procudure path we can generate mapping while recording |
-| integritiy       | can cause issues and complexity for smartly matching a request by file type only | **ROBUST**                                                   |
-
-### Config file
+Example of a cofiguration file : 
 
 ```yaml
-# Profile file path relative to proto home
-# proto home passed as runtimg parameter
-# protofile: $proto/greet.proto
+sessionEnabled : true
+keywordSuffix : '@'
+trimStreaming : 10
+```
 
 
-# Mapping files are applied in specified order 
-# till there is a match
-package.service.methodname : [
-	"greet/rohit.js.yaml",
+
+| Name              | default        |                                                              |
+| ----------------- | -------------- | ------------------------------------------------------------ |
+| expressionSymbols | `["{{", "}}"]` | e.g `{{request.body.name}}`                                  |
+| sessionEnabled    | `true`         |                                                              |
+| keywordSuffix     | `/^@/`         | ends with `@`                                                |
+| trimStreaming     | 10             | number for responses for a streaming server to keep in mappings file. Will repeast the responses unless configured otherwise per request basis. |
+
+
+
+### Defining Mappings
+
+To define a stubbed grpc endpoint, first update the `config/mappings.yaml` in config directory
+
+```yaml
+# Name of endpoint and response rules in order
+helloworld.greet.Greeter.SayHello : [
+  "greet/rohit.js.yaml",
   "greet/virat.js.yaml",
   "greet/default.js.yaml",
 ]
 
-# any number for related/unreleated methods names in a single mapping file
-package.service.methodname2 : [
-  "common/message.js.yaml",
+prices.streaming.Pricing.Subscribe : [
+  "prices/211-Stock.js.yaml",
 ]
-
-# intial value of session (should be seprate file ?)
-session: {
-	knonwnUsers: [{id: "hello", token: "abc"}],
-}
 ```
 
-- defined in `config` dir passed at runtime (directly inside it)
-
-```yaml
-# Sample directory structure : 
-
-stub/
-	- config/
-		- mappings.yaml
-		- greet/
-			- default.js.yaml
-      - rohit.js.yaml
-      - virat.js.yaml
-		- prices/
-    	- defualt.js.yaml
-    - common/
-    	- message/js.yml
-```
+Remember that the responses are applied in the order declared in mappings file. So if `  "greet/rohit.js.yaml"` matches the request, the response will be returned based on this file.
 
 
 
-### A sample matcher definition
+### Define responses
 
-Matcher keywords
-
-|         |                            |      |
-| ------- | -------------------------- | ---- |
-| `any@`  | Any value (including null) |      |
-| `any!@` | Any non null value         |      |
-|         |                            |      |
-|         |                            |      |
-
-For complex stuff, like a tar array should container a field that starts with _, use the script part.
+A simple unary request : 
 
 ```yaml
 request@ : {
-	ignoreOther@ : true # ignore fields in data not defined here
-	name    : "any@"    # any string value 
-  lastName: /^Singh/  # regex field
-  age     : "any@"    # any integer value
-  location: "India"   # fixed value  
-  address : {
-  	city  : 'varanasi' # fixed nested object 
-		pin   : "any@"     # nested directive
-  },
-  header@ : {
-  	token : 'any!@',  # any value but not null
-  }
-  # applied if rest of body matches
+  name: "rohit"
+}
+
+response@ : {
+  message : "Hello Rohit"
+}
+```
+
+For a streaming response : 
+
+```yaml
+# prices/211-Stock.js.yaml
+request@ : {
+  uic: 211,
+  assetType: "Stock"
+}
+
+# Response for a streaming request
+response@ : {
+  "stream@"  : [
+    {quote: "quote:one"}, 
+    {quote: "quote:two"}, 
+    {quote: "quote:three"}
+  ]
+}
+```
+
+
+
+### Using matchers and templates
+
+For some endpoint, it is must to have part of response based on request body. In such case we can use the template : 
+
+```yaml
+# Responds to any request
+request@ : {
+  name: "any@"
+}
+
+# Using expressions in response
+response@ : {
+  message : "Glad to meet you {{request.body.name}}"
+}
+```
+
+
+
+### Including templates
+
+If your response is extremly complex and you need to parameterize certaion parts of it, you can use partial templates. E.g. 
+
+```yaml
+request@: {
+  uic: 211,
+  assetType: "Stock"
+}
+
+reply@: {
+  stream@: [
+    { message: "this is your first message"},
+    { message: "this is your second message"},
+  
+    {
+    	# path is relative to config directory
+      include@: "shared/message-template.js.yaml",
+      param@: {username: "{{request.body.name}}"}
+    },
+    
+  ],
+  repeat@: false
+}
+```
+
+
+
+### Scripting in templates
+
+You can add custom script to handle complex scnarios : 
+
+```yaml
+request@ : {
+	name    : "any@"    
+  lastName: "Singh"  
+  # applied only if rest of body matches
+  # template ignored if it return false
   js@: `
   	return request.matches && request.body.age > 18 
   `
@@ -323,45 +313,92 @@ request@ : {
 
 
 
-Matchers algorithm
+You can even write your own code to create responses dynamically using javascript : 
 
-```typescript
-interface Matcher{
-  MatchResult match(Any data)
-};
-  
-class MatchResult {
-  bool success;
-  Matcher[] next;
+```yaml
+request@: {
+  stream@: [
+  {name: "first-user"},
+  {name: "second-user"},
+  ]
 }
 
-
-
-const reducer = (objectMatchers, request) => {
-  return objectMatchers.find(m => reduce(m, request));
-};
-
-const reduce = (matcher, data) => {
-	let matchers = [{matcher, data}];
-  while(matchers.length){
-    const netxt = matchers.pop();
-    const result = netxt.match(netxt.data);
-    if(result.failed){
-      return false;
+@reply: {
+  stream@: {
+    js@: "
+      endpoint.calls = endpoint.calls  || 0;
+      endpoint.calls++;
+      
+      scope.calls = scope.calls  || 0;
+      scope.calls++;
+      
+      var message = `
+        hello : ${request.body.name},
+        total calls to this endpoint : ${endpoint.calls},
+        total replies by this rule : ${scope.calls},
+        sequence in stream : ${stream.$index}`;
+      
+      return {message};
+    "
     }
-    matchers = [...result.nextMatchers];
   }
-  return true;
-};
+```
 
+
+
+### Extensions
+
+You can write your own javascript code to add custom logic to templates. Create a directory `config/ext` and simply put you javascript file there. 
+
+
+
+### Create custom matchers 
+
+To create custom matcher, create a file ``config/ext /asset-types.js` as : 
+
+```javascript
+const matchers = require('miraje/matchers');
+
+const validAssetTypes = ['Stock', 'CfdOnFutures', 'FxSpot'];
+
+module.exports = {
+	appliesTo : (str) => str === 'assetTypes@',
+  matches   : (value) => validAssetTypes.includes(value)
+}
+```
+
+
+
+### Sessions
+
+In case you wan't to build a stateful stub (not recommened), you can use sessions.  To enable sessions make sure that`sessionEnabled: true` is set in`config/config.yaml`
+
+Then you can use sessions in your matchers or templates : 
+
+```yaml
+request@: {
+  name: 'rohit'
+}
+
+@reply: {
+  stream@: {
+    response: {
+      message: 'You called me {{session[request.name]}} times.'
+    }
+    js@: '
+      session[request.name] = session[request.name] || 0;
+      session[request.name] += session[request.name]; 
+    '
+    }
+  }
 ```
 
 
 
 
 
-In Future : 
+### Roadmap
 
+- [ ] Test with prices service at saxo
 - [ ] Add Oauth
-- [ ] Add certificates 
-- [ ] Add dynamic client and start recording 
+- [ ] Add MTLS
