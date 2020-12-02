@@ -25,6 +25,8 @@ package helloworld.greet;
 service Greeter {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
+  // This is not implemented in config
+  rpc StaySilent (HelloRequest) returns (HelloReply) {}
 }
 
 // The request message containing the user's name.

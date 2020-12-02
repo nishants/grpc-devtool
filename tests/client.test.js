@@ -19,7 +19,7 @@ const parameters = {
 describe('client.js', () => {
   let closeApp;
   let client;
-  const helloWorldEndpoint = analyzer.readProto(helloProto).pop();
+  const helloWorldEndpoint = analyzer.readProto(helloProto).find(e => e.getName() === "SayHello");
   const pricesEndpoint = analyzer.readProto(pricesProto).pop();
 
   beforeAll(async () => {

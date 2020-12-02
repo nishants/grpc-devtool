@@ -10,7 +10,7 @@ const url = `${host}:${port}`;
 describe('server.test.js', () => {
   let service ;
   const responses = {};
-  const helloWorldEndpoint = analyzer.readProto(helloProto).pop();
+  const helloWorldEndpoint = analyzer.readProto(helloProto).find(e => e.getName() === "SayHello");
   const pricesEndpoint = analyzer.readProto(pricesProto).pop();
 
   const endpointResponder = {
@@ -23,13 +23,7 @@ describe('server.test.js', () => {
 
   beforeAll(() => {
     service = server.create({host, port, endpointResponder});
-    const handler = (context, send, endpoint) => {
-      responses[endpoint.getId()](context, send)
-    };
-
-    service.add(helloWorldEndpoint);
-    service.add(pricesEndpoint);
-
+    service.addEndpoints([helloWorldEndpoint, pricesEndpoint]);
     service.start();
   });
 

@@ -8,19 +8,30 @@ module.exports = {
     server.bind(`${host}:${port}`, grpc.ServerCredentials.createInsecure());
 
     return {
-      add : (endpoint) => {
-        const definition = grpc.loadPackageDefinition(endpoint.getLoadedProto());
-        const procedure = getPathFromObject({object: definition, path: endpoint.getService()});
+      addEndpoints: (endpoints) => {
+        const services = {};
+        endpoints.forEach(endpoint => {
+          const definition = grpc.loadPackageDefinition(endpoint.getLoadedProto());
+          const procedure = getPathFromObject({object: definition, path: endpoint.getService()});
 
+          const requestHandler = async (call, callback) => {
+            const response = await endpointResponder.getResponse(endpoint.getId(), call);
+            const responseSender = getHandlerFor(endpoint);
+            await responseSender(response)(call, callback);
+          };
 
-        const requestHandler = async (call, callback) => {
-          const response = await endpointResponder.getResponse(endpoint.getId(), call);
-          const responseSender = getHandlerFor(endpoint);
-          await responseSender(response)(call, callback);
-        };
+          const methodName = endpoint.getName();
 
-        const methodName = endpoint.getName();
-        server.addService(procedure.service, {[methodName]: requestHandler});
+          services[endpoint.getService()] = services[endpoint.getService()] || {service : null, methods: {}};
+          services[endpoint.getService()].methods[methodName] = requestHandler;
+          services[endpoint.getService()].service = procedure.service;
+        });
+
+        Object.keys(services).forEach (service => {
+          console.log("Adding endpoint : ", services[service])
+          server.addService(services[service].service, services[service].methods);
+        });
+        // server.addService(procedure.service, {[methodName]: requestHandler});
       },
       start: () => {
         server.start();

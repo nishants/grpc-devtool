@@ -51,11 +51,7 @@ module.exports = {
 
    const endpointResponder = recording ?  endpointRecordAndResponder : endpointTemplateResponder
    const server = Server.create({host, port, endpointResponder});
-
-   endpoints.forEach(endpoint => {
-     server.add(endpoint);
-   })
-
+    server.addEndpoints(endpoints);
     server.start();
 
    return () => server.stop();

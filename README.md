@@ -8,7 +8,21 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 ### Todo 
 
-- [ ] Add manual
+- [ ] Load proto files once only
+
+- [ ] Add test for service with multiple procedures
+
+- [ ] Add test for proto with mutilple services
+
+- [ ] Create configuration files
+
+  - [ ] read from `cwd` by default
+  - [ ] ovewrite with arguments
+  - [ ] allow proto file path relative to current directory
+
+- [ ] trim streaming responses by config
+
+- [ ] publish npm module
 
 - [ ] All api types
   - [ ] streaming request
@@ -71,6 +85,7 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 ### Done
 
+- [x] create blueprint
 - [x] Define matchers definition `js.yaml`
 - [x] e2e tests
 - [x] create mapping file reader
