@@ -29,6 +29,14 @@ service Greeter {
   rpc StaySilent (HelloRequest) returns (HelloReply) {}
 }
 
+// This is not implemented in config
+service UnimplementedService {
+  // This is not implemented in config
+  rpc Unimplemented (HelloRequest) returns (HelloReply) {}
+  // This is not implemented in config
+  rpc Unimplemented2 (HelloRequest) returns (HelloReply) {}
+}
+
 // The request message containing the user's name.
 message HelloRequest {
   string name = 1;
