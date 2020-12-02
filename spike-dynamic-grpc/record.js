@@ -8,8 +8,8 @@ const parameters = {
   configPath : `${process.cwd()}/tests/fixtures/config`,
   protosPath : `${process.cwd()}/tests/fixtures/protos`,
   recording: true,
-  remoteHost : "0.0.0.0",
-  remotePort : "50053"
+  remoteHost : "localhost",
+  remotePort : "3000"
 };
 
 app.run(parameters);
