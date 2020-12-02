@@ -5,27 +5,62 @@ Refer : https://grpc.io/docs/languages/node/basics/
 ### Todo 
 
 - [ ] Add manual
+
 - [ ] All api types
   - [ ] streaming request
   - [ ] both-way-streaming
+  
 - [ ] Saxo Setup
   - [ ] npm install on saxo
   - [ ] build node docker image
   - [ ] record and playback with prices services
+  
+- [ ] Analysis 
+
+  - [ ] doc review
+  - [ ] spoofing
+  - [ ] edge cases
+
+- [ ] Tech debt
+
+  - [ ] build with azure devops
+  - [ ] auto publish to npmjs.com (on release branches)
+  - [ ] auto publish docker images(on release and master branches)
+  - [ ] code coverage
+  - [ ] prettier
+  - [ ] linter
+  - [ ] typescript migration ??
+
+  
+
 - [ ] test with complex protofile definitions for complex (includes proto file). e.g. saxo
+
 - [ ] use numbers in yaml file (fix proto reader)
+
 - [ ] list of values (enums)
+
 - [ ] custom matchers
+
 - [ ] custom script in mapping file
+
 - [ ] custom script with empty body
+
 - [ ] templating language
+
 - [ ] include partial templates
+
 - [ ] read response only when required (do not keep in memory)
+
 - [ ] add flag to limit number for responses to capture
+
 - [ ] add config file
+
 - [ ] add session initialization file
+
 - [ ] handle sessions
+
 - [ ] make keyword configurable
+
 - [ ] handle when no matcher are found for a request.
 
 
