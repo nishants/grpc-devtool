@@ -1,9 +1,0 @@
-request@ : {
-  #TODO : currenlty numbers are treated like strings in defintion
-  uic: "211",
-  assetType: "Stock"
-}
-
-response@ : {
-  "stream@"  : [{quote: "quote:one"}, {quote: "quote:two"}, {quote: "quote:three"}]
-}
