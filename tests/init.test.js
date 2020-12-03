@@ -15,6 +15,13 @@ describe('init project', () => {
     await init.create({outputDir, protosPath});
   });
 
+  test('should create config.yaml file with default values', async () => {
+    const expected = {};
+    const actual = await readYamlFile(path.join(outputDir, 'config', 'config.yaml'));
+
+    expect(actual).toEqual(expected);
+  });
+
   test('should create mappings file', async () => {
     expect(fs.existsSync(expectedMappingFile)).toBe(true);
   });
@@ -118,5 +125,4 @@ describe('init project', () => {
 
     expect(actualContent).toEqual(expectedContent);
   });
-
 });

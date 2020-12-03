@@ -6,6 +6,10 @@ const templateGenerator = require('./templateGenerator');
 
 const {writeYaml, writeFile} = require('../utils/files');
 
+const defaultConfig = {
+
+};
+
 module.exports = {
   create: async ({outputDir, protosPath}) => {
     const configPath = path.join(outputDir, 'config');
@@ -20,6 +24,7 @@ module.exports = {
       await writeFile(path.join(configPath, endpoint.getId()), 'default.yaml', template);
     }
 
+    await writeYaml(configPath, 'config.yaml', defaultConfig);
     await writeYaml(configPath, 'mappings.yaml', mappings);
   }
 };
