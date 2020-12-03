@@ -36,6 +36,10 @@ const readYamlFileInDir = (dir, filePath) => {
   return readTextFile(path.join(dir, filePath)).then(data => yaml.parse(data));
 };
 
+const writeYaml = (dir, file, content) => {
+  return writeFile(dir, file, yaml.stringify(content, {indent: 2}));
+};
+
 const writeFile = (dir, file, content) => {
   return new Promise((resolve, reject) => {
     fs.mkdir(dir, { recursive: true }, (error) => {
@@ -67,5 +71,6 @@ module.exports = {
   readYamlFile,
   readYamlFileInDir,
   writeFile,
-  createTempDir
+  createTempDir,
+  writeYaml
 };

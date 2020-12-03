@@ -19,11 +19,22 @@ describe('init project', () => {
     expect(fs.existsSync(expectedMappingFile)).toBe(true);
   });
 
-  test('should add entries for all endpoints in mappings file ', async () => {
+  test('should add all endpoints in mappings file ', async () => {
+    const expectedMappings = [
+      'greet.Greeter.SayHello',
+      'helloworld.greet.Greeter.SayHello',
+      'helloworld.greet.Greeter.StaySilent',
+      'helloworld.greet.UnimplementedService.Unimplemented',
+      'helloworld.greet.UnimplementedService.Unimplemented2',
+      'prices.streaming.Pricing.Subscribe',
+      'prices.streaming.Pricing.TwoWaySubscribe'
+    ];
+
     const mappings = await readYamlFile(expectedMappingFile);
 
     const endpointsMapped = Object.keys(mappings);
 
-    expect(endpointsMapped).toEqual([]);
+
+    expect(endpointsMapped).toEqual(expectedMappings);
   });
 });
