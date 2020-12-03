@@ -47,4 +47,15 @@ describe('app.js', () => {
     const actual = await client.readPricesStream({uic: 211, assetType: 'Stock'});
     expect(actual).toEqual(expected);
   });
+
+  test('should tream two way stream as server streaming endpoint', async () => {
+    const responeOne    = {quote: "message:one"};
+    const responseTwo   = {quote: "message:two"};
+    const responseThree = {quote: "message:three"};
+
+    const expected = [responeOne, responseTwo, responseThree];
+
+    const actual = await client.readTwoWayStream({uic: 211, assetType: 'Stock'});
+    expect(actual).toEqual(expected);
+  });
 });

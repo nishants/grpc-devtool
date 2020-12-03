@@ -38,11 +38,30 @@ module.exports = {
       }
     };
 
+    const waitForFirstClientStream = (callContext, endpointId) => {
+      // TODO Full handler for client stream
+      // Currently only first message considered
+      return new Promise((resolve, reject) => {
+        callContext.on('data', resolve);
+        callContext.on('end', () => {
+          console.error(`Empty response received from client at ${endpointId}`);
+          resolve({});
+        });
+      });
+    };
+
     const endpointTemplateResponder = {
       getResponse: async (endpointId, callContext) => {
-        const responseFile = resolver.getResponseFile(endpointId, callContext.request);
+        const endpoint = endpoints.find(e => e.getId() === endpointId);
+        let request = callContext.request;
+
+        if(endpoint.isStreamingRequest()){
+          request = await waitForFirstClientStream(callContext, endpointId);
+        }
+
+        const responseFile = resolver.getResponseFile(endpointId, request);
         if(!responseFile){
-          // TODO Check fo recording mode and invoke recorder
+          // TODO Check for recording mode and invoke recorder
           return null;
         }
         return compileResponseFile(responseFile, callContext);

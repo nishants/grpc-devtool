@@ -1,0 +1,8 @@
+request@ : {
+  uic: "any!@",
+  assetType: "any!@"
+}
+
+response@ : {
+  "stream@"  : [{quote: "message:one"}, {quote: "message:two"}, {quote: "message:three"}]
+}

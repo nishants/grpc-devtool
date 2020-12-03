@@ -28,7 +28,6 @@ module.exports = {
         });
 
         Object.keys(services).forEach (service => {
-          console.log("Adding endpoint : ", services[service])
           server.addService(services[service].service, services[service].methods);
         });
         // server.addService(procedure.service, {[methodName]: requestHandler});

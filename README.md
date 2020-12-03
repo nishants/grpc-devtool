@@ -14,11 +14,23 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 - [ ] Add test for proto with mutilple services
 
-- [ ] Create configuration files
+- [x] Create configuration files
 
-  - [ ] read from `cwd` by default
-  - [ ] ovewrite with arguments
-  - [ ] allow proto file path relative to current directory
+  - [x] read from `cwd` by default
+  - [x] ovewrite with arguments
+  - [x] allow proto file path relative to current directory
+
+- [ ] Test and Refactor commands
+
+- [ ] Add streaming config
+
+  - [ ] delay
+  - [ ] interval
+
+- [ ] Add both-way streaming
+
+  - [ ] simple exmple with bloom
+  - [ ] add test
 
 - [ ] trim streaming responses by config
 

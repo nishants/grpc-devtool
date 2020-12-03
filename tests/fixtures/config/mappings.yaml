@@ -7,3 +7,7 @@ helloworld.greet.Greeter.SayHello : [
 prices.streaming.Pricing.Subscribe : [
   "prices/211-Stock.js.yaml",
 ]
+
+prices.streaming.Pricing.TwoWaySubscribe : [
+  "prices/two-way-stream.js.yaml",
+]

@@ -8,6 +8,7 @@ option csharp_namespace = "Service";
 service Pricing {
   // Note that it returns "stream" of PriceResponse
   rpc Subscribe (PriceRequest) returns (stream PriceResponse);
+  rpc TwoWaySubscribe (stream PriceRequest) returns (stream PriceResponse);
 }
 
 // The request message
