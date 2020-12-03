@@ -26,18 +26,6 @@ module.exports = {
      return response.compile();
    };
 
-    const endpointRecordAndResponder = {
-      getResponse: async (endpointId, callContext) => {
-        const endpoint = endpoints.find(e => e.getId() === endpointId);
-        const response = await client.execute({endpoint, request: callContext.request});
-        console.log("Proxying response : ", response);
-        // TODO handling streaming response :
-        const responseTemplate = endpoint.isStreamingResponse() ? {"stream@" : response.stream} : response;
-        recorder.save({endpointId, request: callContext.request, response : responseTemplate});
-        return response;
-      }
-    };
-
     const waitForFirstClientStream = (callContext, endpointId) => {
       // TODO Full handler for client stream
       // Currently only first message considered
@@ -48,6 +36,22 @@ module.exports = {
           resolve({});
         });
       });
+    };
+
+    const endpointRecordAndResponder = {
+      getResponse: async (endpointId, callContext) => {
+        const endpoint = endpoints.find(e => e.getId() === endpointId);
+        let request = callContext.request;
+        if(endpoint.isStreamingRequest()){
+          request = await waitForFirstClientStream(callContext, endpointId);
+        }
+        const response = await client.execute({endpoint, request});
+        console.log("Proxying response : ", response);
+        // TODO handling streaming response :
+        const responseTemplate = endpoint.isStreamingResponse() ? {"stream@" : response.stream} : response;
+        recorder.save({endpointId, request: callContext.request, response : responseTemplate});
+        return response;
+      }
     };
 
     const endpointTemplateResponder = {

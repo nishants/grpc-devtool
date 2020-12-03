@@ -4,6 +4,7 @@ const {getPathFromObject} = require('../../src/utils/objects');
 const {
   Unary,
   ServerStreaming,
+  BothWayStreaming,
   getType
 } = require('../proto/EndpointTypes');
 
@@ -35,7 +36,26 @@ const clientTypeHandlers = {
         reject({data, error});
       });
     });
+  },
+  [BothWayStreaming] : ({endpointClient, request, endpoint})=> {
+    return new Promise((resolve, reject) => {
+      const data = [];
+      const call = endpointClient[endpoint.getName()]();
+      call.write(request);
+      call.on('data', function(response) {
+        data.push(response);
+      });
+
+      call.on('end', function() {
+        resolve({stream: data});
+      });
+
+      call.on('error', function(error) {
+        reject({data, error});
+      });
+    });
   }
+
 };
 
 module.exports = {

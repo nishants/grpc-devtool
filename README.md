@@ -31,6 +31,8 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 - [ ] fix tests : mulitple endpoint and need to find
 
+- [ ] why initial bad stream when recording ?
+
 - [ ] Add both-way streaming
 
   - [x] simple exmple with bloom
