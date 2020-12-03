@@ -17,7 +17,7 @@ const getHandlerFor = (endpoint) => {
         return call.end();
       }
       const responses = [...response.stream];
-      const streamingDelay = response.streamDelay || DEFAULT_STREAMING_DELAY;
+      const streamingDelay = typeof response.streamDelay === 'undefined' ? DEFAULT_STREAMING_DELAY : response.streamDelay;
       let keepStreaming = !response.doNotRepeat ;
 
       if(keepStreaming){
