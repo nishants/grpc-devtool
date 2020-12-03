@@ -97,7 +97,20 @@ describe('init project', () => {
         "name": "@any"
       },
       'response@': {
-        "message": "string"
+        "bytes": "YWJjMTIzIT8kKiYoKSctPUB+",
+        "double": "2.3",
+        "fixed32": "43",
+        "fixed64": "-10",
+        "float": "3.3",
+        "int32": "7",
+        "int64": "7",
+        "sfixed32": "23",
+        "sfixed64": "32",
+        "sint32": "12",
+        "sint64": "str23ing",
+        "string": "string",
+        "uint32": "7",
+        "uint64": "7"
       }
     };
 

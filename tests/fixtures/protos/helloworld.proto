@@ -32,7 +32,7 @@ service Greeter {
 // This is not implemented in config
 service UnimplementedService {
   // This is not implemented in config
-  rpc Unimplemented (HelloRequest) returns (HelloReply) {}
+  rpc Unimplemented (HelloRequest) returns (MessageAllTypes) {}
   // This is not implemented in config
   rpc Unimplemented2 (HelloRequest) returns (HelloReply) {}
 }
@@ -45,4 +45,25 @@ message HelloRequest {
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
+}
+
+//TODO Add struct, message (reference), enum, map, repeated(array),
+// Any, Timestamp, Duration, FieldMask, Wrapper, ListValue
+// Value, NullValue, 
+message MessageAllTypes {
+  double double = 15;
+  float float = 1;
+  int32 int32 = 2;
+  int64 int64 = 3;
+  uint32 uint32 = 4;
+  uint64 uint64 = 5;
+  sint32 sint32 = 6;
+  sint64 sint64 = 7;
+  fixed32 fixed32 = 8;
+  fixed64 fixed64 = 9;
+  sfixed32 sfixed32 = 10;
+  sfixed64 sfixed64 = 11;
+  bool bool = 12;
+  string string = 13;
+  bytes bytes = 14;
 }
