@@ -44,7 +44,7 @@ module.exports = {
       return new Promise((resolve, reject) => {
         callContext.on('data', resolve);
         callContext.on('end', () => {
-          console.error(`Empty response received from client at ${endpointId}`);
+          console.warn(`Empty message received from client at ${endpointId}`);
           resolve({});
         });
       });

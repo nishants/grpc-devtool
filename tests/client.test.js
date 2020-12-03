@@ -20,11 +20,11 @@ describe('client.js', () => {
   let closeApp;
   let client;
   const helloWorldEndpoint = analyzer.readProto(helloProto).find(e => e.getName() === "SayHello");
-  const pricesEndpoint = analyzer.readProto(pricesProto).pop();
+  const subscribePricesEndpoint = analyzer.readProto(pricesProto).find(e => e.getName() === "Subscribe");
 
   beforeAll(async () => {
     closeApp = await app.run(parameters);
-    client   = await Client.create({host,port , endpoints: [helloWorldEndpoint, pricesEndpoint]});
+    client   = await Client.create({host,port , endpoints: [helloWorldEndpoint, subscribePricesEndpoint]});
   });
 
   afterAll(async () => {
@@ -39,7 +39,7 @@ describe('client.js', () => {
   test('should create unary endpoint client', async () => {
     const expected = [{quote: "quote:one"}, {quote: "quote:two"}, {quote: "quote:three"}];
 
-    const actual  = await client.execute({endpoint: pricesEndpoint, request: {uic: "211", assetType : "Stock"}});
+    const actual  = await client.execute({endpoint: subscribePricesEndpoint, request: {uic: "211", assetType : "Stock"}});
 
     expect(actual.stream).toEqual(expected);
   });

@@ -47,7 +47,7 @@ describe('endpoint.test.js', () => {
   });
 
   test('should have streaming request or reponse', () => {
-    const result = analyzer.readProto(pricesProto).pop();
+    const result = analyzer.readProto(pricesProto).find( e => e.getName() === "Subscribe");
     expect(result.isStreamingRequest()).toBe(false);
     expect(result.isStreamingResponse()).toBe(true);
   });

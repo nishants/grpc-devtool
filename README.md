@@ -10,9 +10,9 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 - [ ] Load proto files once only
 
-- [ ] Add test for service with multiple procedures
+- [x] Add test for service with multiple procedures
 
-- [ ] Add test for proto with mutilple services
+- [x] Add test for proto with mutilple services
 
 - [x] Create configuration files
 
@@ -27,9 +27,14 @@ Refer : https://grpc.io/docs/languages/node/basics/
   - [ ] delay
   - [ ] interval
 
+- [ ] remove `server.test.js`
+
+- [ ] fix tests : mulitple endpoint and need to find
+
 - [ ] Add both-way streaming
 
-  - [ ] simple exmple with bloom
+  - [x] simple exmple with bloom
+  - [ ] add client handler for recorder
   - [ ] add test
 
 - [ ] trim streaming responses by config
