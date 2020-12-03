@@ -1,6 +1,7 @@
 const glob = require('glob');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const yaml = require("yaml");
 
 const getFilesFromDir = (pattern) => {
@@ -52,9 +53,19 @@ const writeFile = (dir, file, content) => {
   });
 }
 
+const createTempDir = (name) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdtemp(path.join(os.tmpdir(), `name-${Date.now()}`), (error, dir) => {
+      if (error) return reject(error);
+      resolve(dir)
+    });
+  });
+};
+
 module.exports = {
   getFilesFromDir,
   readYamlFile,
   readYamlFileInDir,
-  writeFile
+  writeFile,
+  createTempDir
 };
