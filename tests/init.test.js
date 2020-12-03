@@ -38,4 +38,35 @@ describe('init project', () => {
     expect(endpointsMapped).toEqual(expectedMappings);
   });
 
+  test('should map all endpoints to a default.yaml', async () => {
+    const expectedMappings = {
+      'greet.Greeter.SayHello': [
+      'greet.Greeter.SayHello/default.yaml'],
+
+      'helloworld.greet.Greeter.SayHello': [
+      'helloworld.greet.Greeter.SayHello/default.yaml'],
+
+      'helloworld.greet.Greeter.StaySilent': [
+      'helloworld.greet.Greeter.StaySilent/default.yaml'],
+
+      'helloworld.greet.UnimplementedService.Unimplemented': [
+      'helloworld.greet.UnimplementedService.Unimplemented/default.yaml'],
+
+      'helloworld.greet.UnimplementedService.Unimplemented2': [
+      'helloworld.greet.UnimplementedService.Unimplemented2/default.yaml'],
+
+      'prices.streaming.Pricing.Subscribe': [
+      'prices.streaming.Pricing.Subscribe/default.yaml'],
+
+      'prices.streaming.Pricing.TwoWaySubscribe': [
+      'prices.streaming.Pricing.TwoWaySubscribe/default.yaml']
+    };
+
+    const mappings = await readYamlFile(expectedMappingFile);
+
+
+    expect(mappings).toEqual(expectedMappings);
+  });
+
+
 });
