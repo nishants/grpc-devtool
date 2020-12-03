@@ -49,7 +49,6 @@ const getHandlerFor = (endpoint) => {
   return handlerTypes[type];
 }
 
-
 module.exports = {
   getHandlerFor
 }

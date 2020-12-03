@@ -87,4 +87,23 @@ describe('init project', () => {
       expect({templateFile, exists}).toEqual({templateFile, exists: true});
     }
   });
+
+  test('should generate request and response in default templates', async () => {
+    const anEndpointId = 'helloworld.greet.UnimplementedService.Unimplemented';
+    const aGeneratedTemplateFile =  path.join(outputDir, 'config', anEndpointId, 'default.yaml');
+
+    const expectedContent = {
+      'request@': {
+        "name": "@any"
+      },
+      'response@': {
+        "message": "string"
+      }
+    };
+
+    const actualContent = await readYamlFile(aGeneratedTemplateFile);
+
+    expect(actualContent).toEqual(expectedContent);
+  });
+
 });

@@ -18,6 +18,7 @@ module.exports = {
       getName : () => protoMessage.type.name,
       getFields : () => fields,
       isStream : () => isStream,
+      getUnderlyingFields : () => protoMessage.type.field,
     };
   }
 };

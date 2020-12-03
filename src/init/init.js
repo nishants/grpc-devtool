@@ -2,8 +2,9 @@ const path = require('path');
 
 const endpointsLoader = require('../endpointsLoader');
 const protosReader = require('../protosReader');
+const templateGenerator = require('./templateGenerator');
 
-const {writeYaml} = require('../utils/files');
+const {writeYaml, writeFile} = require('../utils/files');
 
 module.exports = {
   create: async ({outputDir, protosPath}) => {
@@ -14,8 +15,9 @@ module.exports = {
     const mappings = {};
 
     for(const endpoint of endpoints){
-      await writeYaml(path.join(configPath, endpoint.getId()), 'default.yaml', {});
       mappings[endpoint.getId()] = [`${endpoint.getId()}/default.yaml`];
+      const template = templateGenerator.create(endpoint);
+      await writeFile(path.join(configPath, endpoint.getId()), 'default.yaml', template);
     }
 
     await writeYaml(configPath, 'mappings.yaml', mappings);
