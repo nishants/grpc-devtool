@@ -19,20 +19,24 @@ const typeDefaultValues = {
 
 module.exports = {
   create: (endpoint) => {
-    const request = {};
-    const response = {};
-
     const requestFields = endpoint.getRequest().getUnderlyingFields();
     const responseFields = endpoint.getResponse().getUnderlyingFields();
+
+    const request = {};
+    const responseFieldValues = {};
 
     requestFields.forEach(field => {
       request[field.name] = "@any";
     });
 
     responseFields.forEach(field => {
-      response[field.name] = typeDefaultValues[field.type];
-      console.log(field.name, field.type);
+      responseFieldValues[field.name] = typeDefaultValues[field.type];
     });
+
+    const response = endpoint.isStreamingResponse() ? {
+      'stream@' : [responseFieldValues],
+      "streamDelay@"  : 1000
+    } : responseFieldValues;
 
     const json = (data) => JSON.stringify(data, null, 2);
     const template =  `request@ : ${json(request)} ${endOfLine + endOfLine}response@ : ${json(response)}`;

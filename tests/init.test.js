@@ -102,32 +102,53 @@ describe('init project', () => {
 
   test('should generate request and response in default templates', async () => {
     const anEndpointId = 'helloworld.greet.UnimplementedService.Unimplemented';
-    const aGeneratedTemplateFile =  path.join(outputDir, 'config', anEndpointId, 'default.yaml');
+    const generatedTemplateFile =  path.join(outputDir, 'config', anEndpointId, 'default.yaml');
 
     const expectedContent = {
       'request@': {
-        "name": "@any"
+        'name': '@any'
       },
       'response@': {
-        "bytes": "YWJjMTIzIT8kKiYoKSctPUB+",
-        "double": "2.3",
-        "fixed32": "43",
-        "fixed64": "-10",
-        "float": "3.3",
-        "int32": "7",
-        "int64": "7",
-        "sfixed32": "23",
-        "sfixed64": "32",
-        "sint32": "12",
-        "sint64": "str23ing",
-        "string": "string",
-        "uint32": "7",
-        "uint64": "7"
+        'bytes': 'YWJjMTIzIT8kKiYoKSctPUB+',
+        'double': '2.3',
+        'fixed32': '43',
+        'fixed64': '-10',
+        'float': '3.3',
+        'int32': '7',
+        'int64': '7',
+        'sfixed32': '23',
+        'sfixed64': '32',
+        'sint32': '12',
+        'sint64': 'str23ing',
+        'string': 'string',
+        'uint32': '7',
+        'uint64': '7'
       }
     };
 
-    const actualContent = await readYamlFile(aGeneratedTemplateFile);
+    const actualContent = await readYamlFile(generatedTemplateFile);
 
     expect(actualContent).toEqual(expectedContent);
   });
+
+  test('should add streaming response in default template', async () => {
+    const aStreamingEndpointId = 'prices.streaming.Pricing.Subscribe';
+    const generatedTemplateFile =  path.join(outputDir, 'config', aStreamingEndpointId, 'default.yaml');
+
+    const expectedContent = {
+      'request@': {
+        assetType: '@any',
+        uic: '@any'
+      },
+      'response@': {
+        'stream@': [{quote: 'string'}],
+        'streamDelay@': 1000
+      }
+    };
+
+    const actualContent = await readYamlFile(generatedTemplateFile);
+
+    expect(actualContent).toEqual(expectedContent);
+  });
+
 });
