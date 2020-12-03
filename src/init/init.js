@@ -26,7 +26,12 @@ module.exports = {
       await writeFile(path.join(configPath, endpoint.getId()), 'default.yaml', template);
     }
 
-    await writeYaml(configPath, 'config.yaml', defaultConfig);
+    const config = {
+      ...defaultConfig,
+      protos : path.relative(configPath, protosPath)
+    };
+
+    await writeYaml(configPath, 'config.yaml', config);
     await writeYaml(configPath, 'mappings.yaml', mappings);
   }
 };

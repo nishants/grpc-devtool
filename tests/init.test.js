@@ -19,7 +19,8 @@ describe('init project', () => {
     const expected = {
       host: 'localhost',
       port: '3009',
-      streamingLoopSize: 10
+      streamingLoopSize: 10,
+      protos: path.relative(path.join(outputDir, 'config'), protosPath)
     };
 
     const actual = await readYamlFile(path.join(outputDir, 'config', 'config.yaml'));
