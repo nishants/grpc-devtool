@@ -47,8 +47,8 @@ module.exports = {
         }
         const response = await client.execute({endpoint, request, streamingLoopSize});
         console.log("Proxying response : ", response);
-        // TODO handling streaming response :
-        const responseTemplate = endpoint.isStreamingResponse() ? {"stream@" : response.stream} : response;
+        // TODO handling streaming response should go in template builder:
+        const responseTemplate = endpoint.isStreamingResponse() ? {'stream@' : response.stream, '@doNotRepeat': response.doNotRepeat} : response;
         recorder.save({endpointId, request: callContext.request, response : responseTemplate});
         return response;
       }
