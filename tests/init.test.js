@@ -37,4 +37,5 @@ describe('init project', () => {
 
     expect(endpointsMapped).toEqual(expectedMappings);
   });
+
 });
