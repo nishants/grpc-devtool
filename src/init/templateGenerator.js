@@ -35,7 +35,7 @@ module.exports = {
 
     const response = endpoint.isStreamingResponse() ? {
       'stream@' : [responseFieldValues],
-      "streamDelay@"  : 1000
+      "streamInterval@"  : 1000
     } : responseFieldValues;
 
     const json = (data) => JSON.stringify(data, null, 2);

@@ -16,7 +16,7 @@ const handleServerStreaming = ({call, streamingLoopSize, data: stream, endpoint,
     if (streamingLoopSize < stream.length) {
       console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${streamingLoopSize}.`)
       call.cancel();
-      return resolve({stream, streamDelay: minStreamTime});
+      return resolve({stream, streamInterval: minStreamTime});
     }
     minStreamTime = Math.min(minStreamTime, Date.now() - lastStreamTime);
     lastStreamTime = Date.now();
@@ -25,7 +25,7 @@ const handleServerStreaming = ({call, streamingLoopSize, data: stream, endpoint,
   });
 
   call.on('end', () => {
-    resolve({stream, doNotRepeat: true, streamDelay: minStreamTime});
+    resolve({stream, doNotRepeat: true, streamInterval: minStreamTime});
   });
 
   call.on('error', (error) => {

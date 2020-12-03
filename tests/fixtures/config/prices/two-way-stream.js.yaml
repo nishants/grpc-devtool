@@ -6,5 +6,5 @@ request@ : {
 response@ : {
   "stream@"  : [{quote: "message:one"}, {quote: "message:two"}, {quote: "message:three"}],
   "doNotRepeat@": true,
-  "streamDelay@": 0,
+  "streamInterval@": 0,
 }

@@ -13,7 +13,7 @@ module.exports = {
               return {
                 stream: response['stream@'],
                 doNotRepeat: !!response['doNotRepeat@'],
-                streamDelay: response['streamDelay@'],
+                streamInterval: response['streamInterval@'],
               }
             }
             return response;

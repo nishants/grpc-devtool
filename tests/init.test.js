@@ -142,7 +142,7 @@ describe('init project', () => {
       },
       'response@': {
         'stream@': [{quote: 'string'}],
-        'streamDelay@': 1000
+        'streamInterval@': 1000
       }
     };
 
