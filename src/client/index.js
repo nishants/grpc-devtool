@@ -9,19 +9,23 @@ const {
 } = require('../proto/EndpointTypes');
 
 const handleServerStreaming = ({call, streamingLoopSize, data: stream, endpoint, resolve, reject})  => {
+  let lastStreamTime = Date.now();
+  let minStreamTime = 1000;
+
   call.on('data', (response) => {
-    if (streamingLoopSize <= stream.length) {
+    if (streamingLoopSize < stream.length) {
       console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${streamingLoopSize}.`)
       call.cancel();
-      return resolve({stream});
+      return resolve({stream, streamDelay: minStreamTime});
     }
-    //TODO : invokes ever after resolving streamingLoopSize above
+    minStreamTime = Math.min(minStreamTime, Date.now() - lastStreamTime);
+    lastStreamTime = Date.now();
     console.log("Received message from remote server ", response);
     stream.push(response);
   });
 
   call.on('end', () => {
-    resolve({stream, doNotRepeat: true});
+    resolve({stream, doNotRepeat: true, streamDelay: minStreamTime});
   });
 
   call.on('error', (error) => {

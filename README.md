@@ -1,14 +1,12 @@
 # [WIP]
 
-
-
 Refer : https://grpc.io/docs/languages/node/basics/
 
 
 
 ### Todo 
 
-- [ ] Load proto files once only
+- [x] Load proto files once only
 
 - [x] Add test for service with multiple procedures
 
@@ -22,16 +20,16 @@ Refer : https://grpc.io/docs/languages/node/basics/
 
 - [ ] Test and Refactor commands
 
-- [ ] Add streaming config
+- [x] Add streaming config
 
-  - [ ] delay
-  - [ ] streamingLoopSize
-  - [ ] recorder : keep streaming back while recording till maxLoopSize
-  - [ ] set repeat false if streaming server stopped while recording
+  - [x] delay
+  - [x] streamingLoopSize
+  - [x] recorder : keep streaming back while recording till maxLoopSize
+  - [x] set repeat false if streaming server stopped while recording
 
 - [ ] e2e tests for recorder.
 
-- [ ] remove `server.test.js`
+- [x] remove `server.test.js`
 
 - [ ] fix tests : mulitple endpoint and need to find
 
@@ -44,16 +42,16 @@ Refer : https://grpc.io/docs/languages/node/basics/
 - [ ] Add both-way streaming
 
   - [x] simple exmple with bloom
-  - [ ] add client handler for recorder
-  - [ ] add test
+  - [x] add client handler for recorder
+  - [x] add test
 
-- [ ] trim streaming responses by config
+- [x] trim streaming responses by config
 
-- [ ] publish npm module
+- [x] publish npm module
 
-- [ ] All api types
-  - [ ] streaming request
-  - [ ] both-way-streaming
+- [x] All api types
+  - [x] streaming request
+  - [x] both-way-streaming
   
 - [ ] Saxo Setup
   - [ ] npm install on saxo
@@ -107,10 +105,6 @@ Refer : https://grpc.io/docs/languages/node/basics/
 - [ ] make keyword configurable
 
 - [ ] handle when no matcher are found for a request.
-
-
-
-### Done
 
 - [x] create blueprint
 - [x] Define matchers definition `js.yaml`
