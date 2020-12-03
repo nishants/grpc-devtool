@@ -68,5 +68,23 @@ describe('init project', () => {
     expect(mappings).toEqual(expectedMappings);
   });
 
+  test('should create default.yaml for all endpoints', async () => {
 
+    const expectedFilesToCreated = [
+      'greet.Greeter.SayHello',
+      'helloworld.greet.Greeter.SayHello',
+      'helloworld.greet.Greeter.StaySilent',
+      'helloworld.greet.UnimplementedService.Unimplemented',
+      'helloworld.greet.UnimplementedService.Unimplemented2',
+      'prices.streaming.Pricing.Subscribe',
+      'prices.streaming.Pricing.TwoWaySubscribe'
+    ];
+
+    for(const endpointId of expectedFilesToCreated){
+      const templateFile = path.join(outputDir, 'config', endpointId, 'default.yaml');
+      const exists = fs.existsSync(templateFile);
+
+      expect({templateFile, exists}).toEqual({templateFile, exists: true});
+    }
+  });
 });

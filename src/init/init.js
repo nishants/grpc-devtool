@@ -14,6 +14,7 @@ module.exports = {
     const mappings = {};
 
     for(const endpoint of endpoints){
+      await writeYaml(path.join(configPath, endpoint.getId()), 'default.yaml', {});
       mappings[endpoint.getId()] = [`${endpoint.getId()}/default.yaml`];
     }
 
