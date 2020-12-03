@@ -16,7 +16,12 @@ describe('init project', () => {
   });
 
   test('should create config.yaml file with default values', async () => {
-    const expected = {};
+    const expected = {
+      host: 'localhost',
+      port: '3009',
+      streamingLoopSize: 10
+    };
+
     const actual = await readYamlFile(path.join(outputDir, 'config', 'config.yaml'));
 
     expect(actual).toEqual(expected);

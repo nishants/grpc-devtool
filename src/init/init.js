@@ -7,7 +7,9 @@ const templateGenerator = require('./templateGenerator');
 const {writeYaml, writeFile} = require('../utils/files');
 
 const defaultConfig = {
-
+  host: 'localhost',
+  port: '3009',
+  streamingLoopSize: 10
 };
 
 module.exports = {
