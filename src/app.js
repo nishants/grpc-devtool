@@ -8,7 +8,7 @@ const Client = require('./client');
 const Recorder = require('./endpointRecorder');
 
 module.exports = {
-  run : async ({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort}) => {
+  run : async ({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, streamingLoopSize}) => {
    console.log('Starting with configuration : ');
    console.log({host, port, configPath, protosPath, extensionsPath});
 
@@ -45,7 +45,7 @@ module.exports = {
         if(endpoint.isStreamingRequest()){
           request = await waitForFirstClientStream(callContext, endpointId);
         }
-        const response = await client.execute({endpoint, request});
+        const response = await client.execute({endpoint, request, streamingLoopSize});
         console.log("Proxying response : ", response);
         // TODO handling streaming response :
         const responseTemplate = endpoint.isStreamingResponse() ? {"stream@" : response.stream} : response;

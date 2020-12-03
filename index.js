@@ -7,6 +7,7 @@ const parameters = {
   port : "3000",
   configPath : `${process.cwd()}/tests/fixtures/config`,
   protosPath : `${process.cwd()}/tests/fixtures/protos`,
+  streamingLoopSize: 10
 };
 
 app.run(parameters);

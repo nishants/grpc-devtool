@@ -9,7 +9,8 @@ const parameters = {
   protosPath : `${process.cwd()}/tests/fixtures/protos`,
   recording: true,
   remoteHost : "localhost",
-  remotePort : "3000"
+  remotePort : "3000",
+  streamingLoopSize: 10
 };
 
 app.run(parameters);
