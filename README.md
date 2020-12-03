@@ -25,13 +25,21 @@ Refer : https://grpc.io/docs/languages/node/basics/
 - [ ] Add streaming config
 
   - [ ] delay
-  - [ ] interval
+  - [ ] streamingLoopSize
+  - [ ] recorder : keep streaming back while recording till maxLoopSize
+  - [ ] set repeat false if streaming server stopped while recording
+
+- [ ] e2e tests for recorder.
 
 - [ ] remove `server.test.js`
 
 - [ ] fix tests : mulitple endpoint and need to find
 
 - [ ] why initial bad stream when recording ?
+
+- [ ] create logger
+
+- [ ] create standard messages and point to help text with hrefs
 
 - [ ] Add both-way streaming
 

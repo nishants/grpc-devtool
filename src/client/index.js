@@ -8,6 +8,26 @@ const {
   getType
 } = require('../proto/EndpointTypes');
 
+const handleServerStreaming = ({call, streamingLoopSize, data, endpoint, resolve, reject})  => {
+  call.on('data', (response) => {
+    if (streamingLoopSize <= data.length) {
+      console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${streamingLoopSize}.`)
+      return resolve({stream: data});
+    }
+    //TODO : invokes ever after resolving streamingLoopSize above
+    console.log("Received message from remote server ", response);
+    data.push(response);
+  });
+
+  call.on('end', () => {
+    resolve({stream: data});
+  });
+
+  call.on('error', (error) => {
+    reject({data, error});
+  });
+};
+
 const clientTypeHandlers = {
   [Unary] : ({endpointClient, request, endpoint})=> {
     return new Promise((resolve, reject) => {
@@ -19,40 +39,19 @@ const clientTypeHandlers = {
       });
     });
   },
-  [ServerStreaming] : ({endpointClient, request, endpoint})=> {
+  [ServerStreaming] : ({endpointClient, request, endpoint, streamingLoopSize})=> {
     return new Promise((resolve, reject) => {
       const data = [];
       const call = endpointClient[endpoint.getName()](request);
-
-      call.on('data', function(response) {
-        data.push(response);
-      });
-
-      call.on('end', function() {
-        resolve({stream: data});
-      });
-
-      call.on('error', function(error) {
-        reject({data, error});
-      });
+      handleServerStreaming({call, streamingLoopSize, data, endpoint, resolve, reject});
     });
   },
-  [BothWayStreaming] : ({endpointClient, request, endpoint})=> {
+  [BothWayStreaming] : ({endpointClient, request, endpoint, streamingLoopSize})=> {
     return new Promise((resolve, reject) => {
       const data = [];
       const call = endpointClient[endpoint.getName()]();
       call.write(request);
-      call.on('data', function(response) {
-        data.push(response);
-      });
-
-      call.on('end', function() {
-        resolve({stream: data});
-      });
-
-      call.on('error', function(error) {
-        reject({data, error});
-      });
+      handleServerStreaming({call, streamingLoopSize, data, endpoint, resolve, reject});
     });
   }
 
@@ -75,9 +74,9 @@ module.exports = {
     }
 
     return {
-      execute : async ({endpoint, request}) =>{
+      execute : async ({endpoint, request, streamingLoopSize}) =>{
         const endpointClient = endpointClients[endpoint.getId()];
-        return await clientTypeHandlers[getType(endpoint)]({endpointClient, request, endpoint});
+        return await clientTypeHandlers[getType(endpoint)]({endpointClient, request, endpoint, streamingLoopSize});
       }
     }
   }
