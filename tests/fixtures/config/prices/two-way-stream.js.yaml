@@ -4,5 +4,6 @@ request@ : {
 }
 
 response@ : {
-  "stream@"  : [{quote: "message:one"}, {quote: "message:two"}, {quote: "message:three"}]
+  "stream@"  : [{quote: "message:one"}, {quote: "message:two"}, {quote: "message:three"}],
+  "doNotRepeat@": true
 }

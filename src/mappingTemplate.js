@@ -11,7 +11,9 @@ module.exports = {
             const response = data['response@'];
             if(response['stream@']){
               return {
-                stream: response['stream@']
+                stream: response['stream@'],
+                doNotRepeat: !!response['doNotRepeat@'],
+                streamDelay: response['streamDelay@'],
               }
             }
             return response;
