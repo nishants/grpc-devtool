@@ -9,22 +9,22 @@ const Recorder = require('./endpointRecorder');
 
 module.exports = {
   run : async ({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, streamingLoopSize}) => {
-   console.log('Starting with configuration : ');
-   console.log({host, port, configPath, protosPath, extensionsPath});
+    console.log('Starting with configuration : ');
+    console.log({host, port, configPath, protosPath, extensionsPath});
 
-   const mappings   = await mappingsReader.readFrom(configPath);
-   const protoFiles = await protosReader.readFrom(protosPath);
-   const endpoints  = await endpointsLoader.loadFiles(protoFiles);
-   const templates  = TemplateReader.create({configPath});
-   const resolver   = await endpointMappingResolver.createResolvers({endpoints, mappings, templates});
-   const client     = recording ? await Client.create({host : remoteHost, port : remotePort, endpoints}) : null;
-   const recorder   = recording ? await Recorder.create({configPath}) : null;
+    const mappings   = await mappingsReader.readFrom(configPath);
+    const protoFiles = await protosReader.readFrom(protosPath);
+    const endpoints  = await endpointsLoader.loadFiles(protoFiles);
+    const templates  = TemplateReader.create({configPath});
+    const resolver   = await endpointMappingResolver.createResolvers({endpoints, mappings, templates});
+    const client     = recording ? await Client.create({host : remoteHost, port : remotePort, endpoints}) : null;
+    const recorder   = recording ? await Recorder.create({configPath}) : null;
 
-   const compileResponseFile = async (file, callContext)=> {
-     const template = await templates.get(file);
-     const response = template.getResponse();
-     return response.compile();
-   };
+    const compileResponseFile = async (file, callContext)=> {
+      const template = await templates.get(file);
+      const response = template.getResponse();
+      return response.compile();
+    };
 
     const waitForFirstClientStream = (callContext, endpointId) => {
       // TODO Full handler for client stream
@@ -49,7 +49,7 @@ module.exports = {
         console.log("Proxying response : ", response);
         // TODO handling streaming response should go in template builder:
         const responseTemplate = endpoint.isStreamingResponse() ? {'stream@' : response.stream, '@doNotRepeat': response.doNotRepeat, '@streamInterval': response.streamInterval} : response;
-        recorder.save({endpointId, request: callContext.request, response : responseTemplate});
+        recorder.save({endpointId, request, response : responseTemplate});
         return response;
       }
     };
@@ -72,11 +72,11 @@ module.exports = {
       }
     };
 
-   const endpointResponder = recording ?  endpointRecordAndResponder : endpointTemplateResponder
-   const server = Server.create({host, port, endpointResponder});
+    const endpointResponder = recording ?  endpointRecordAndResponder : endpointTemplateResponder
+    const server = Server.create({host, port, endpointResponder});
     server.addEndpoints(endpoints);
     server.start();
 
-   return () => server.stop();
+    return () => server.stop();
   }
 };
