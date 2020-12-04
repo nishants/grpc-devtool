@@ -15,6 +15,23 @@ const MatcherTree = {
       tree[fieldName] = isObject(fieldValue) ? MatcherTree.create(fieldValue) : MatcherNode.create(fieldValue);
     }
     return tree;
+  },
+  matches: (matcherTree, dataTree) => {
+    for(const fieldName in matcherTree){
+      const data = dataTree[fieldName];
+      const matcher = matcherTree[fieldName]
+      if(matcher.isNode){
+        if(!matcher.matches(data)){
+          return false;
+        }
+      } else{
+        if(!MatcherTree.matches(matcher, data)){
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 };
 

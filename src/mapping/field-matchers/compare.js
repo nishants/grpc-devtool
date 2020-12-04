@@ -2,6 +2,8 @@ const isObject = (object) =>
   object != null && typeof object === 'object';
 
 const areEqual = (object1, object2) => {
+  if(object1 && !object2) return false;
+
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
 
