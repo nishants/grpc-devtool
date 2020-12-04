@@ -40,6 +40,7 @@ describe('init project', () => {
       'helloworld.greet.UnimplementedService.Unimplemented',
       'helloworld.greet.UnimplementedService.Unimplemented2',
       'prices.streaming.Pricing.Subscribe',
+      "prices.streaming.Pricing.MultiSubscribe",
       'prices.streaming.Pricing.TwoWaySubscribe'
     ];
 
@@ -71,12 +72,15 @@ describe('init project', () => {
       'prices.streaming.Pricing.Subscribe': [
       'prices.streaming.Pricing.Subscribe/default.yaml'],
 
+      "prices.streaming.Pricing.MultiSubscribe": [
+      "prices.streaming.Pricing.MultiSubscribe/default.yaml"
+      ],
+
       'prices.streaming.Pricing.TwoWaySubscribe': [
       'prices.streaming.Pricing.TwoWaySubscribe/default.yaml']
     };
 
     const mappings = await readYamlFile(expectedMappingFile);
-
 
     expect(mappings).toEqual(expectedMappings);
   });
@@ -90,6 +94,7 @@ describe('init project', () => {
       'helloworld.greet.UnimplementedService.Unimplemented',
       'helloworld.greet.UnimplementedService.Unimplemented2',
       'prices.streaming.Pricing.Subscribe',
+      "prices.streaming.Pricing.MultiSubscribe",
       'prices.streaming.Pricing.TwoWaySubscribe'
     ];
 
