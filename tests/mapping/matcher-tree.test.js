@@ -38,13 +38,17 @@ describe("matcher-tree.js", () => {
     expect(actualSpec).toEqual(spec);
   });
 
-  test("should ignore unkown fields in data", () => {
+  test("should ignore unknown fields in data", () => {
     const spec = {
       value : 21,
+      flag: true,
+      nonValue: 0
     };
 
     const data = {
       value : 21,
+      flag: true,
+      nonValue: 0,
       unknownField: {value: true},
       unkownArray: [],
       unknownFlag: true
@@ -109,6 +113,7 @@ describe("matcher-tree.js", () => {
 
     expect(matches).toBe(true);
   });
+
 
   test("should not match if nested array doesnt match", () => {
     const spec = {

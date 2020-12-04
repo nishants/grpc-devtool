@@ -2,9 +2,9 @@ const {areEqual}  = require('./compare');
 
 const isEqual = {
   name : 'isEqual',
-  appliesTo : spec => typeof spec === 'object',
+  appliesTo : () => true,
   matches : (spec, data) =>  {
-    return areEqual(spec, data);
+    return spec == data;
   }
 };
 

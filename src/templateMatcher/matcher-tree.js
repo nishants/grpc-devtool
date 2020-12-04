@@ -20,7 +20,7 @@ const MatcherTree = {
     for(const fieldName in matcherTree){
       const data = dataTree[fieldName];
       const matcher = matcherTree[fieldName];
-      if(matcher && !data){
+      if(matcher && typeof data === "undefined"){
         return false;
       }
       if(matcher.isNode){
