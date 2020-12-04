@@ -1,4 +1,4 @@
-const matchers = require('./mapping/matchers');
+const matchers = require('./templateMatcher');
 
 module.exports = {
   createResolvers : async ({endpoints, mappings, templates}) => {

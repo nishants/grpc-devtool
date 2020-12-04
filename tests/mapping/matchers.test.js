@@ -1,4 +1,4 @@
-const matchers = require('../../src/mapping/matchers');
+const matchers = require('../../src/templateMatcher');
 
 describe("matchers", ()=> {
   test("should create matcher for static json", () => {
@@ -25,7 +25,6 @@ describe("matchers", ()=> {
     const definition = {
       name : 'any@',
       age: 'any@',
-      male: 'any@',
       location: 'any@'
     };
 
@@ -89,6 +88,7 @@ describe("matchers", ()=> {
 
       expect(actual).toBe(false);
     });
+
     test("should apply matchers in nested objects for notnull", () => {
       const definition = {
         info: {address: {location: "any!@"}}

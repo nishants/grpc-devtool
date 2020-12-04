@@ -1,4 +1,4 @@
-const MatchingTree = require('../../src/mapping/matcher-tree/matcher-tree');
+const MatchingTree = require('../../src/templateMatcher/matcher-tree');
 
 const getSpecsFromTree = (tree => {
   if(Array.isArray(tree)){

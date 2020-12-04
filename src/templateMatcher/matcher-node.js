@@ -1,8 +1,8 @@
-const {getAll} = require('../field-matchers');
+const matchers = require('./matchers');
 
 const MatcherNode = {
   create: (spec) => {
-    const matcher = getAll().find(m => m.appliesTo(spec));
+    const matcher = matchers.getAll().find(m => m.appliesTo(spec));
     return {
       spec,
       isNode: true,

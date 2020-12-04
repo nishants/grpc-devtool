@@ -7,7 +7,7 @@ const isAny = {
     return config.isKeyWord(definitionField, 'any')
   },
   matches : () => {
-    return {failed: false};
+    return true;
   }
 };
 
