@@ -19,7 +19,10 @@ const MatcherTree = {
   matches: (matcherTree, dataTree) => {
     for(const fieldName in matcherTree){
       const data = dataTree[fieldName];
-      const matcher = matcherTree[fieldName]
+      const matcher = matcherTree[fieldName];
+      if(matcher && !data){
+        return false;
+      }
       if(matcher.isNode){
         if(!matcher.matches(data)){
           return false;
