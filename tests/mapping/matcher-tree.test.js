@@ -38,6 +38,24 @@ describe("matcher-tree.js", () => {
     expect(actualSpec).toEqual(spec);
   });
 
+  test("should ignore unkown fields in data", () => {
+    const spec = {
+      value : 21,
+    };
+
+    const data = {
+      value : 21,
+      unknownField: {value: true},
+      unkownArray: [],
+      unknownFlag: true
+    };
+
+    const tree = MatchingTree.create(spec);
+    const matches = MatchingTree.matches(tree, data);
+
+    expect(matches).toBe(true);
+  });
+
   test("should match exact same data tree", () => {
     const spec = {
       value : 21,
