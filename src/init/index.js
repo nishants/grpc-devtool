@@ -1,5 +1,6 @@
 const readLine = require('readline');
 const chalk = require('chalk');
+const init = require('./init');
 
 const states = [
   require('./interactive/SelectProtosToMap'),
@@ -32,16 +33,18 @@ const askUser = (prompt) => {
   });
 };
 
-(async () => {
-  let config = {};
-  while(states.length){
-    const next = states.pop().create(config);
-    while(next.needsMoreInput()){
-      const input = await askUser(next.getNextInputQuestion());
-      await next.addInput(input);
+module.exports = {
+  createProject : async () => {
+    let config = {};
+    while(states.length){
+      const next = states.pop().create(config);
+      while(next.needsMoreInput()){
+        const input = await askUser(next.getNextInputQuestion());
+        await next.addInput(input);
+      }
+      config = next.getConfig();
     }
-    config = next.getConfig();
+    cli.close();
+    await init.create(config);
   }
-  cli.close();
-  console.log("Ready with configuration", config);
-})();
+}
