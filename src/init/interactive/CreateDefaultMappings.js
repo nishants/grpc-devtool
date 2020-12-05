@@ -12,7 +12,11 @@ module.exports = {
         return typeof config.createDefaultMappings === 'undefined';
       },
       getNextInputQuestion: () => {
-        return 'Do you want to create default mappings (y/n) : (y)';
+        return {
+          question : 'Do you want to create default mappings (y/n)',
+          default  : 'y',
+          hint     : null
+        };
       },
       addInput: (input) => {
         config = {

@@ -1,4 +1,5 @@
 const readLine = require('readline');
+const chalk = require('chalk');
 
 const states = [
   require('./interactive/SelectProtosToMap'),
@@ -13,10 +14,20 @@ const cli = readLine.createInterface({
     output: process.stdout
   });
 
-const askUser = (question) => {
+const askUser = (prompt) => {
   return new Promise((resolve) => {
-    cli.question(question, (userInput) => {
-      resolve(userInput)
+    if(prompt.error){
+      console.log(chalk.red(prompt.error));
+    }
+    if(prompt.question){
+      console.log(chalk.green(prompt.question));
+    }
+    if(prompt.default){
+      console.log(chalk.dim(prompt.default));
+    }
+
+    cli.on('line', (userInput) => {
+      resolve(userInput);
     });
   });
 };

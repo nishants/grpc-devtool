@@ -10,21 +10,26 @@ module.exports = {
     };
 
     let nextQuestion =  'Enter path containing your proto files : '
+    let error ;
     return {
       needsMoreInput: () => {
         return !config.protoFiles.length;
       },
       getNextInputQuestion: () => {
-        return nextQuestion;
+        return {
+          question : nextQuestion,
+          error,
+        };
       },
       addInput: async (input) => {
         const protosPath = path.resolve(input);
         if(!fs.existsSync(protosPath)){
-          return nextQuestion = `Entered path "${input}" does not exist. Please enter a valid path : `
+          error = `"${input}" does not exist.`
+          return;
         }
         const protoFiles = await protosReader.readFrom(protosPath);
         if(!protoFiles.length){
-          return nextQuestion = `Entered path "${input}" does not contain any proto files. Please enter again : `
+          return error = `No proto files found in "${input}"`
         }
         config = {
           ...config,

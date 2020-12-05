@@ -13,7 +13,10 @@ module.exports = {
         return !config.outputDir;
       },
       getNextInputQuestion: () => {
-        return `Where do you want to save your configuration ?  : (${defaultOutputDir})`;
+        return {
+          question : 'Where do you want to save your configuration ?',
+          default  : defaultOutputDir
+        };
       },
       addInput: (outputDir) => {
         config = {
