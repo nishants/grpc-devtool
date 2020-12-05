@@ -2,9 +2,12 @@ const GetHostConfig = require('../../../src/init/interactive/GetHostConfig');
 
 describe("GetHostConfig.js", () => {
   let getHostConfig ;
+  const previousConfig = {
+    prevInput: "value"
+  }
 
   beforeEach(() => {
-    getHostConfig = GetHostConfig.create();
+    getHostConfig = GetHostConfig.create(previousConfig);
   })
 
   test("should need user input", () => {
@@ -25,7 +28,8 @@ describe("GetHostConfig.js", () => {
 
   test("should add user input to config as hostPort", () => {
     const expectedConfig = {
-      hostPort: 'host:port'
+      hostPort: 'host:port',
+      prevInput: "value"
     };
     getHostConfig.addInput('host:port');
     const actualConfig = getHostConfig.getConfig();
@@ -35,7 +39,8 @@ describe("GetHostConfig.js", () => {
 
   test("should set default config if user entered empty", () => {
     const expectedConfig = {
-      hostPort: 'localhost:3009'
+      hostPort: 'localhost:3009',
+      prevInput: "value"
     };
     getHostConfig.addInput(' ');
     const actualConfig = getHostConfig.getConfig();
