@@ -1,12 +1,11 @@
 {
   "name": "grpc-devtool",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Record, Playback and Monitor gRPC traffic.",
   "main": "index.js",
   "dependencies": {
     "@grpc/proto-loader": "^0.5.5",
     "glob": "^7.1.6",
-    "grpc": "^1.24.4",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
