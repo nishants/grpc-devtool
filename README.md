@@ -1,284 +1,82 @@
-# [WIP]
+> WIP - beta expected soon
 
-Refer : https://grpc.io/docs/languages/node/basics/
+# gRPC-devtool
 
-### Todo
-
-- CLI app
-  - how to create npm cli app
-  - add cli commands
-- Project setup
-  - create projec board
-  - create cli pipeline
-  - move to grpc-devtool organization
-- 
-
-### Todo 
-
-- [x] Load proto files once only
-
-- [x] Add test for service with multiple procedures
-
-- [x] Add test for proto with mutilple services
-
-- [x] Create configuration files
-
-  - [x] read from `cwd` by default
-  - [x] ovewrite with arguments
-  - [x] allow proto file path relative to current directory
-
-- [ ] Test and Refactor commands
-
-- [x] Add streaming config
-
-  - [x] delay
-  - [x] streamingLoopSize
-  - [x] recorder : keep streaming back while recording till maxLoopSize
-  - [x] set repeat false if streaming server stopped while recording
-
-- [ ] e2e tests for recorder.
-
-- [x] remove `server.test.js`
-
-- [ ] fix tests : mulitple endpoint and need to find
-
-- [ ] why initial bad stream when recording ?
-
-- [ ] create logger
-
-- [ ] create standard messages and point to help text with hrefs
-
-- [ ] Add both-way streaming
-
-  - [x] simple exmple with bloom
-  - [x] add client handler for recorder
-  - [x] add test
-
-- [x] trim streaming responses by config
-
-- [x] publish npm module
-
-- [x] All api types
-  - [x] streaming request
-  - [x] both-way-streaming
-  
-- [ ] Saxo Setup
-  - [ ] npm install on saxo
-  - [ ] build node docker image
-  - [ ] record and playback with prices services
-  
-- [ ] Analysis 
-
-  - [ ] doc review
-  - [ ] spoofing
-  - [ ] edge cases
-
-- [ ] Tech debt
-
-  - [ ] build with azure devops
-  - [ ] auto publish to npmjs.com (on release branches)
-  - [ ] auto publish docker images(on release and master branches)
-  - [ ] code coverage
-  - [ ] prettier
-  - [ ] linter
-  - [ ] typescript migration ??
-
-  
-
-- [ ] test with complex protofile definitions for complex (includes proto file). e.g. saxo
-
-- [ ] use numbers in yaml file (fix proto reader)
-
-- [ ] list of values (enums)
-
-- [ ] custom matchers
-
-- [ ] custom script in mapping file
-
-- [ ] custom script with empty body
-
-- [ ] templating language
-
-- [ ] include partial templates
-
-- [ ] read response only when required (do not keep in memory)
-
-- [ ] add flag to limit number for responses to capture
-
-- [ ] add config file
-
-- [ ] add session initialization file
-
-- [ ] handle sessions
-
-- [ ] make keyword configurable
-
-- [ ] handle when no matcher are found for a request.
-
-- [x] create blueprint
-- [x] Define matchers definition `js.yaml`
-- [x] e2e tests
-- [x] create mapping file reader
-- [x] create dynamic client from endpoint
-  - [x] for unary
-  - [x] for streaming client
-- [x] run recorder
-- [x] define model 
-- [ ] ~~run with node 10.~~
-- [x] Create matchers from json
-  - [x] for flat object with static fields
-  - [x] for flat object with matchers
-    - [x] `@any`
-    - [x] `@any!`
-    - [x] ~~`@ignoreOther`~~
-    - [x] ~~js regex~~
-  - [ ] ~~for nested objects~~
-  - [ ] ~~for arrays~~
-- [ ] Handle request headers in matchers
-- [x] Create test for server
-- [x] Create endpoint handler dynamically
-- [x] Create endpoint handler
-  - [x] dynmically capture the endpoint requests
-  - [x] return custom data
-  - [x] for streaming response
-  - [ ] for streaming requests
-  - [ ] for two way streaming
-  - [ ] test for all protobus types
-  - [ ] add protobuf include type
-- [x] creat two set of protofiles
-  - [x] single request - single response
-  - [x] single request - streaming response
-- [x] print protofile definitions for simple protobufs
-- [x] Infer followign details for a proto file
-  - [x] request field and types
-  - [x] reply field and types
-  - [x] request is streamin ?
-  - [x] response is streamin ?
-  - [x] endpoint name.
-- [x] add jest
-- [x] print protofile definitions with proto packages
-- [x] read a directory of proto files
-- [x] generate a dynamic handler for each endpoint in each proto file and return random data 
-- [x] add a streaming endpoint
-- [x] ~~Use this to analyze the dynamically generated client components : https://esprima.org~~
+[![Build Status](https://dev.azure.com/nishantsingh870743/grpc-devtool/_apis/build/status/nishants.grpc-devtool?branchName=master)](https://dev.azure.com/nishantsingh870743/grpc-devtool/_build/latest?definitionId=1&branchName=master)
 
 
 
-# Blueprint
-
-About it.
-
-Features 
-
-- record and playback gRPC endpoints
-- custom matchers and templates
-- sessoin support
-- run as docker image, cli command or as node module.
+**gRPC-devtool** is a cli program to monitor, record and playback gRPC traffic.
 
 
 
-Kinds of gRPC API supported
+**Features** 
 
-- single request- single response
-- single request - streaming response
-- streaming request - single response
-- streaming request - streaming response
+- Monitor gRPC traffic
+- Record gRPC traffic
+- Playback recorded traffic
+- Define matcher rules to match and respond to an endpoint
+- Use templates to generate responses dynamically
+- Support for sessions
 
 
 
-### Installation
+### Setup
+
+A sample demonstration of creating a project from [scratch](/doc/demo/create-new) 
 
 - Run as node module
 
   ```bash
-  # Run with default options
-  npx miraje 
+  # Install with npm
+  npm install -g grpc-devtool
   
-  # Server mappings from config directory
-  npx miraje -port 3000 -host 0.0.0.0 -config ./config -protos ./protos
+  # Create a project
+  grpc-devtool create --protos path/to/protos
   
-  # Record and save responses from remote to ./config/recoding@ 
-  npx miraje -port 3000 -host 0.0.0.0 -config ./config -protos ./protos -recording -remotehost: 0.0.0.0 remoteport: 8080
+  # Recrod traffic
+  grpc-devtool record 
+  
+  # Use as proxy to monitor gRPC traffic
+  grpc-devtool start
   ```
 
   Default values : 
 
   - config : `./config`
   - protos : `./protos`
-  - port : `5055`
+  - port : `3009`
   - host : `0.0.0.0`
 
   
 
-- Run as docker image
+- **Run as docker container**
 
-  ```bash
-  # Server mappings from /path/to/config directory
-  docker run -p 3000:80 -v /path/to/config:/config saxolab/miraje -host 0.0.0.0 -protos ./protos
+  >  TODO
+
   
-  # Record and save responses from remote to /path/to/config/recoding@ 
-  docker run -p 3000:80 -v /path/to/config:/config saxolab/miraje -host 0.0.0.0 -recording -remotehost: 0.0.0.0 remoteport: 8080 -protos ./protos
-  ```
 
-- Install as node module and use api in node tests
+- **Use API in nodejs project**
 
-  ```bash
-  npm install --save miraje
-  ```
+  > TODO
 
-	Run in player mode: 
-  ```javascript
-  const app = require('miraze/app');
   
-  // Server mappings from /path/to/config directory
-  const parameters = {
-    host : "0.0.0.0",
-    port : "3000",
-    configPath : `${process.cwd()}/config`,
-    protosPath : `${process.cwd()}/protos`,
-  };
-  
-  app.run(parameters);
-  ```
-
-  Run in recorder mode
-
-  ```javascript
-  const app = require('miraze/app');
-  
-  // run in recoding mode
-  const parameters = {
-    host : "0.0.0.0",
-    port : "50054",
-    configPath : `${process.cwd()}/tests/fixtures/config`,
-    protosPath : `${process.cwd()}/tests/fixtures/protos`,
-    recording: true,
-    remoteHost : "localhost",
-    remotePort : "3000"
-  };
-  
-  app.run(parameters);
-  ```
-
-
 
 
 **Sample strucuture of config folder**
 
 ```yaml
-# Sample directory structure : 
-
-stub/
-	- config/
-		- mappings.yaml
-		- greet/
-			- default.js.yaml
-      - rohit.js.yaml
-      - virat.js.yaml
-		- prices/
-    	- defualt.js.yaml
-    - common/
-    	- message/js.yml
+my-stub/
+  - config/
+  - mappings.yaml
+  - greet/
+    - default.yaml
+    - rohit.yaml
+    - virat.yaml
+  - prices/
+    - defualt.yaml
+  - common/
+  - message.yaml
 ```
 
 
@@ -290,19 +88,33 @@ Configuration file shoud be placed in the `config` dir and named as `config.yaml
 Example of a cofiguration file : 
 
 ```yaml
-sessionEnabled : true
-keywordSuffix : '@'
-trimStreaming : 10
+protos : '../Protos'
+host : localhost
+port : 3000
+trimmedStreamSize : 10
+```
+
+All configuration values can be configured at runtime (e.g. in your ci build). 
+
+e.g. 
+
+```
+grpc-devtool start --port 50055 --protos 
 ```
 
 
 
+**Configuration options**
+
 | Name              | default        |                                                              |
 | ----------------- | -------------- | ------------------------------------------------------------ |
+| host              | localhost      | Address of server ran by `grpc-devtool` (use it in you app)  |
+| port              | 3009           | Port of server exposed by `grpc-devtool` (use it in you app) |
+| protos            |                | Relative or absolute path to the directory containing proto files |
 | expressionSymbols | `["{{", "}}"]` | e.g `{{request.body.name}}`                                  |
-| sessionEnabled    | `true`         |                                                              |
-| keywordSuffix     | `/^@/`         | ends with `@`                                                |
-| trimStreaming     | 10             | number for responses for a streaming server to keep in mappings file. Will repeast the responses unless configured otherwise per request basis. |
+| sessionEnabled    | `true`         | Enable session support                                       |
+| keywordSuffix     | `@`            | ends with `@`                                                |
+| trimmedStreamSize | 10             | number for responses for a streaming server to keep in mappings file. Will repeast the responses unless configured otherwise per request basis. |
 
 
 

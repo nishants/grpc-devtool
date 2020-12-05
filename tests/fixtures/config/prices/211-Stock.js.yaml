@@ -1,11 +1,13 @@
-request@ : {
-  #TODO : currenlty numbers are treated like strings in defintion
-  uic: "211",
-  assetType: "Stock"
-}
+# Sample directory structure : 
 
-response@ : {
-  "stream@"  : [{quote: "quote:one"}, {quote: "quote:two"}, {quote: "quote:three"}],
-  "doNotRepeat@"  : true,
-  "streamInterval@"  : 1000,
-}
+my-stub/
+  - config/
+  - mappings.yaml
+  - greet/
+    - default.js.yaml
+    - rohit.js.yaml
+    - virat.js.yaml
+  - prices/
+    - defualt.js.yaml
+  - common/
+  - message/js.yml
