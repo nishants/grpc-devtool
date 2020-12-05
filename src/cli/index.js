@@ -4,7 +4,7 @@ const serve  = require('./serve');
 const version  = require('./get-version');
 
 const commands = {
-  create : (params) => create.run(params),
+  init   : (params) => create.run(params),
   record : (params) => record.run(params),
   serve  : (params) => serve.run(params),
   'v'    : () => version.run(),
@@ -20,15 +20,15 @@ const commands = {
 };
 
 const commandHelpLinks = {
-  create: "https://github.com/nishants/grpc-devtool/blob/master/docs/demo/create-new/README.md",
+  init: "https://github.com/nishants/grpc-devtool/blob/master/docs/demo/create-new/README.md",
   record: "https://github.com/nishants/grpc-devtool",
   serve : "https://github.com/nishants/grpc-devtool",
 };
 const helpText = `
 Enter a command :
  
-grpc-devtool create --protos path/to/protofiles [--out path/to/create]
-Read more at ${commandHelpLinks.create}
+grpc-devtool init --protos path/to/protofiles [--out path]
+Read more at ${commandHelpLinks.init}
 
 Record grpc interactions : 
 grpc-devtool record my-host.com:8081 [--config path/to/config] [--protos path/to/protofiles ]
