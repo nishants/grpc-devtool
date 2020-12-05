@@ -1,6 +1,6 @@
 {
   "name": "grpc-devtool",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Record, Playback and Monitor gRPC traffic.",
   "main": "index.js",
   "dependencies": {
@@ -17,6 +17,6 @@
   "author": "",
   "license": "MIT",
   "bin": {
-    "grpc-devtool": "./bin/grpc-devtool.js"
+    "grpc": "./bin/grpc.js"
   }
 }
