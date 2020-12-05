@@ -1,6 +1,7 @@
 const readLine = require('readline');
 
 const states = [
+  require('./interactive/SelectProtosToMap'),
   require('./interactive/CreateDefaultMappings'),
   require('./interactive/GetProtosPath'),
   require('./interactive/GetHostConfig'),
