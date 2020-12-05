@@ -13,10 +13,9 @@ const defaultConfig = {
 };
 
 module.exports = {
-  create: async ({outputDir, protosPath}) => {
+  create: async ({outputDir, protosPath, protosToMap}) => {
     const configPath = path.join(outputDir, 'config');
-    const protoFiles = await protosReader.readFrom(protosPath);
-    const endpoints  = await endpointsLoader.loadFiles(protoFiles);
+    const endpoints  = await endpointsLoader.loadFiles(protosToMap);
 
     const mappings = {};
 
@@ -34,7 +33,7 @@ module.exports = {
     await writeYaml(configPath, 'grpc.yaml', config);
     await writeYaml(configPath, 'mappings.yaml', mappings);
 
-    for(const filePath of protoFiles){
+    for(const filePath of protosToMap){
       await copyFile(filePath, path.join(configPath, 'protos', filePath.replace(protosPath, '')) );
     }
   }

@@ -1,10 +1,7 @@
-const init = require('../init/init');
+const init = require('../init');
 
 module.exports = {
   run : (params) => {
-    init.create({
-      outputDir: "/Users/dawn/Desktop/NewProject",
-      protosPath: "/Users/dawn/Desktop/Protobuf"
-    })
+    init.createProject()
   }
 };

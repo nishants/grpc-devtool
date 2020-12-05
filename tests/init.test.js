@@ -2,17 +2,26 @@ const fs = require('fs');
 const path = require('path');
 
 const init = require('../src/init/init');
-const {createTempDir, readYamlFile} = require('../src/utils/files');
+const {createTempDir, readYamlFile, getFilesFromDir} = require('../src/utils/files');
 
 describe('init project', () => {
   const protosPath = path.join(__dirname, './fixtures/protos');
+  let protosToMap;
   let outputDir;
   let expectedMappingFile;
+
+  beforeAll(async () => {
+    protosToMap = [
+      'greet.proto',
+      'helloworld.proto',
+      'prices.proto',
+    ].map(name => path.join(__dirname, 'fixtures', 'protos', name));
+  });
 
   beforeEach(async () => {
     outputDir = await createTempDir('mirage-config-test');
     expectedMappingFile = path.join(outputDir, 'config', 'mappings.yaml');
-    await init.create({outputDir, protosPath});
+    await init.create({outputDir, protosToMap, protosPath});
   });
 
   test('should create config.yaml file with default values', async () => {
