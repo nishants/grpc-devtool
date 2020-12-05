@@ -1,7 +1,8 @@
 const readLine = require('readline');
 
 const states = [
-  require('./interactive/GetOutputDir')
+  require('./interactive/GetHostConfig'),
+  require('./interactive/GetOutputDir'),
 ];
 
 const cli = readLine.createInterface({
@@ -30,5 +31,3 @@ const askUser = (question) => {
   cli.close();
   console.log("Ready with configuration", config);
 })();
-
-console.log("yeah")

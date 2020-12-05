@@ -6,19 +6,19 @@ module.exports = {
       outputDir: null
     };
 
-    const defaultOutputDir = './';
+    const defaultOutputDir = process.cwd();
 
     return {
       needsMoreInput: () => {
         return !config.outputDir;
       },
       getNextInputQuestion: () => {
-        return `Where do you want to save your configuration ?  : ${defaultOutputDir})`;
+        return `Where do you want to save your configuration ?  : (${defaultOutputDir})`;
       },
       addInput: (outputDir) => {
         config = {
           ...config,
-          outputDir: outputDir || defaultOutputDir
+          outputDir: outputDir.trim() || defaultOutputDir
         };
       },
       getConfig: () => {
