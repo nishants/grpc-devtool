@@ -4,6 +4,8 @@
 
 [![Build Status](https://dev.azure.com/nishantsingh870743/grpc-devtool/_apis/build/status/nishants.grpc-devtool?branchName=master)](https://dev.azure.com/nishantsingh870743/grpc-devtool/_build/latest?definitionId=1&branchName=master)
 
+[![npm version](https://badge.fury.io/js/grpc-devtool.svg)](https://badge.fury.io/js/grpc-devtool)
+
 
 
 **gRPC-devtool** is a cli program to monitor, record and playback gRPC traffic.
