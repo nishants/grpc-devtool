@@ -6,13 +6,13 @@ module.exports = {
   create : (prevConfig) => {
     let config = {
       ...prevConfig,
-      protosPath: null
+      protoFiles: []
     };
 
     let nextQuestion =  'Enter path containing your proto files : '
     return {
       needsMoreInput: () => {
-        return !config.protosPath;
+        return !config.protoFiles.length;
       },
       getNextInputQuestion: () => {
         return nextQuestion;
@@ -28,7 +28,7 @@ module.exports = {
         }
         config = {
           ...config,
-          protosPath
+          protoFiles
         };
       },
       getConfig: () => {
