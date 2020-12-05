@@ -47,14 +47,17 @@ describe("GetProtosPath.js", () => {
 
   test("should add user input to config as protosPath", async () => {
     const expectedConfig = {
-      protosPath: aValidProtsDir,
-      prevInput: "value"
+      prevInput: "value",
+      protoFiles: [
+        `${aValidProtsDir}/greet.proto`,
+        `${aValidProtsDir}/helloworld.proto`,
+        `${aValidProtsDir}/prices.proto`
+      ]
     };
     await state.addInput(aValidProtsDir);
     const actualConfig = state.getConfig();
     expect(actualConfig).toEqual(expectedConfig);
   });
-
 
   test("should warn if no proto files found at path", async () => {
     await state.addInput(aValidDirWithNoProtos);
