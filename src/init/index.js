@@ -1,6 +1,8 @@
 const readLine = require('readline');
 
 const states = [
+  require('./interactive/CreateDefaultMappings'),
+  require('./interactive/GetProtosPath'),
   require('./interactive/GetHostConfig'),
   require('./interactive/GetOutputDir'),
 ];
