@@ -24,7 +24,7 @@ const askUser = (question) => {
     const next = states.pop().create(config);
     while(next.needsMoreInput()){
       const input = await askUser(next.getNextInputQuestion());
-      next.addInput(input);
+      await next.addInput(input);
     }
     config = next.getConfig();
   }
