@@ -6,7 +6,7 @@ module.exports = {
       outputDir: null
     };
 
-    const defaultOutputDir = process.cwd();
+    const defaultOutputDir = './';
 
     return {
       needsMoreInput: () => {
@@ -18,7 +18,7 @@ module.exports = {
       addInput: (outputDir) => {
         config = {
           ...config,
-          outputDir
+          outputDir: outputDir || defaultOutputDir
         };
       },
       getConfig: () => {
