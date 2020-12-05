@@ -32,13 +32,13 @@ A sample demonstration of creating a project from [scratch](/doc/demo/create-new
   npm install -g grpc-devtool
   
   # Create a project
-  grpc-devtool create --protos path/to/protos
+  grpc create --protos path/to/protos
   
   # Recrod traffic
-  grpc-devtool record 
+  grpc record 
   
   # Use as proxy to monitor gRPC traffic
-  grpc-devtool start
+  grpc start
   ```
 
   Default values : 
