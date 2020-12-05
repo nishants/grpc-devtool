@@ -12,7 +12,7 @@ module.exports = {
 
     return {
       needsMoreInput: () => {
-        return nextFile !== protoFiles.length;
+        return config.createDefaultMappings === true && nextFile !== protoFiles.length;
       },
       getNextInputQuestion: () => {
         const file = protoFiles[nextFile];
