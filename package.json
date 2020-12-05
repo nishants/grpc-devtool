@@ -1,7 +1,7 @@
 {
-  "name": "miraze-spike",
-  "version": "1.0.0",
-  "description": "",
+  "name": "grpc-devtool",
+  "version": "0.0.1",
+  "description": "Record, Playback and Monitor gRPC traffic.",
   "main": "index.js",
   "dependencies": {
     "@grpc/proto-loader": "^0.5.5",
@@ -16,8 +16,8 @@
     "test": "jest"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bin": {
-    "miraze": "./index.js"
+    "grpc-devtool": "./bin/grpc-devtool.js"
   }
 }
