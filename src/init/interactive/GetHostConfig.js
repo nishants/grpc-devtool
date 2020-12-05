@@ -14,7 +14,10 @@ module.exports = {
         return !config.hostPort;
       },
       getNextInputQuestion: () => {
-        return `Enter the devtool server host:port (${defaultHost})`;
+        return {
+          question : 'Enter the devtool server host:port',
+          default  : defaultHost
+        };
       },
       addInput: (hostPort) => {
         config = {

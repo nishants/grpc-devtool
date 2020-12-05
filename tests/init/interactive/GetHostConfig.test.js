@@ -1,35 +1,39 @@
 const GetHostConfig = require('../../../src/init/interactive/GetHostConfig');
 
-describe("GetHostConfig.js", () => {
+describe('GetHostConfig.js', () => {
   let getHostConfig ;
   const previousConfig = {
-    prevInput: "value"
+    prevInput: 'value'
   }
 
   beforeEach(() => {
     getHostConfig = GetHostConfig.create(previousConfig);
   })
 
-  test("should need user input", () => {
+  test('should need user input', () => {
     const needsInput = getHostConfig.needsMoreInput();
     expect(needsInput).toBe(true);
   });
 
-  test("should ask user for host and port", () => {
-    const expectedQuestion = `Enter the devtool server host:port (localhost:3009)`;
+  test('should ask user for host and port', () => {
+    const expectedQuestion = {
+      'default': 'localhost:3009',
+      'question': 'Enter the devtool server host:port'
+    };
+    
     const actualQuestion = getHostConfig.getNextInputQuestion();
-    expect(actualQuestion).toBe(expectedQuestion);
+    expect(actualQuestion).toEqual(expectedQuestion);
   });
 
-  test("should not need any input after getting path", () => {
+  test('should not need any input after getting path', () => {
     getHostConfig.addInput('some input');
     expect(getHostConfig.needsMoreInput()).toBe(false);
   });
 
-  test("should add user input to config as hostPort", () => {
+  test('should add user input to config as hostPort', () => {
     const expectedConfig = {
       hostPort: 'host:port',
-      prevInput: "value"
+      prevInput: 'value'
     };
     getHostConfig.addInput('host:port');
     const actualConfig = getHostConfig.getConfig();
@@ -37,10 +41,10 @@ describe("GetHostConfig.js", () => {
   });
 
 
-  test("should set default config if user entered empty", () => {
+  test('should set default config if user entered empty', () => {
     const expectedConfig = {
       hostPort: 'localhost:3009',
-      prevInput: "value"
+      prevInput: 'value'
     };
     getHostConfig.addInput(' ');
     const actualConfig = getHostConfig.getConfig();

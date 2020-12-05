@@ -1,11 +1,11 @@
 const SelectProtosToMap = require('../../../src/init/interactive/SelectProtosToMap');
 
-describe("SelectProtosToMap.js", () => {
+describe('SelectProtosToMap.js', () => {
   let state ;
 
   const previousConfig = {
     createDefaultMappings: true,
-    prevInput: "value",
+    prevInput: 'value',
     protoFiles: ['file-1', 'file-2', 'file-3']
   }
 
@@ -13,12 +13,12 @@ describe("SelectProtosToMap.js", () => {
     state = SelectProtosToMap.create(previousConfig);
   })
 
-  test("should need user input", () => {
+  test('should need user input', () => {
     const needsInput = state.needsMoreInput();
     expect(needsInput).toBe(true);
   });
 
-  test("should not need user input user does not want to create default mappings", () => {
+  test('should not need user input user does not want to create default mappings', () => {
     const needsInput = SelectProtosToMap.create({
       createDefaultMappings: false,
       protoFiles: ['file-1', 'file-2', 'file-3']
@@ -27,11 +27,20 @@ describe("SelectProtosToMap.js", () => {
     expect(needsInput).toBe(false);
   });
 
-  test("should ask user for each proto file", () => {
+  test('should ask user for each proto file', () => {
     const expectedQuestions = [
-      'Generate default mappings for file-1 (y/n) ? (y)',
-      'Generate default mappings for file-2 (y/n) ? (y)',
-      'Generate default mappings for file-3 (y/n) ? (y)'
+      {
+        default: 'y',
+        question: 'Generate default mappings for file-1 (y/n) ?'
+      },
+      {
+        default: 'y',
+        question: 'Generate default mappings for file-2 (y/n) ?'
+      },
+      {
+        default: 'y',
+        question: 'Generate default mappings for file-3 (y/n) ?'
+      }
     ];
     const actualQuestions = [];
     while(state.needsMoreInput()) {
@@ -41,10 +50,10 @@ describe("SelectProtosToMap.js", () => {
     expect(actualQuestions).toEqual(expectedQuestions);
   });
 
-  test("should ignore files if user enter n or no", async () => {
+  test('should ignore files if user enter n or no', async () => {
     const expectedConfig = {
       createDefaultMappings: true,
-      prevInput: "value",
+      prevInput: 'value',
       protoFiles: ['file-1', 'file-2', 'file-3'],
       protosToMap : ['file-2']
     };

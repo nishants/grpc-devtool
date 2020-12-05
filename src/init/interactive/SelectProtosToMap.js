@@ -16,7 +16,10 @@ module.exports = {
       },
       getNextInputQuestion: () => {
         const file = protoFiles[nextFile];
-        return `Generate default mappings for ${file} (y/n) ? (y)`;
+        return {
+          question : `Generate default mappings for ${file} (y/n) ?`,
+          default  : 'y'
+        };
       },
       addInput: (input) => {
         const ignore = ['n', 'no'].includes(input.trim().toLowerCase());
