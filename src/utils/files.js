@@ -40,6 +40,17 @@ const writeYaml = (dir, file, content) => {
   return writeFile(dir, file, yaml.stringify(content, {indent: 2}));
 };
 
+const ensureDirExists = (dir) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dir, { recursive: true }, (error) => {
+      if(error){
+        return reject(error);
+      }
+      resolve();
+    })
+  })
+};
+
 const writeFile = (dir, file, content) => {
   return new Promise((resolve, reject) => {
     fs.mkdir(dir, { recursive: true }, (error) => {
@@ -66,11 +77,25 @@ const createTempDir = (name) => {
   });
 };
 
+const copyFile = async (from, to) => {
+  await ensureDirExists(path.dirname(to));
+
+  return new Promise((resolve, reject) => {
+    fs.copyFile(from, to, (error) => {
+      if (error) {
+        return reject(error);
+      }
+      resolve();
+    });
+  });
+};
+
 module.exports = {
   getFilesFromDir,
   readYamlFile,
   readYamlFileInDir,
   writeFile,
   createTempDir,
-  writeYaml
+  writeYaml,
+  copyFile
 };

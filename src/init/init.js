@@ -4,7 +4,7 @@ const endpointsLoader = require('../endpointsLoader');
 const protosReader = require('../protosReader');
 const templateGenerator = require('./templateGenerator');
 
-const {writeYaml, writeFile} = require('../utils/files');
+const {writeYaml, writeFile, copyFile} = require('../utils/files');
 
 const defaultConfig = {
   host: 'localhost',
@@ -28,10 +28,14 @@ module.exports = {
 
     const config = {
       ...defaultConfig,
-      protos : path.relative(configPath, protosPath)
+      protos : './protos'
     };
 
     await writeYaml(configPath, 'grpc.yaml', config);
     await writeYaml(configPath, 'mappings.yaml', mappings);
+
+    for(const filePath of protoFiles){
+      await copyFile(filePath, path.join(configPath, 'protos', filePath.replace(protosPath, '')) );
+    }
   }
 };
