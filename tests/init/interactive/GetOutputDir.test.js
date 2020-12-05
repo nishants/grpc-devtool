@@ -13,7 +13,7 @@ describe("GetOutputDir.js", () => {
   });
 
   test("should ask user for input dir", () => {
-    const expectedQuestion = `Where do you want to save your configuration ?  : ${process.cwd()})`;
+    const expectedQuestion = `Where do you want to save your configuration ?  : ./)`;
     const actualQuestion = getOutputDir.getNextInputQuestion();
     expect(actualQuestion).toBe(expectedQuestion);
   });
@@ -28,6 +28,15 @@ describe("GetOutputDir.js", () => {
       outputDir: 'user/entered/path'
     };
     getOutputDir.addInput('user/entered/path');
+    const actualConfig = getOutputDir.getConfig();
+    expect(actualConfig).toEqual(expectedConfig);
+  });
+
+  test("should create default output if user enters empty", () => {
+    const expectedConfig = {
+      outputDir: './'
+    };
+    getOutputDir.addInput('');
     const actualConfig = getOutputDir.getConfig();
     expect(actualConfig).toEqual(expectedConfig);
   });
