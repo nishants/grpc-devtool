@@ -31,7 +31,7 @@ module.exports = {
       protos : path.relative(configPath, protosPath)
     };
 
-    await writeYaml(configPath, 'config.yaml', config);
+    await writeYaml(configPath, 'grpc.yaml', config);
     await writeYaml(configPath, 'mappings.yaml', mappings);
   }
 };

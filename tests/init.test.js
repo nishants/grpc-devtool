@@ -23,7 +23,7 @@ describe('init project', () => {
       protos: path.relative(path.join(outputDir, 'config'), protosPath)
     };
 
-    const actual = await readYamlFile(path.join(outputDir, 'config', 'config.yaml'));
+    const actual = await readYamlFile(path.join(outputDir, 'config', 'grpc.yaml'));
 
     expect(actual).toEqual(expected);
   });
