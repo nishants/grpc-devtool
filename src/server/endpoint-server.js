@@ -1,11 +1,13 @@
-const grpc = require('grpc');
+const grpc = require('@grpc/grpc-js');
 const {getPathFromObject} = require('../utils/objects');
 const {getHandlerFor} = require('./endpointHandlerTypes');
 
 module.exports = {
-  create: ({host, port, endpointResponder}) => {
+  create: async ({host, port, endpointResponder}) => {
     const server = new grpc.Server();
-    server.bind(`${host}:${port}`, grpc.ServerCredentials.createInsecure());
+    await new Promise((resolve) => {
+      server.bindAsync(`${host}:${port}`, grpc.ServerCredentials.createInsecure(), resolve);
+    })
 
     return {
       addEndpoints: (endpoints) => {

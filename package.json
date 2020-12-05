@@ -4,7 +4,7 @@
   "description": "Record, Playback and Monitor gRPC traffic.",
   "main": "src/cli/index.js",
   "dependencies": {
-    "grpc": "^1.24.4",
+    "@grpc/grpc-js": "^1.2.2",
     "@grpc/proto-loader": "^0.5.5",
     "glob": "^7.1.6",
     "yaml": "^1.10.0"

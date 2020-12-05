@@ -80,7 +80,7 @@ module.exports = {
     };
 
     const endpointResponder = recording ?  endpointRecordAndResponder : endpointTemplateResponder
-    const server = Server.create({host, port, endpointResponder});
+    const server = await Server.create({host, port, endpointResponder});
     server.addEndpoints(endpoints);
     server.start();
 
