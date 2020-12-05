@@ -30,9 +30,16 @@ module.exports = {
       // TODO Full handler for client stream
       // Currently only first message considered
       return new Promise((resolve, reject) => {
-        callContext.on('data', resolve);
+        const data = [];
+        // TODO Currenlty resolves on  first data from client
+        callContext.on('data', (response) => {
+          data.push(response)
+          resolve(response);
+        });
         callContext.on('end', () => {
-          console.warn(`Empty message received from client at ${endpointId}`);
+          if(data.length === 0){
+            console.warn(`Empty message received from client at ${endpointId}`);
+          }
           resolve({});
         });
       });
