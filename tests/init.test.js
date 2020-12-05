@@ -20,12 +20,27 @@ describe('init project', () => {
       host: 'localhost',
       port: '3009',
       streamingLoopSize: 10,
-      protos: path.relative(path.join(outputDir, 'config'), protosPath)
+      protos: './protos'
     };
 
     const actual = await readYamlFile(path.join(outputDir, 'config', 'grpc.yaml'));
 
     expect(actual).toEqual(expected);
+  });
+
+  test('should copy protos to output dir', async () => {
+    const expectedFilesToCopy = [
+      'greet.proto',
+      'helloworld.proto',
+      'prices.proto',
+    ];
+
+    for(const protoFile of expectedFilesToCopy){
+      const copiedProtoFile = path.join(outputDir, 'config', 'protos', protoFile);
+      const exists = fs.existsSync(copiedProtoFile);
+
+      expect({copiedProtoFile, exists}).toEqual({copiedProtoFile, exists: true});
+    }
   });
 
   test('should create mappings file', async () => {
