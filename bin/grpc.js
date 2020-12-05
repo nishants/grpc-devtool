@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../cli').run(process.argv);
+require('../src/cli').run(process.argv);

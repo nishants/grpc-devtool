@@ -1,17 +1,17 @@
 const create = require('./create');
 const record = require('./record');
-const start  = require('./index');
+const serve  = require('./serve');
 const version  = require('./get-version');
 
 const commands = {
   create : (params) => create.run(params),
   record : (params) => record.run(params),
-  serve  : (params) => start.run(params),
-  'v'    : (params) => version.run(),
-  '-v'   : (params) => version.run(),
-  version  : (params) => version.run(),
-  '-version'  : (params) => version.run(),
-  '--version'  : (params) => version.run(),
+  serve  : (params) => serve.run(params),
+  'v'    : () => version.run(),
+  '-v'   : () => version.run(),
+  version  : () => version.run(),
+  '-version'  : () => version.run(),
+  '--version'  : () => version.run(),
   help   : () => console.log(helpText),
   '--help'   : () => console.log(helpText),
   '-help'   : () => console.log(helpText),

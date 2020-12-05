@@ -1,4 +1,4 @@
-const init = require('./src/init/init');
+const init = require('../init/init');
 
 module.exports = {
   run : (params) => {
