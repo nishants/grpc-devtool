@@ -2,7 +2,16 @@
 
 Refer : https://grpc.io/docs/languages/node/basics/
 
+### Todo
 
+- CLI app
+  - how to create npm cli app
+  - add cli commands
+- Project setup
+  - create projec board
+  - create cli pipeline
+  - move to grpc-devtool organization
+- 
 
 ### Todo 
 
