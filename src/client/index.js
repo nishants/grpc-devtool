@@ -10,13 +10,13 @@ const {
   getType
 } = require('../proto/EndpointTypes');
 
-const handleServerStreaming = ({call, streamingLoopSize, data: stream, endpoint, resolve, reject})  => {
+const handleServerStreaming = ({call, trimmedStreamSize, data: stream, endpoint, resolve, reject})  => {
   let lastStreamTime = Date.now();
   let minStreamTime = 1000;
 
   call.on('data', (response) => {
-    if (streamingLoopSize < stream.length) {
-      console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${streamingLoopSize}.`)
+    if (trimmedStreamSize < stream.length) {
+      console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${trimmedStreamSize}.`)
       call.cancel();
       return resolve({stream, streamInterval: minStreamTime, doNotRepeat: false});
     }
@@ -58,19 +58,19 @@ const clientTypeHandlers = {
       });
     });
   },
-  [ServerStreaming] : ({endpointClient, request, endpoint, streamingLoopSize})=> {
+  [ServerStreaming] : ({endpointClient, request, endpoint, trimmedStreamSize})=> {
     return new Promise((resolve, reject) => {
       const data = [];
       const call = endpointClient[endpoint.getName()](request);
-      handleServerStreaming({call, streamingLoopSize, data, endpoint, resolve, reject});
+      handleServerStreaming({call, trimmedStreamSize, data, endpoint, resolve, reject});
     });
   },
-  [BothWayStreaming] : ({endpointClient, request, endpoint, streamingLoopSize})=> {
+  [BothWayStreaming] : ({endpointClient, request, endpoint, trimmedStreamSize})=> {
     return new Promise((resolve, reject) => {
       const data = [];
       const call = endpointClient[endpoint.getName()]();
       call.write(request);
-      handleServerStreaming({call, streamingLoopSize, data, endpoint, resolve, reject});
+      handleServerStreaming({call, trimmedStreamSize, data, endpoint, resolve, reject});
     });
   }
 
@@ -93,9 +93,9 @@ module.exports = {
     }
 
     return {
-      execute : async ({endpoint, request, streamingLoopSize}) =>{
+      execute : async ({endpoint, request, trimmedStreamSize}) =>{
         const endpointClient = endpointClients[endpoint.getId()];
-        return await clientTypeHandlers[getType(endpoint)]({endpointClient, request, endpoint, streamingLoopSize});
+        return await clientTypeHandlers[getType(endpoint)]({endpointClient, request, endpoint, trimmedStreamSize});
       }
     }
   }

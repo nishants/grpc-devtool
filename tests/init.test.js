@@ -28,7 +28,7 @@ describe('init project', () => {
     const expected = {
       host: 'localhost',
       port: '3009',
-      streamingLoopSize: 10,
+      trimmedStreamSize: 10,
       protos: './protos',
       remoteHost: '',
       remotePort: '',

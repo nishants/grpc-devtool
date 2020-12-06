@@ -8,7 +8,7 @@ const withConfig = (config) => {
     ...config,
     protosPath: path.resolve(config.protos),
     configPath: path.resolve(config.configPath),
-    streamingLoopSize: isNaN(config.streamingLoopSize) ? 10 : config.streamingLoopSize
+    trimmedStreamSize: isNaN(config.trimmedStreamSize) ? 10 : config.trimmedStreamSize
   };
 }
 
