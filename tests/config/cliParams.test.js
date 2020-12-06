@@ -52,7 +52,7 @@ describe('getConfigPath.js', () => {
 
 
   test('should accept path withotu quotes', () => {
-    const cliInput = ['path/to/config']
+    const cliInput = ['path/to/config'];
 
     const expected = {
       configPath: "path/to/config"
