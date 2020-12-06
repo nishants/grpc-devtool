@@ -48,7 +48,8 @@ module.exports = {
         //
         config = {
           ...config,
-          protoFiles: protoFileWithEndpoints
+          protoFiles: protoFileWithEndpoints,
+          protosPath
         };
       },
       getConfig: () => {
