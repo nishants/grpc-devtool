@@ -6,7 +6,7 @@ const configFileName = 'grpc.yaml'
 const withConfig = (config) => {
   return {
     ...config,
-    protosPath: path.resolve(config.protosPath),
+    protosPath: path.resolve(config.protos),
     configPath: path.resolve(config.configPath),
     streamingLoopSize: isNaN(config.streamingLoopSize) ? 10 : config.streamingLoopSize
   };
