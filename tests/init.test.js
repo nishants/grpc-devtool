@@ -12,7 +12,6 @@ describe('init project', () => {
 
   beforeAll(async () => {
     protosToMap = [
-      'greet.proto',
       'helloworld.proto',
       'prices.proto',
     ].map(name => path.join(__dirname, 'fixtures', 'protos', name));
@@ -58,7 +57,6 @@ describe('init project', () => {
 
   test('should add all endpoints in mappings file ', async () => {
     const expectedMappings = [
-      'greet.Greeter.SayHello',
       'helloworld.greet.Greeter.SayHello',
       'helloworld.greet.Greeter.StaySilent',
       'helloworld.greet.UnimplementedService.Unimplemented',
@@ -78,30 +76,27 @@ describe('init project', () => {
 
   test('should map all endpoints to a default.yaml', async () => {
     const expectedMappings = {
-      'greet.Greeter.SayHello': [
-      'greet.Greeter.SayHello/default.yaml'],
-
       'helloworld.greet.Greeter.SayHello': [
-      'helloworld.greet.Greeter.SayHello/default.yaml'],
-
-      'helloworld.greet.Greeter.StaySilent': [
-      'helloworld.greet.Greeter.StaySilent/default.yaml'],
-
-      'helloworld.greet.UnimplementedService.Unimplemented': [
-      'helloworld.greet.UnimplementedService.Unimplemented/default.yaml'],
-
-      'helloworld.greet.UnimplementedService.Unimplemented2': [
-      'helloworld.greet.UnimplementedService.Unimplemented2/default.yaml'],
-
-      'prices.streaming.Pricing.Subscribe': [
-      'prices.streaming.Pricing.Subscribe/default.yaml'],
-
-      "prices.streaming.Pricing.MultiSubscribe": [
-      "prices.streaming.Pricing.MultiSubscribe/default.yaml"
+        'data/SayHello/default.yaml'
       ],
-
+      'helloworld.greet.Greeter.StaySilent': [
+        'data/StaySilent/default.yaml'
+      ],
+      'helloworld.greet.UnimplementedService.Unimplemented': [
+        'data/Unimplemented/default.yaml'
+      ],
+      'helloworld.greet.UnimplementedService.Unimplemented2': [
+        'data/Unimplemented2/default.yaml'
+      ],
+      'prices.streaming.Pricing.MultiSubscribe': [
+        'data/MultiSubscribe/default.yaml'
+      ],
+      'prices.streaming.Pricing.Subscribe': [
+        'data/Subscribe/default.yaml'
+      ],
       'prices.streaming.Pricing.TwoWaySubscribe': [
-      'prices.streaming.Pricing.TwoWaySubscribe/default.yaml']
+        'data/TwoWaySubscribe/default.yaml'
+      ]
     };
 
     const mappings = await readYamlFile(expectedMappingFile);
@@ -109,21 +104,20 @@ describe('init project', () => {
     expect(mappings).toEqual(expectedMappings);
   });
 
-  test('should create default.yaml for all endpoints', async () => {
+  test('should create default.yaml for all endpoints with unique suffixes', async () => {
 
     const expectedFilesToCreated = [
-      'greet.Greeter.SayHello',
-      'helloworld.greet.Greeter.SayHello',
-      'helloworld.greet.Greeter.StaySilent',
-      'helloworld.greet.UnimplementedService.Unimplemented',
-      'helloworld.greet.UnimplementedService.Unimplemented2',
-      'prices.streaming.Pricing.Subscribe',
-      "prices.streaming.Pricing.MultiSubscribe",
-      'prices.streaming.Pricing.TwoWaySubscribe'
+      'SayHello',
+      'StaySilent',
+      'Unimplemented',
+      'Unimplemented2',
+      'Subscribe',
+      "MultiSubscribe",
+      'TwoWaySubscribe'
     ];
 
     for(const endpointId of expectedFilesToCreated){
-      const templateFile = path.join(outputDir, 'config', endpointId, 'default.yaml');
+      const templateFile = path.join(outputDir, 'config', 'data', endpointId, 'default.yaml');
       const exists = fs.existsSync(templateFile);
 
       expect({templateFile, exists}).toEqual({templateFile, exists: true});
@@ -131,8 +125,8 @@ describe('init project', () => {
   });
 
   test('should generate request and response in default templates', async () => {
-    const anEndpointId = 'helloworld.greet.UnimplementedService.Unimplemented';
-    const generatedTemplateFile =  path.join(outputDir, 'config', anEndpointId, 'default.yaml');
+    const anEndpointId = 'Unimplemented';
+    const generatedTemplateFile =  path.join(outputDir, 'config', 'data', anEndpointId, 'default.yaml');
 
     const expectedContent = {
       'request@': {
@@ -162,8 +156,8 @@ describe('init project', () => {
   });
 
   test('should add streaming response in default template', async () => {
-    const aStreamingEndpointId = 'prices.streaming.Pricing.Subscribe';
-    const generatedTemplateFile =  path.join(outputDir, 'config', aStreamingEndpointId, 'default.yaml');
+    const aStreamingEndpointId = 'Subscribe';
+    const generatedTemplateFile =  path.join(outputDir, 'config', 'data', aStreamingEndpointId, 'default.yaml');
 
     const expectedContent = {
       'request@': {

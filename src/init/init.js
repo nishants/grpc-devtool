@@ -17,6 +17,7 @@ module.exports = {
   create: async ({outputDir, protosPath, protosToMap}) => {
     const configPath = path.join(outputDir, 'config');
     const endpoints  = await endpointsLoader.loadFiles(protosToMap);
+    const allProtoFiles = await protosReader.readFrom(protosPath);
 
     const mappings = {};
 
@@ -25,9 +26,9 @@ module.exports = {
     for(let i =0; i < endpoints.length; i++){
       const endpoint = endpoints[i];
       const uniqeId = uniqueSuffixes[i];
-      mappings[endpoint.getId()] = [`${uniqeId}/default.yaml`];
+      mappings[endpoint.getId()] = [`data/${uniqeId}/default.yaml`];
       const template = templateGenerator.create(endpoint);
-      await writeFile(path.join(configPath, uniqeId), 'default.yaml', template);
+      await writeFile(path.join(configPath, 'data' , uniqeId), 'default.yaml', template);
     }
 
     const config = {
@@ -38,7 +39,8 @@ module.exports = {
     await writeYaml(configPath, 'grpc.yaml', config);
     await writeYaml(configPath, 'mappings.yaml', mappings);
 
-    for(const filePath of protosToMap){
+    // Copy all proto files as some may not require mapping but may contain messages
+    for(const filePath of allProtoFiles){
       await copyFile(filePath, path.join(configPath, 'protos', filePath.replace(protosPath, '')) );
     }
   }
