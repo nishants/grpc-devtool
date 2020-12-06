@@ -20,7 +20,7 @@ describe('init project', () => {
 
   beforeEach(async () => {
     outputDir = await createTempDir('mirage-config-test');
-    expectedMappingFile = path.join(outputDir, 'config', 'mappings.yaml');
+    expectedMappingFile = path.join(outputDir, 'mappings.yaml');
     await init.create({outputDir, protosToMap, protosPath});
   });
 
@@ -32,7 +32,7 @@ describe('init project', () => {
       protos: './protos'
     };
 
-    const actual = await readYamlFile(path.join(outputDir, 'config', 'grpc.yaml'));
+    const actual = await readYamlFile(path.join(outputDir, 'grpc.yaml'));
 
     expect(actual).toEqual(expected);
   });
@@ -46,7 +46,7 @@ describe('init project', () => {
       ];
 
       for(const protoFile of expectedFilesToCopy){
-        const copiedProtoFile = path.join(outputDir, 'config', 'protos', protoFile);
+        const copiedProtoFile = path.join(outputDir, 'protos', protoFile);
         const exists = fs.existsSync(copiedProtoFile);
 
         expect({copiedProtoFile, exists}).toEqual({copiedProtoFile, exists: true});
@@ -60,7 +60,7 @@ describe('init project', () => {
       ];
 
       for(const protoFile of expectedFilesToCopy){
-        const copiedProtoFile = path.join(outputDir, 'config', 'protos', protoFile);
+        const copiedProtoFile = path.join(outputDir, 'protos', protoFile);
         const exists = fs.existsSync(copiedProtoFile);
 
         expect({copiedProtoFile, exists}).toEqual({copiedProtoFile, exists: true});
@@ -134,7 +134,7 @@ describe('init project', () => {
     ];
 
     for(const endpointId of expectedFilesToCreated){
-      const templateFile = path.join(outputDir, 'config', 'data', endpointId, 'default.yaml');
+      const templateFile = path.join(outputDir, 'data', endpointId, 'default.yaml');
       const exists = fs.existsSync(templateFile);
 
       expect({templateFile, exists}).toEqual({templateFile, exists: true});
@@ -143,7 +143,7 @@ describe('init project', () => {
 
   test('should generate request and response in default templates', async () => {
     const anEndpointId = 'Unimplemented';
-    const generatedTemplateFile =  path.join(outputDir, 'config', 'data', anEndpointId, 'default.yaml');
+    const generatedTemplateFile =  path.join(outputDir, 'data', anEndpointId, 'default.yaml');
 
     const expectedContent = {
       'request@': {
@@ -174,7 +174,7 @@ describe('init project', () => {
 
   test('should add streaming response in default template', async () => {
     const aStreamingEndpointId = 'Subscribe';
-    const generatedTemplateFile =  path.join(outputDir, 'config', 'data', aStreamingEndpointId, 'default.yaml');
+    const generatedTemplateFile =  path.join(outputDir, 'data', aStreamingEndpointId, 'default.yaml');
 
     const expectedContent = {
       'request@': {
@@ -204,7 +204,7 @@ describe('init project', () => {
       protosPath: nestedProtosPath
     });
 
-    const expectedCopiedProtoPath = path.join(outputDir, 'config', 'protos', 'protos', 'prices.proto');
+    const expectedCopiedProtoPath = path.join(outputDir, 'protos', 'protos', 'prices.proto');
     const exists = fs.existsSync(expectedCopiedProtoPath);
 
     expect({copiedProtoFile: expectedCopiedProtoPath, exists}).toEqual({copiedProtoFile: expectedCopiedProtoPath, exists: true});
