@@ -24,9 +24,10 @@ module.exports = {
 
     for(let i =0; i < endpoints.length; i++){
       const endpoint = endpoints[i];
-      mappings[uniqueSuffixes[i]] = [`${endpoint.getId()}/default.yaml`];
+      const uniqeId = uniqueSuffixes[i];
+      mappings[endpoint.getId()] = [`${uniqeId}/default.yaml`];
       const template = templateGenerator.create(endpoint);
-      await writeFile(path.join(configPath, endpoint.getId()), 'default.yaml', template);
+      await writeFile(path.join(configPath, uniqeId), 'default.yaml', template);
     }
 
     const config = {
