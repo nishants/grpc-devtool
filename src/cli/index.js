@@ -28,15 +28,15 @@ const commandHelpLinks = {
 const helpText = `
 Enter a command :
  
-grpc-devtool init --protos path/to/protofiles [--out path]
+grpc init 
 Read more at ${commandHelpLinks.init}
 
 Record grpc interactions : 
-grpc-devtool record my-host.com:8081 [--config path/to/config] [--protos path/to/protofiles ]
+grpc record my-host.com:8081 
 Read more at ${commandHelpLinks.record}
 
 Record grpc interactions : 
-grpc-devtool serve my-host.com:8081 [--config path/to/config] [--protos path/to/protofiles ]
+grpc serve my-host.com:8081 path/to/config
 Read more at ${commandHelpLinks.serve}
 `;
 
