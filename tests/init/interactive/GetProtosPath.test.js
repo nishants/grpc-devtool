@@ -56,7 +56,6 @@ describe('GetProtosPath.js', () => {
       protoFiles: [
         `${aValidProtsDir}/greet.proto`,
         `${aValidProtsDir}/helloworld.proto`,
-        `${aValidProtsDir}/subdir/messages.proto`,
         `${aValidProtsDir}/prices.proto`,
       ]
     };
@@ -83,7 +82,6 @@ describe('GetProtosPath.js', () => {
       protoFiles: [
         `${aValidProtsDir}/greet.proto`,
         `${aValidProtsDir}/prices.proto`,
-        `${aValidProtsDir}/subdir/messages.proto`,
         `${aValidProtsDir}/helloworld.proto`
       ],
       protosPath: aValidProtsDir
@@ -93,5 +91,15 @@ describe('GetProtosPath.js', () => {
 
     expect(actualConfig.protoFiles.sort()).toEqual(expectedConfig.protoFiles.sort());
     expect(actualConfig.protosPath).toEqual(expectedConfig.protosPath);
+  });
+
+  test('should ignore proto files with no services', async () => {
+    state = await GetHostConfig.create({
+      protosPath: aValidProtsDir
+    });
+    const aMessageOnlyProto = `${aValidProtsDir}/subdir/messages.proto`;
+
+    const actualConfig = state.getConfig();
+    expect(actualConfig.protoFiles.includes(aMessageOnlyProto)).toBe(false);
   });
 });

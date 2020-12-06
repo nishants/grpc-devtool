@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const protosReader = require('../../protosReader');
+const hasEndpoint = require('../../proto/hasEndpoint');
 
 module.exports = {
   create : async (prevConfig) => {
@@ -28,12 +29,26 @@ module.exports = {
           return;
         }
         const protoFiles = await protosReader.readFrom(protosPath);
+        const protoFileWithEndpoints = [];
+
+        for(const protoFile of protoFiles){
+          const needsMapping =  await hasEndpoint(protoFile);
+          if(needsMapping){
+            protoFileWithEndpoints.push(protoFile);
+          }
+        }
+
         if(!protoFiles.length){
           return error = `No proto files found in "${input}"`
         }
+
+        // if(!protoFileWithServices.length){
+        //   return error = `None of the protofiles in "${input}" contain a gRPC endpoint.`
+        // }
+        //
         config = {
           ...config,
-          protoFiles
+          protoFiles: protoFileWithEndpoints
         };
       },
       getConfig: () => {
