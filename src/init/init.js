@@ -5,6 +5,7 @@ const protosReader = require('../protosReader');
 const templateGenerator = require('./templateGenerator');
 
 const {writeYaml, writeFile, copyFile} = require('../utils/files');
+const getUniqueSuffixes = require('../utils/getUniqueSuffixes');
 
 const defaultConfig = {
   host: 'localhost',
@@ -19,8 +20,11 @@ module.exports = {
 
     const mappings = {};
 
-    for(const endpoint of endpoints){
-      mappings[endpoint.getId()] = [`${endpoint.getId()}/default.yaml`];
+    const uniqueSuffixes = getUniqueSuffixes(endpoints.map(e => e.getId()));
+
+    for(let i =0; i < endpoints.length; i++){
+      const endpoint = endpoints[i];
+      mappings[uniqueSuffixes[i]] = [`${endpoint.getId()}/default.yaml`];
       const template = templateGenerator.create(endpoint);
       await writeFile(path.join(configPath, endpoint.getId()), 'default.yaml', template);
     }
