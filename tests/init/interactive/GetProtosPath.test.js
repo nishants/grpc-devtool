@@ -10,8 +10,8 @@ describe('GetProtosPath.js', () => {
     prevInput: 'value'
   }
 
-  beforeEach(() => {
-    state = GetHostConfig.create(previousConfig);
+  beforeEach(async () => {
+    state = await GetHostConfig.create(previousConfig);
   })
 
   test('should need user input', () => {
@@ -67,5 +67,27 @@ describe('GetProtosPath.js', () => {
   test('should warn if no proto files found at path', async () => {
     await state.addInput(aValidDirWithNoProtos);
     expect(state.needsMoreInput()).toBe(true);
+  });
+
+  test('should not need user input if protosPath already exists in config', async () => {
+    state = await GetHostConfig.create({
+      protosPath: aValidProtsDir
+    });
+
+    await state.addInput(aValidDirWithNoProtos);
+    expect(state.needsMoreInput()).toBe(false);
+
+    const expectedConfig = {
+      protoFiles: [
+        `${aValidProtsDir}/greet.proto`,
+        `${aValidProtsDir}/helloworld.proto`,
+        `${aValidProtsDir}/prices.proto`
+      ],
+      "protosPath": aValidProtsDir
+
+    };
+
+    const actualConfig = state.getConfig();
+    expect(actualConfig).toEqual(expectedConfig);
   });
 });

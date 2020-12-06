@@ -3,7 +3,7 @@ const path = require('path');
 const protosReader = require('../../protosReader');
 
 module.exports = {
-  create : (prevConfig) => {
+  create : async (prevConfig) => {
     let config = {
       ...prevConfig,
       protoFiles: []
@@ -11,7 +11,7 @@ module.exports = {
 
     let nextQuestion =  'Enter path containing your proto files : '
     let error ;
-    return {
+    let getProtosPath = {
       needsMoreInput: () => {
         return !config.protoFiles.length;
       },
@@ -40,5 +40,10 @@ module.exports = {
         return config;
       }
     };
+
+    if(config.protosPath){
+      await getProtosPath.addInput(config.protosPath);
+    }
+    return getProtosPath;
   }
 };
