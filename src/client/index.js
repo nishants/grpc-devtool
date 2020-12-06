@@ -1,4 +1,6 @@
 const grpc = require('@grpc/grpc-js');
+const MAX_STREAM_RECORDING_DURATION = 10000;
+
 const {getPathFromObject} = require('../../src/utils/objects');
 
 const {
@@ -23,6 +25,18 @@ const handleServerStreaming = ({call, streamingLoopSize, data: stream, endpoint,
     console.log("Received message from remote server ", response);
     stream.push(response);
   });
+
+  const timeoutStream = () => {
+    if(!stream.length){
+      console.warn(`No server stream found for ${endpoint} after ${MAX_STREAM_RECORDING_DURATION/1000} seconds.`);
+      return;
+    }
+    resolve({stream, streamInterval: minStreamTime});
+    console.log(`Closing stream recording for ${endpoint.getId()}`)
+  };
+
+  setTimeout(timeoutStream, MAX_STREAM_RECORDING_DURATION);
+
 
   call.on('end', () => {
     resolve({stream, doNotRepeat: true, streamInterval: minStreamTime});

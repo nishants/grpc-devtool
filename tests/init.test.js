@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const init = require('../src/init/init');
-const {createTempDir, readYamlFile, getFilesFromDir} = require('../src/utils/files');
+const {createTempDir, readYamlFile} = require('../src/utils/files');
 
 describe('init project', () => {
   const protosPath = path.join(__dirname, './fixtures/protos');
