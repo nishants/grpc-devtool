@@ -10,7 +10,10 @@ const getUniqueSuffixes = require('../utils/getUniqueSuffixes');
 const defaultConfig = {
   host: 'localhost',
   port: '3009',
-  streamingLoopSize: 10
+  streamingLoopSize: 10,
+  remoteHost: '',
+  remotePort: '',
+  protos : './protos'
 };
 
 module.exports = {
@@ -32,7 +35,6 @@ module.exports = {
 
     const config = {
       ...defaultConfig,
-      protos : './protos'
     };
 
     await writeYaml(outputDir, 'grpc.yaml', config);

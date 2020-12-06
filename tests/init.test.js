@@ -29,7 +29,9 @@ describe('init project', () => {
       host: 'localhost',
       port: '3009',
       streamingLoopSize: 10,
-      protos: './protos'
+      protos: './protos',
+      remoteHost: '',
+      remotePort: '',
     };
 
     const actual = await readYamlFile(path.join(outputDir, 'grpc.yaml'));
