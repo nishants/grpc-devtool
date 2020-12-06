@@ -41,7 +41,7 @@ module.exports = {
 
     // Copy all proto files as some may not require mapping but may contain messages
     for(const filePath of allProtoFiles){
-      await copyFile(filePath, path.join(configPath, 'protos', filePath.replace(protosPath, '')) );
+      await copyFile(filePath, path.join(configPath, 'protos', path.relative(protosPath, filePath)) );
     }
   }
 };

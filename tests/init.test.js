@@ -175,4 +175,22 @@ describe('init project', () => {
     expect(actualContent).toEqual(expectedContent);
   });
 
+  test('should correctly copy protos keeping relative path to protosPath', async () => {
+    const nestedProtosPath = path.join(__dirname, './fixtures');
+    const protoFile = path.join(__dirname, 'fixtures', 'protos', 'prices.proto')
+
+    outputDir = await createTempDir('mirage-config-test');
+
+    await init.create({
+      outputDir,
+      protosToMap : [protoFile],
+      protosPath: nestedProtosPath
+    });
+
+    const expectedCopiedProtoPath = path.join(outputDir, 'config', 'protos', 'protos', 'prices.proto');
+    const exists = fs.existsSync(expectedCopiedProtoPath);
+
+    expect({copiedProtoFile: expectedCopiedProtoPath, exists}).toEqual({copiedProtoFile: expectedCopiedProtoPath, exists: true});
+  });
+
 });
