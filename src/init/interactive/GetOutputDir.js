@@ -1,9 +1,10 @@
 
 
 module.exports = {
-  create : () => {
+  create : (prevConfig) => {
     let config = {
-      outputDir: null
+      outputDir: null,
+      ...prevConfig
     };
 
     const defaultOutputDir = process.cwd();

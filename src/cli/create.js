@@ -1,7 +1,9 @@
 const init = require('../init');
+const cliParams = require('../config/cliParams');
 
 module.exports = {
-  run : (params) => {
-    init.createProject()
+  run : async (cliInput) => {
+    const cliConfig = await cliParams.parse(cliInput);
+    init.createProject(cliConfig)
   }
 };

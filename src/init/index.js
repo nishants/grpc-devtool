@@ -34,8 +34,8 @@ const askUser = (prompt) => {
 };
 
 module.exports = {
-  createProject : async () => {
-    let config = {};
+  createProject : async (initialConfig) => {
+    let config = {...initialConfig};
     while(states.length){
       const next = states.pop().create(config);
       while(next.needsMoreInput()){

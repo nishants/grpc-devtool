@@ -43,4 +43,14 @@ describe('GetOutputDir.js', () => {
     const actualConfig = getOutputDir.getConfig();
     expect(actualConfig).toEqual(expectedConfig);
   });
+
+  test('should not need input outputDir is already present', () => {
+    const expectedConfig = {
+      outputDir: 'user/entered/intpu'
+    };
+    getOutputDir = GetOutputDir.create({outputDir: 'user/entered/intpu'});
+    const needsInput = getOutputDir.needsMoreInput();
+    const actualConfig = getOutputDir.getConfig();
+    expect(actualConfig).toEqual(expectedConfig);
+  });
 });
