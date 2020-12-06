@@ -56,12 +56,14 @@ describe('GetProtosPath.js', () => {
       protoFiles: [
         `${aValidProtsDir}/greet.proto`,
         `${aValidProtsDir}/helloworld.proto`,
-        `${aValidProtsDir}/prices.proto`
+        `${aValidProtsDir}/subdir/messages.proto`,
+        `${aValidProtsDir}/prices.proto`,
       ]
     };
     await state.addInput(aValidProtsDir);
     const actualConfig = state.getConfig();
-    expect(actualConfig).toEqual(expectedConfig);
+    expect(actualConfig.protoFiles.sort()).toEqual(expectedConfig.protoFiles.sort());
+    expect(actualConfig.prevInput).toEqual(expectedConfig.prevInput);
   });
 
   test('should warn if no proto files found at path', async () => {
@@ -80,14 +82,16 @@ describe('GetProtosPath.js', () => {
     const expectedConfig = {
       protoFiles: [
         `${aValidProtsDir}/greet.proto`,
-        `${aValidProtsDir}/helloworld.proto`,
-        `${aValidProtsDir}/prices.proto`
+        `${aValidProtsDir}/prices.proto`,
+        `${aValidProtsDir}/subdir/messages.proto`,
+        `${aValidProtsDir}/helloworld.proto`
       ],
-      "protosPath": aValidProtsDir
-
+      protosPath: aValidProtsDir
     };
 
     const actualConfig = state.getConfig();
-    expect(actualConfig).toEqual(expectedConfig);
+
+    expect(actualConfig.protoFiles.sort()).toEqual(expectedConfig.protoFiles.sort());
+    expect(actualConfig.protosPath).toEqual(expectedConfig.protosPath);
   });
 });

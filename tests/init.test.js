@@ -13,6 +13,7 @@ describe('init project', () => {
   beforeAll(async () => {
     protosToMap = [
       'helloworld.proto',
+      'subdir/messages.proto',
       'prices.proto',
     ].map(name => path.join(__dirname, 'fixtures', 'protos', name));
   });
@@ -36,20 +37,36 @@ describe('init project', () => {
     expect(actual).toEqual(expected);
   });
 
-  test('should copy protos to output dir', async () => {
-    const expectedFilesToCopy = [
-      'greet.proto',
-      'helloworld.proto',
-      'prices.proto',
-    ];
+  describe("copy protofiles", () => {
 
-    for(const protoFile of expectedFilesToCopy){
-      const copiedProtoFile = path.join(outputDir, 'config', 'protos', protoFile);
-      const exists = fs.existsSync(copiedProtoFile);
+    test('should copy protos to output dir', async () => {
+      const expectedFilesToCopy = [
+        'helloworld.proto',
+        'prices.proto',
+      ];
 
-      expect({copiedProtoFile, exists}).toEqual({copiedProtoFile, exists: true});
-    }
-  });
+      for(const protoFile of expectedFilesToCopy){
+        const copiedProtoFile = path.join(outputDir, 'config', 'protos', protoFile);
+        const exists = fs.existsSync(copiedProtoFile);
+
+        expect({copiedProtoFile, exists}).toEqual({copiedProtoFile, exists: true});
+      }
+    });
+
+    test('should copy protos not selected for mapping', async () => {
+      const expectedFilesToCopy = [
+        'greet.proto',
+        'subdir/messages.proto'
+      ];
+
+      for(const protoFile of expectedFilesToCopy){
+        const copiedProtoFile = path.join(outputDir, 'config', 'protos', protoFile);
+        const exists = fs.existsSync(copiedProtoFile);
+
+        expect({copiedProtoFile, exists}).toEqual({copiedProtoFile, exists: true});
+      }
+    });
+  })
 
   test('should create mappings file', async () => {
     expect(fs.existsSync(expectedMappingFile)).toBe(true);
