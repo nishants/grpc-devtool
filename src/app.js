@@ -10,7 +10,7 @@ const Recorder = require('./endpointRecorder');
 module.exports = {
   run : async ({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, streamingLoopSize}) => {
     console.log('Starting with configuration : ');
-    console.log({host, port, configPath, protosPath, extensionsPath});
+    console.log({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, streamingLoopSize});
 
     const mappings   = await mappingsReader.readFrom(configPath);
     const protoFiles = await protosReader.readFrom(protosPath);

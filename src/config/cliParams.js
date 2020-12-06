@@ -1,5 +1,3 @@
-const {getFilesFromDir} = require('../utils/files');
-
 module.exports = {
   parse: (tokens)=> {
     const trim = value => value.trim().replace(/^"/, '').replace(/"$/, '').trim();
