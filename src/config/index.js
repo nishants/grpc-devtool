@@ -9,6 +9,6 @@ module.exports = {
     const config = await projectConfig.read(runtimeConfig, process.cwd());
     console.log("Project config", config);
 
-    return  {...runtimeConfig, ...config, recording: true};
+    return  {...runtimeConfig, ...config};
   }
 };
