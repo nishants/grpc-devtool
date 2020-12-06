@@ -39,16 +39,9 @@ A sample demonstration of creating a project from [scratch](/doc/demo/create-new
   # Recrod traffic
   grpc record 
   
-  # Use as proxy to monitor gRPC traffic
+  # Serve mapped responses 
   grpc start
   ```
-
-  Default values : 
-
-  - config : `./config`
-  - protos : `./protos`
-  - port : `3009`
-  - host : `0.0.0.0`
 
   
 
@@ -70,7 +63,7 @@ A sample demonstration of creating a project from [scratch](/doc/demo/create-new
 ```yaml
 my-stub/
   - config/
-  - mappings.yaml
+  - grpc.yaml
   - greet/
     - default.yaml
     - rohit.yaml
@@ -85,7 +78,7 @@ my-stub/
 
 ### Configurations
 
-Configuration file shoud be placed in the `config` dir and named as `config.yaml`
+Configuration file shoud be placed in the `config` dir and named as `grpc.yaml`
 
 Example of a cofiguration file : 
 
@@ -101,7 +94,7 @@ All configuration values can be configured at runtime (e.g. in your ci build).
 e.g. 
 
 ```
-grpc-devtool start --port 50055 --protos 
+grpc start --port 50055 
 ```
 
 
@@ -137,7 +130,7 @@ prices.streaming.Pricing.Subscribe : [
 ]
 ```
 
-Remember that the responses are applied in the order declared in mappings file. So if `  "greet/rohit.js.yaml"` matches the request, the response will be returned based on this file.
+***Remember that the responses are applied in the order declared in mappings file.*** So if `  "greet/rohit.js.yaml"` matches the request, the files next to it won't be matched with the request.
 
 
 
@@ -166,11 +159,13 @@ request@ : {
 
 # Response for a streaming request
 response@ : {
-  "stream@"  : [
+  stream@  : [
     {quote: "quote:one"}, 
     {quote: "quote:two"}, 
     {quote: "quote:three"}
-  ]
+  ],
+  doNotRepeat@ : true,   # if not defined, will stream infinitely
+  streamInterval@ : 500  # 500 ms of delay between consecutive messages
 }
 ```
 
@@ -193,6 +188,10 @@ response@ : {
 ```
 
 
+
+#  WIP
+
+> Specs below this are not implemented or guranteed to work for now.
 
 ### Including templates
 
@@ -298,7 +297,7 @@ module.exports = {
 
 ### Sessions
 
-In case you wan't to build a stateful stub (not recommened), you can use sessions.  To enable sessions make sure that`sessionEnabled: true` is set in`config/config.yaml`
+In case you wan't to build a stateful stub (not recommened), you can use sessions.  To enable sessions make sure that`sessionEnabled: true` is set in`config/grpc.yaml`
 
 Then you can use sessions in your matchers or templates : 
 
