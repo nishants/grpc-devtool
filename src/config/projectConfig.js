@@ -19,6 +19,7 @@ module.exports = {
 
     const configFiles = await getFilesFromDir(pathToSearchForConfig) ;
     const configFile = configFiles[0];
+    const configPath = path.dirname(configFile);
 
     if(configFiles.length > 1){
       console.warn("Multiple configuration files found", configFiles);
@@ -33,10 +34,11 @@ module.exports = {
       projectConfig = await readYamlFile(configFile);
     }
 
-
+    // Ignore config path form user input and set to dir containing grpc.yaml
     return withConfig({
       ...projectConfig,
-      ...cliParams
+      ...cliParams,
+      configPath
     });
   },
 }
