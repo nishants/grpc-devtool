@@ -24,8 +24,8 @@ module.exports = {
       config.remotePort = parseInt(cliInputs.remotePort);
     }
 
-    if(typeof cliInputs.streamingLoopSize !== 'undefined'){
-      config.streamingLoopSize = parseInt(cliInputs.streamingLoopSize);
+    if(typeof cliInputs.trimmedStreamSize !== 'undefined'){
+      config.trimmedStreamSize = parseInt(cliInputs.trimmedStreamSize);
     }
 
     if(typeof cliInputs.remote !== 'undefined'){

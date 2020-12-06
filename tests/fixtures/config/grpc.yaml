@@ -4,4 +4,4 @@ remoteHost: 'localhost'
 remotePort: '3010'
 protos: ../protos
 
-streamingLoopSize: 10
+trimmedStreamSize: 10

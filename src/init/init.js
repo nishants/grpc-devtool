@@ -10,7 +10,7 @@ const getUniqueSuffixes = require('../utils/getUniqueSuffixes');
 const defaultConfig = {
   host: 'localhost',
   port: '3009',
-  streamingLoopSize: 10,
+  trimmedStreamSize: 10,
   remoteHost: '',
   remotePort: '',
   protos : './protos'

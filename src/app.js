@@ -8,9 +8,9 @@ const Client = require('./client');
 const Recorder = require('./endpointRecorder');
 
 module.exports = {
-  run : async ({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, streamingLoopSize}) => {
+  run : async ({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, trimmedStreamSize}) => {
     console.log('Starting with configuration : ');
-    console.log({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, streamingLoopSize});
+    console.log({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, trimmedStreamSize});
 
     const mappings   = await mappingsReader.readFrom(configPath);
     const protoFiles = await protosReader.readFrom(protosPath);
@@ -52,7 +52,7 @@ module.exports = {
         if(endpoint.isStreamingRequest()){
           request = await waitForFirstClientStream(callContext, endpointId);
         }
-        const response = await client.execute({endpoint, request, streamingLoopSize});
+        const response = await client.execute({endpoint, request, trimmedStreamSize});
         console.log("Proxying response : ", response);
         // TODO handling streaming response should go in template builder:
         const responseTemplate = endpoint.isStreamingResponse() ? {'stream@' : response.stream, 'doNotRepeat@': response.doNotRepeat, 'streamInterval@': response.streamInterval} : response;

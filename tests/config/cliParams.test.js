@@ -8,7 +8,7 @@ describe('getConfigPath.js', () => {
       'port=3202',
       'protos="path/to/protos with space"',
       'remote=remote.host:121',
-      'streamingLoopSize=1212',
+      'trimmedStreamSize=1212',
       'host=localhost'
     ]
 
@@ -19,7 +19,7 @@ describe('getConfigPath.js', () => {
         protosPath: 'path/to/protos with space',
         remoteHost: 'remote.host',
         remotePort: 121,
-        streamingLoopSize: 1212
+        trimmedStreamSize: 1212
       };
 
     const actual = cliParams.parse(cliInput)
