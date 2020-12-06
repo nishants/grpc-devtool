@@ -51,7 +51,7 @@ describe('getConfigPath.js', () => {
   });
 
 
-  test('should accept path withotu quotes', () => {
+  test('should accept path without quotes', () => {
     const cliInput = ['path/to/config'];
 
     const expected = {
@@ -62,5 +62,18 @@ describe('getConfigPath.js', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  test('should accept init params', () => {
+    const cliInput = ['out=path/to/output'];
+
+    const expected = {
+      outputDir: "path/to/output"
+    };
+
+    const actual = cliParams.parse(cliInput)
+
+    expect(actual).toEqual(expected);
+  });
+
 
 });

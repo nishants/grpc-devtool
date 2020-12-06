@@ -50,6 +50,10 @@ module.exports = {
       config.protosPath = trim(cliInputs.protos);
     }
 
+    if(cliInputs.out){
+      config.outputDir = trim(cliInputs.out);
+    }
+
     return config;
   },
 }
