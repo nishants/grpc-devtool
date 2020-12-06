@@ -18,7 +18,7 @@ const handleServerStreaming = ({call, streamingLoopSize, data: stream, endpoint,
     if (streamingLoopSize < stream.length) {
       console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${streamingLoopSize}.`)
       call.cancel();
-      return resolve({stream, streamInterval: minStreamTime});
+      return resolve({stream, streamInterval: minStreamTime, doNotRepeat: false});
     }
     minStreamTime = Math.min(minStreamTime, Date.now() - lastStreamTime);
     lastStreamTime = Date.now();
@@ -31,7 +31,7 @@ const handleServerStreaming = ({call, streamingLoopSize, data: stream, endpoint,
       console.warn(`No server stream found for ${endpoint} after ${MAX_STREAM_RECORDING_DURATION/1000} seconds.`);
       return;
     }
-    resolve({stream, streamInterval: minStreamTime});
+    resolve({stream, streamInterval: minStreamTime, doNotRepeat: false});
     console.log(`Closing stream recording for ${endpoint.getId()}`)
   };
 
