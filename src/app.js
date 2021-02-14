@@ -1,7 +1,7 @@
-const mappingsReader = require('./mappingsReader');
+const mappingFile = require('./mappingsReader');
 const protosReader = require('./protosReader');
 const endpointsLoader = require('./endpointsLoader');
-const endpointMappingResolver = require('./endpointMappingResolver');
+const endpointDataFileResolver = require('./endpointMappingResolver');
 const TemplateReader = require('./templateReader');
 const Server = require('./server/endpoint-server');
 const Client = require('./client');
@@ -12,16 +12,17 @@ module.exports = {
     console.log('Starting with configuration : ');
     console.log({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, trimmedStreamSize});
 
-    const mappings   = await mappingsReader.readFrom(configPath);
-    const protoFiles = await protosReader.readFrom(protosPath);
-    const endpoints  = await endpointsLoader.loadFiles(protoFiles);
-    const templates  = TemplateReader.create({configPath});
-    const resolver   = await endpointMappingResolver.createResolvers({endpoints, mappings, templates});
+    const mappings   = await mappingFile.readFrom(configPath);
+    const protoFileList = await protosReader.readFrom(protosPath);
+    const endpoints  = await endpointsLoader.loadFiles(protoFileList);
+    const dataFiles  = TemplateReader.create({configPath});
+
+    const resolver   = await endpointDataFileResolver.createResolvers({endpoints, mappings, templates: dataFiles});
     const client     = recording ? await Client.create({host : remoteHost, port : remotePort, endpoints}) : null;
     const recorder   = recording ? await Recorder.create({configPath}) : null;
 
     const compileResponseFile = async (file, callContext)=> {
-      const template = await templates.get(file);
+      const template = await dataFiles.get(file);
       const response = template.getResponse();
       return response.compile();
     };
