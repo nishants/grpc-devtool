@@ -9,6 +9,10 @@ module.exports = {
       const mappingFiles = mappings[endpoint.getId()] || [];
 
       for(const file of mappingFiles){
+        if(Array.isArray(file)){
+          // Ignore array of mappings
+          continue;
+        }
         const template = await templates.get(file)
         const matcher = matchers.create({definition: template.getRequest()});
 

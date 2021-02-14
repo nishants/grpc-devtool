@@ -1,0 +1,10 @@
+request@ : {
+  uic: "211",
+  assetType: "Stock"
+}
+
+response@ : {
+  "stream@"  : [{quote: "211:stock-one"}, {quote: "211:stock-two"}, {quote: "211:stock-three"}],
+  "doNotRepeat@": true,
+  "streamInterval@": 0,
+}

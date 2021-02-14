@@ -1,0 +1,10 @@
+request@ : {
+  uic: "22",
+  assetType: "FxSpot"
+}
+
+response@ : {
+  "stream@"  : [{quote: "22:fxspot-one"}, {quote: "22:fxspot-two"}, {quote: "22:fxspot-three"}],
+  "doNotRepeat@": true,
+  "streamInterval@": 0,
+}
