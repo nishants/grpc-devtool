@@ -5,11 +5,7 @@ const {
   getType
 } = require('../proto/EndpointTypes');
 
-const compileResponseFile = async (file, dataFiles)=> {
-  const template = await dataFiles.get(file);
-  const response = template.getResponse();
-  return response.compile();
-};
+const DEFAULT_STREAMING_DELAY = 1000;
 
 const unaryController = (endpoint, mappingResolver, dataFiles) => {
   return {
@@ -27,14 +23,31 @@ const unaryController = (endpoint, mappingResolver, dataFiles) => {
   }
 };
 
-const serverStreamController = (endpoint) => {
-
+const serverStreamController = (endpoint, mappingResolver, dataFiles) => {
   return {
     canHandle: async (endpointId) => {
-
+      return endpoint.getId() === endpointId;
     },
-    handle : async (endpointId, callContext) => {
+    handle : async (callContext) => {
+      const request = callContext.request;
+      const responseFile = mappingResolver.getResponseFile(endpoint.getId(), request);
+      const template = await dataFiles.get(responseFile);
+      const response = template.getResponse().compile();
 
+      if(!response){
+        return callContext.end();
+      }
+
+      const responses = [...response.stream];
+      const streamingDelay = typeof response.streamInterval === 'undefined' ? DEFAULT_STREAMING_DELAY : response.streamInterval;
+      let keepStreaming = !response.doNotRepeat ;
+
+      for(let i =0; i < responses.length || keepStreaming; i++){
+        await new Promise((resolve => setTimeout(resolve, streamingDelay)));
+        callContext.write(responses[i%responses.length]);
+      }
+
+      callContext.end();
     }
   }
 };
@@ -77,7 +90,7 @@ module.exports = {
     }
 
     if(isServerStream){
-      return serverStreamController(endpoint, mappingResolver);
+      return serverStreamController(endpoint, mappingResolver, dataFiles);
     }
 
     if(isClientStream){
