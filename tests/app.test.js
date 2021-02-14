@@ -55,7 +55,7 @@ describe('app.js', () => {
 
     const expected = [responeOne, responseTwo, responseThree];
 
-    const actual = await client.readTwoWayStream({uic: 211, assetType: 'Stock'});
+    const actual = await client.readTwoWayStream({uic: 101, assetType: 'CfdOnStock'});
     expect(actual).toEqual(expected);
   });
 });

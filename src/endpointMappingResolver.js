@@ -10,9 +10,21 @@ module.exports = {
 
       for(const file of mappingFiles){
         if(Array.isArray(file)){
-          // Ignore array of mappings
+          const templateList =  await Promise.all(file.map(templates.get));
+          const matcherList  =  await Promise.all(templateList.map((template) => {
+            return matchers.create({definition: template.getRequest()})
+          }));
+          const fileMatchers = matcherList.map((matcher, index) => {
+            return {
+              matcher,
+              file: file[index]
+            };
+          });
+
+          endpointFileMatcher.push({matcher: matchers.anyOf(matcherList), fileMatchers});
           continue;
         }
+
         const template = await templates.get(file)
         const matcher = matchers.create({definition: template.getRequest()});
 
@@ -29,7 +41,12 @@ module.exports = {
           console.error(`No response found for ${endpointId} when requested : `, request);
           return null;
         }
-        return matcher.file;
+        if(matcher.hasOwnProperty("file")){
+          return matcher.file;
+        }
+
+        const fileMatcher = matcher.fileMatchers.find(fm => fm.matcher.matches(request));
+        return fileMatcher.file;
       }
     };
   }
