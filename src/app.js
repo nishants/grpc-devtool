@@ -6,6 +6,7 @@ const TemplateReader = require('./templateReader');
 const Server = require('./server/endpoint-server');
 const Client = require('./client');
 const Recorder = require('./endpointRecorder');
+const Controllers = require('./controllers');
 
 module.exports = {
   run : async ({host, port, configPath, protosPath, extensionsPath, recording, remoteHost, remotePort, trimmedStreamSize}) => {
@@ -17,15 +18,13 @@ module.exports = {
     const endpoints  = await endpointsLoader.loadFiles(protoFileList);
     const dataFiles  = TemplateReader.create({configPath});
 
-    const resolver   = await endpointDataFileResolver.createResolvers({endpoints, mappings, templates: dataFiles});
+    const mappingResolver = await endpointDataFileResolver.createResolvers({endpoints, mappings, templates: dataFiles});
+    const controllers = await Promise.all(endpoints.map((endpoint) => {
+      return Controllers.create(endpoint, mappingResolver, dataFiles)
+    }));
+
     const client     = recording ? await Client.create({host : remoteHost, port : remotePort, endpoints}) : null;
     const recorder   = recording ? await Recorder.create({configPath}) : null;
-
-    const compileResponseFile = async (file, callContext)=> {
-      const template = await dataFiles.get(file);
-      const response = template.getResponse();
-      return response.compile();
-    };
 
     const waitForFirstClientStream = (callContext, endpointId) => {
       // TODO Full handler for client stream
@@ -63,20 +62,12 @@ module.exports = {
     };
 
     const endpointTemplateResponder = {
-      getResponse: async (endpointId, callContext) => {
-        const endpoint = endpoints.find(e => e.getId() === endpointId);
-        let request = callContext.request;
-
-        if(endpoint.isStreamingRequest()){
-          request = await waitForFirstClientStream(callContext, endpointId);
+      getResponse: async (endpointId, callContext, callback) => {
+        const controller = controllers.find(controller => controller.canHandle(endpointId));
+        if(controller === null){
+          throw new Error(`No controller found for ${endpointId}`);
         }
-
-        const responseFile = resolver.getResponseFile(endpointId, request);
-        if(!responseFile){
-          // TODO Check for recording mode and invoke recorder
-          return null;
-        }
-        return compileResponseFile(responseFile, callContext);
+        return controller.handle(callContext, callback);
       }
     };
 

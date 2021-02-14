@@ -17,9 +17,10 @@ module.exports = {
           const procedure = getPathFromObject({object: definition, path: endpoint.getService()});
 
           const requestHandler = async (call, callback) => {
-            const response = await endpointResponder.getResponse(endpoint.getId(), call);
-            const responseSender = getHandlerFor(endpoint);
-            await responseSender(response)(call, callback);
+            endpointResponder.getResponse(endpoint.getId(), call, callback);
+            // const response = await endpointResponder.getResponse(endpoint.getId(), call, callback);
+            // const responseSender = getHandlerFor(endpoint);
+            // await responseSender(response)(call, callback);
           };
 
           const methodName = endpoint.getName();
