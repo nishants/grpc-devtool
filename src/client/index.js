@@ -15,15 +15,14 @@ const handleServerStreaming = ({call, trimmedStreamSize, data: stream, endpoint,
   let minStreamTime = 1000;
 
   call.on('data', (response) => {
-    if (trimmedStreamSize < stream.length) {
-      console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${trimmedStreamSize}.`)
-      call.cancel();
-      return resolve({stream, streamInterval: minStreamTime, doNotRepeat: false});
-    }
     minStreamTime = Math.min(minStreamTime, Date.now() - lastStreamTime);
     lastStreamTime = Date.now();
     console.log("Received message from remote server ", response);
     stream.push(response);
+    if (trimmedStreamSize <= stream.length) {
+      console.log(`Stopping to record ${endpoint} as streaming loop size is set to ${trimmedStreamSize}.`)
+      return resolve({stream, streamInterval: minStreamTime, doNotRepeat: false});
+    }
   });
 
   const timeoutStream = () => {

@@ -13,9 +13,8 @@ module.exports = {
   anyOf: (matcherList) => {
     return {
       matches: (data) => {
-        return false;
-        // const matching = matcherList.find(m => m.matches(data));
-        // return matching !== null;
+        const matching = matcherList.find(m => m.matches(data));
+        return !!matching;
       }
     };
   }

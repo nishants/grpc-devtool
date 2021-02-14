@@ -48,9 +48,13 @@ describe('client.js', () => {
   test('should create both way streaming client', async () => {
     const expected = [{quote: "message:one"}, {quote: "message:two"}, {quote: "message:three"}];
 
-    const actual  = await client.execute({endpoint: twoWayStreamingEndpoint, request: {uic: "211", assetType : "Stock"}});
+    const actual  = await client.execute({
+      endpoint: twoWayStreamingEndpoint,
+      request: {uic: "213", assetType : "Stock"},
+      trimmedStreamSize: 3
+    });
 
     expect(actual.stream).toEqual(expected);
-  });
+  }, 1500);
 
 });

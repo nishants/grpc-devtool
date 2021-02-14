@@ -59,12 +59,12 @@ module.exports = {
         });
       }),
 
-      readTwoWayStream : (request) => new Promise(async (resolve, reject) => {
+      readTwoWayStream : (request, timeout = 1000) => new Promise(async (resolve, reject) => {
         const protoDefinition = grpc.loadPackageDefinition(pricesProto).prices.streaming;
         const client = new protoDefinition.Pricing(url, grpc.credentials.createInsecure());
 
         const data = [];
-        const call = client.TwoWaySubscribe(request);
+        const call = client.TwoWaySubscribe();
 
         call.write(request);
 
@@ -79,9 +79,34 @@ module.exports = {
         call.on('error', function(error) {
           reject({data, error});
         });
+        setTimeout(() => call.end(), timeout);
+      }),
 
+      getClientStreamResponses : (requests, timeout = 1000) => new Promise(async (resolve, reject) => {
+        const protoDefinition = grpc.loadPackageDefinition(pricesProto).prices.streaming;
+        const client = new protoDefinition.Pricing(url, grpc.credentials.createInsecure());
+
+        const data = [];
+        const call = client.TwoWaySubscribe();
+
+        requests.forEach((request) => {
+          call.write(request);
+        })
+
+        call.on('data', function(response) {
+          data.push(response);
+        });
+
+        call.on('end', function() {
+          resolve(data);
+        });
+
+        call.on('error', function(error) {
+          reject({data, error});
+        });
+
+        setTimeout(() => call.end(), timeout);
       })
-
 
     };
   }
