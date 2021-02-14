@@ -34,7 +34,7 @@ describe('app.js', () => {
     expect(responseTwo).toEqual({message : "Hello virat"});
 
     const responseThree = await client.sayHelloWorld({name: "nishant"});
-    expect(responseThree).toEqual({message : "Glad to meet you {{request.body.name}}"});
+    expect(responseThree).toEqual({message : "Glad to meet you nishant"});
   });
 
   test('should serve a streaming response', async () => {
