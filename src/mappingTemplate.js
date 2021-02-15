@@ -1,5 +1,7 @@
 const mustache = require('mustache');
 
+const compiled = (template, variables) => JSON.parse(mustache.render(JSON.stringify(template), variables));
+
 module.exports = {
   create: (data) => {
     return {
@@ -12,13 +14,12 @@ module.exports = {
             const response = data['response@'];
             if(response['stream@']){
               return {
-                stream: response['stream@'],
+                stream: compiled(response['stream@'], variables),
                 doNotRepeat: !!response['doNotRepeat@'],
                 streamInterval: response['streamInterval@'],
               }
             }
-            const compiled = JSON.parse(mustache.render(JSON.stringify(response), variables))
-            return compiled;
+            return compiled(response, variables);
         }};
       },
     };
