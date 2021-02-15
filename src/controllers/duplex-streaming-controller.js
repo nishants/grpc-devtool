@@ -16,7 +16,7 @@ module.exports = {
           console.log(`Received request for ${endpoint.getId()} `, request);
           const responseFile = mappingResolver.getResponseFile(endpoint.getId(), request);
           const template = await dataFiles.get(responseFile);
-          const response = template.getResponse().compile();
+          const response = template.getResponse().compile({request : {body: request}});
 
           if(!response){
             return callContext.end();
