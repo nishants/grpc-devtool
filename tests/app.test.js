@@ -102,5 +102,19 @@ describe('app.js', () => {
 
       expect(actualQuotes).toEqual(expectedQuotes);
     }, 2000);
-  })
+  });
+
+  describe('Should support expressions in template', () => {
+
+    test('should support expressions in templates', async () => {
+      const expectedFxSpot = [
+        {quote: "299:stock-one"},
+        {quote: "299:stock-two"},
+        {quote: "299:stock-three"}
+      ];
+      const actual = await client.readTwoWayStream({uic: 299, assetType: 'Stock'});
+      expect(actual).toEqual(expectedFxSpot);
+    });
+  });
+
 });
