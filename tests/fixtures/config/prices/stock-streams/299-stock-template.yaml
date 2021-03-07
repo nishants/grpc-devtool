@@ -1,0 +1,10 @@
+request@ : {
+  uic: "299",
+  assetType: "Stock"
+}
+
+response@ : {
+  "stream@"  : '{{["one", "two", "three"].map(v => ({quote: `${request.body.uic}:stock-${v}`}))}}',
+  "doNotRepeat@": true,
+  "streamInterval@": 0,
+}
