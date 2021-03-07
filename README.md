@@ -25,7 +25,7 @@
 
 ### Setup
 
-A sample demonstration of creating a project from [scratch](/doc/demo/create-new) 
+A sample demonstration of creating a project from [scratch](https://grpc-devtool.github.io/quick-start) 
 
 - Run as node module
 
@@ -325,6 +325,6 @@ request@: {
 
 ### Roadmap
 
-- [ ] Test with prices service at saxo
+- [x] Test with prices service at saxo
 - [ ] Add Oauth
 - [ ] Add MTLS

@@ -2,16 +2,18 @@ Todo
 
 ### Templates with expressions support
 
-- [ ] Remove mustache
+- [x] Remove mustache
 
-  > Mustache can not support expressions in templates. It only allows key/value pair.
+  > Mustache can not support JS expressions in templates. It only allows key/value pair from variables.
   >
   > i.e. `{{request.body.name}}` is supported but` {{request.body.name.toUpperCase()}}` is not supported
 
-- [ ] Setup jeyson templates
+- [x] Setup jeyson templates
 
-  - [ ] Make all tests pass
-  - [ ] Make all tests pass with pricing service.
+  - [x] Make all tests pass
+  - [x] Make all tests pass with pricing service.
+
+
 
 
 

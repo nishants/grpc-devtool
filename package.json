@@ -1,6 +1,6 @@
 {
   "name": "grpc-devtool",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Record, Playback and Monitor gRPC traffic.",
   "main": "src/cli/index.js",
   "dependencies": {
