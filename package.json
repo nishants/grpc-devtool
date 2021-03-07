@@ -8,6 +8,7 @@
     "@grpc/proto-loader": "^0.5.5",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
+    "jeyson": "^1.0.6",
     "mustache": "^4.1.0",
     "yaml": "^1.10.0"
   },
