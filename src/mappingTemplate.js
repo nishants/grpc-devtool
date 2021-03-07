@@ -1,6 +1,5 @@
-const mustache = require('mustache');
-
-const compiled = (template, variables) => JSON.parse(mustache.render(JSON.stringify(template), variables));
+const jeyson    = require('jeyson').create();
+const compiled = (template, variables) => jeyson.compile(variables, template);
 
 module.exports = {
   create: (data) => {
