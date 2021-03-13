@@ -18,47 +18,32 @@ steps:
       path: $(Build.SourcesDirectory)/ui-assets
 
   - script: |
-      echo "Check in /"
-      ls
-      echo "*************"
-
-      echo "Check in /ui-assets dir"
-      ls ui-assets
-      echo "*************"
-
-      echo "copy files : cp -r ui-assets/* app/assets/"
       cp -r ui-assets/* app/assets/
-      echo "*************"
-
-      echo "Check in app/assets"
-      ls app/assets
-      echo "*************"
-
-    displayName: 'ls app/assets'
+    displayName: 'Copy ui-assets to app/assets'
 
   - script: |
       cd app
       yarn
-    displayName: 'npm install'
-#
-#  - script: |
-#      cd app
-#      yarn make
-#    displayName: 'Build electron app'
-#
-#  - task: CopyFiles@2
-#    inputs:
-#      sourceFolder: '$(System.DefaultWorkingDirectory)/app/out'
-#      targetFolder: '$(Build.ArtifactStagingDirectory)'
-#      flattenFolders: true
-#      cleanTargetFolder: true
-#      preserveTimestamp: true
-#      contents: '**/*${{ parameters.extension }}'
-#      overWrite: false
-#
-#  - task: PublishPipelineArtifact@1
-#    inputs:
-#      artifactName: ${{ parameters.buildName }}
-#      targetPath: '$(Build.ArtifactStagingDirectory)'
-#      artifactType: 'pipeline'
-#      #fileSharePath: '\builds\${{ parameters.buildName }}'
+    displayName: 'Install'
+
+  - script: |
+      cd app
+      yarn make
+    displayName: 'Build electron app'
+
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(System.DefaultWorkingDirectory)/app/out'
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+      flattenFolders: true
+      cleanTargetFolder: true
+      preserveTimestamp: true
+      contents: '**/*${{ parameters.extension }}'
+      overWrite: false
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      artifactName: ${{ parameters.buildName }}
+      targetPath: '$(Build.ArtifactStagingDirectory)'
+      artifactType: 'pipeline'
+      #fileSharePath: '\builds\${{ parameters.buildName }}'
