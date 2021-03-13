@@ -20,6 +20,11 @@
   "config": {
     "forge": {
       "packagerConfig": {
+        "name": "GrpcDevtool",
+        "out": "dist",
+        "overwrite" : true,
+        "appCategoryType": "app-category-type=public.app-category.developer-tools",
+        "darwinDarkModeSupport": true
       },
       "makers": [
         {
