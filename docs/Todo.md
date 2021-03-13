@@ -13,14 +13,16 @@
 
   - [x] Build for Macos and publish
 
-  - [ ] Set build icon
+  - [x] Set build icon
 
-  - [ ] Build for Windows and publish
+  - [x] Build for Windows and publish
 
-    - [ ] Check on windows machine
+    - [x] Check on windows machine
+
+  - [ ] Create ui project
 
   - [ ] Create single build pipeline with stages
-
+  
   - [ ] Publish to github packages
   
     - [ ] Ensure it works
