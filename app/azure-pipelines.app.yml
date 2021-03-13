@@ -27,14 +27,6 @@ jobs:
           yarn make
         displayName: 'Build electron app'
 
-      - publish: $(System.DefaultWorkingDirectory)/app/out/make/zip/darwin/x64/GrpcDevtool-darwin-x64-1.0.0.zip
-        artifact: WebApp
-
-      - script: |
-          cd app
-          yarn make
-        displayName: 'Build electron app'
-
       - task: CopyFiles@2
         inputs:
           sourceFolder: '$(System.DefaultWorkingDirectory)/app/out'
@@ -45,11 +37,6 @@ jobs:
           contents: '**/*.zip'
           overWrite: false
           #contents: '**/$(BuildConfiguration)/**/?(*.exe|*.dll|*.pdb)'
-
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: '$(Build.ArtifactStagingDirectory)'
-          artifactName: drop
 
       - task: PublishPipelineArtifact@1
         inputs:
