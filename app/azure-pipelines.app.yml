@@ -11,9 +11,9 @@ jobs:
     pool:
       vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
     steps:
-      - task: NodeTool@0
+      - task: NodeTool@0 #https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/node-js?view=azure-devops
         inputs:
-        versionSpec: '>= 10.0.0'
+          versionSpec: '>= 10.0.0'
 
       - script: |
           cd app
