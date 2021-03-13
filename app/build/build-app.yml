@@ -1,0 +1,39 @@
+parameters:
+  - name: buildName
+    type: string
+  - name: extension
+    type: string
+
+steps:
+  # Ensure required node version is installed
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/node-js?view=azure-devops
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '>= 10.0.0'
+
+  - script: |
+      cd app
+      yarn
+    displayName: 'npm install'
+
+  - script: |
+      cd app
+      yarn make
+    displayName: 'Build electron app'
+
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(System.DefaultWorkingDirectory)/app/out'
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+      flattenFolders: true
+      cleanTargetFolder: true
+      preserveTimestamp: true
+      contents: '**/*${{ parameters.extension }}'
+      overWrite: false
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      artifactName: ${{ parameters.buildName }}
+      targetPath: '$(Build.ArtifactStagingDirectory)'
+      artifactType: 'pipeline'
+      #fileSharePath: '\builds\${{ parameters.buildName }}'

@@ -27,6 +27,8 @@ Configuring :
       "overwrite" : true,
       "appCategoryType": "app-category-type=public.app-category.developer-tools", 
       "darwinDarkModeSupport": true,
+      "icon": "path/to/icon.icns"
+
     }
 	}
 }
