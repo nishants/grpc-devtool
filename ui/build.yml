@@ -1,0 +1,16 @@
+steps:
+  # Ensure required node version is installed
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/node-js?view=azure-devops
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '>= 10.0.0'
+
+  - script: |
+      cd app
+      npm i
+    displayName: 'npm install'
+
+  - script: |
+      cd app
+      npm run build
+    displayName: 'Build electron app'

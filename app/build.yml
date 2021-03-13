@@ -12,6 +12,10 @@ steps:
       versionSpec: '>= 10.0.0'
 
   - script: |
+      ls app/assets
+    displayName: 'ls app/assets'
+
+  - script: |
       cd app
       yarn
     displayName: 'npm install'

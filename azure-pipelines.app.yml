@@ -1,0 +1,41 @@
+trigger:
+- master
+
+pr:
+- master
+
+stages:
+  - stage: BuildUi
+    displayName: "Build /ui"
+    jobs:
+      - job: BuilUI
+        displayName: "ui/build.yml"
+        timeoutInMinutes: 10
+        steps:
+          - template: ui/build.yml
+
+  - stage: BuildApp
+    displayName: "ui/build.yml"
+    dependsOn: "BuildUi"
+    jobs:
+      - job: MacOs
+        displayName: "MacOs Build - Mojave(macOS-10.14)"
+        timeoutInMinutes: 10
+        pool:
+          vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
+        steps:
+        - template: app/build.yml
+          parameters:
+            buildName: "MacOs"
+            extension: ".zip"
+
+      - job: Windows
+        displayName: "Windows Build - Windows Server(windows-2019)"
+        timeoutInMinutes: 10
+        pool:
+          vmImage: 'windows-2019'
+        steps:
+          - template: app/build.yml
+            parameters:
+              buildName: "Windows"
+              extension: "Setup.exe" # Ignore other files like standalone app/squirrel.exe
