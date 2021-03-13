@@ -16,4 +16,4 @@ steps:
     displayName: 'npm run build'
 
   - publish: $(System.DefaultWorkingDirectory)/ui/dist
-    artifact: ui
+    artifact: ui-assets

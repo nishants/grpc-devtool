@@ -12,19 +12,19 @@ steps:
       versionSpec: '>= 10.0.0'
 
   - download: current
-    artifact: ui
+    artifact: ui-assets
 
   - script: |
       echo "Check in /"
       ls
       echo "*************"
 
-      echo "Check in /ui dir"
-      ls ui
+      echo "Check in /ui-assets dir"
+      ls ui-assets
       echo "*************"
 
-      echo "copy files : cp -r ui/* app/assets/"
-      cp -r ui/* app/assets/
+      echo "copy files : cp -r ui-assets/* app/assets/"
+      cp -r ui-assets/* app/assets/
       echo "*************"
 
       echo "Check in app/assets"
