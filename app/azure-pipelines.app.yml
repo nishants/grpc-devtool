@@ -11,7 +11,10 @@ jobs:
     pool:
       vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
     steps:
-      - bash: echo "Hello world"
+      - task: NodeTool@0
+        inputs:
+        versionSpec: '>= 10.0.0'
+
       - script: |
           cd app
           yarn
