@@ -11,10 +11,20 @@ steps:
     inputs:
       versionSpec: '>= 10.0.0'
 
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: ui-assets
+      patterns: '**/*'
+      path: $(Build.SourcesDirectory)/ui-assets
+
+  - script: |
+      cp -r ui-assets/* app/assets/
+    displayName: 'Copy ui-assets to app/assets'
+
   - script: |
       cd app
       yarn
-    displayName: 'npm install'
+    displayName: 'Install'
 
   - script: |
       cd app

@@ -15,6 +15,7 @@ Configuring :
 
 - parameters: https://www.electronforge.io/configuration
 - package config options : https://electron.github.io/electron-packager/master/interfaces/electronpackager.options.html#name
+- icon: https://stackoverflow.com/questions/48790003/setting-platform-dependant-icon-via-electron-forge-electronpackagerconfig
 
 ```yaml
 # app/package.json
@@ -27,8 +28,7 @@ Configuring :
       "overwrite" : true,
       "appCategoryType": "app-category-type=public.app-category.developer-tools", 
       "darwinDarkModeSupport": true,
-      "icon": "path/to/icon.icns"
-
+      "icon": "assets/icons/icon"
     }
 	}
 }
