@@ -14,10 +14,12 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    cd core
     npm install
   displayName: 'npm install'
 
 
 - script: |
+    cd core
     npm test
   displayName: 'npm test'

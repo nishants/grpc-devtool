@@ -1,4 +1,15 @@
-Todo
+### Todo
+
+- [ ] Create mono-repo
+
+  > - core
+  > - ui
+  > - client
+  > - app
+
+
+
+
 
 ### Templates with expressions support
 
