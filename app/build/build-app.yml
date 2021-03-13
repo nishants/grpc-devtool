@@ -1,3 +1,8 @@
+parameters:
+  - name: buildName
+    type: string
+    default: false
+
 steps:
   # Ensure required node version is installed
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/node-js?view=azure-devops
@@ -24,11 +29,10 @@ steps:
       preserveTimestamp: true
       contents: '**/*.zip'
       overWrite: false
-      #contents: '**/$(BuildConfiguration)/**/?(*.exe|*.dll|*.pdb)'
 
   - task: PublishPipelineArtifact@1
     inputs:
-      artifactName: 'Mojave' # Optional
-      targetPath: '$(Build.ArtifactStagingDirectory)' # Required
-      artifactType: 'pipeline' # Required. Options: pipeline, filepath. Default value: pipeline
-      #fileSharePath: '\server\folderName' # Required when artifactType = filepath
+      artifactName: ${{ parameters.buildName }}
+      targetPath: '$(Build.ArtifactStagingDirectory)'
+      artifactType: 'pipeline'
+      #fileSharePath: '\builds\${{ parameters.buildName }}'
