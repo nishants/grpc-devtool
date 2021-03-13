@@ -5,6 +5,17 @@ pr:
 - master
 
 stages:
+  - stage: BuildCore
+    displayName: "core/build.yml"
+    jobs:
+      - job: BuildCore
+        displayName: "Build grpc-devtool"
+        timeoutInMinutes: 10
+        pool:
+          vmImage: 'ubuntu-18.04'
+        steps:
+          - template: core/build.yml
+
   - stage: BuildUi
     displayName: "ui/build.yml"
     jobs:
@@ -17,7 +28,7 @@ stages:
           - template: ui/build.yml
 
   - stage: BuildApp
-    displayName: "ui/build.yml"
+    displayName: "app/build.yml"
     dependsOn: "BuildUi"
     jobs:
       - job: MacOs
