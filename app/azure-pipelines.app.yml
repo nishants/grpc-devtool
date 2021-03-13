@@ -1,0 +1,23 @@
+trigger:
+- master
+
+pr:
+- master
+
+jobs:
+  - job: MacOs
+    displayName: "MacOs Build - Mojave(macOS-10.14)"
+    timeoutInMinutes: 10
+    pool:
+      vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
+    steps:
+      - bash: echo "Hello world"
+      - script: |
+          cd app
+          yarn
+        displayName: 'npm install'
+
+      - script: |
+          cd app
+          yarn make
+        displayName: 'Build electron app'
