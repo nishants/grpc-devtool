@@ -1,13 +1,18 @@
 ### Todo
 
-- [ ] Create mono-repo
+- [x] Create mono-repo
 
   > - core
   > - ui
   > - client
   > - app
 
-
+- [ ] Electron project 
+  - [ ] publish to github packages
+    - [ ] macos
+    - [ ] windows
+    - [ ] linux
+  - [ ] ensure works on windows
 
 
 
