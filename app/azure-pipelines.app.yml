@@ -25,4 +25,4 @@ jobs:
       - template: build/build-app.yml
         parameters:
           buildName: "Windows"
-          extension: "Setup.exe"
+          extension: "Setup.exe" # Ignore other files like standalone app/squirrel.exe
