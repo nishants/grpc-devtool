@@ -12,3 +12,11 @@ jobs:
       vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
     steps:
     - template: build/build-app.yml
+
+  - job: Windows
+    displayName: "Windows Build - Windows Server(windows-2019)"
+    timeoutInMinutes: 10
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+      - template: build/build-app.yml
