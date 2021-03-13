@@ -1,7 +1,7 @@
 {
-  "name": "grpc-devtool-app",
-  "productName": "grpc-devtool-app",
-  "version": "1.0.0",
+  "name": "grpc-devtool.app",
+  "productName": "grpc-devtool.app",
+  "version": "0.0.10",
   "description": "GrpcDevtool Gui app.",
   "main": "src/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "keywords": [],
   "author": {
     "name": "nishant",
-    "email": "nishant.singh87@gmail.com"
+    "email": "in.nishants@gmail.com"
   },
   "license": "MIT",
   "config": {
