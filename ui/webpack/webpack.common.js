@@ -2,14 +2,12 @@ const Path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
 
 module.exports = {
   entry: {
     app: Path.resolve(__dirname, '../src/scripts/index.js'),
   },
   output: {
-    path: path.resolve(__dirname, "..", "..", "app", 'assets'),
     filename: 'js/[name].js',
   },
   optimization: {

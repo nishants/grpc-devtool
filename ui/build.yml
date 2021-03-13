@@ -6,11 +6,14 @@ steps:
       versionSpec: '>= 10.0.0'
 
   - script: |
-      cd app
+      cd ui
       npm i
     displayName: 'npm install'
 
   - script: |
-      cd app
-      npm run build
-    displayName: 'Build electron app'
+      cd ui
+      npm run build:prod
+    displayName: 'npm run build'
+
+  - publish: $(System.DefaultWorkingDirectory)/bin/WebApp
+    artifact: WebApp
