@@ -28,7 +28,7 @@ steps:
       flattenFolders: true
       cleanTargetFolder: true
       preserveTimestamp: true
-      contents: '**/*.${{ parameters.extension }}'
+      contents: '**/*${{ parameters.extension }}'
       overWrite: false
 
   - task: PublishPipelineArtifact@1

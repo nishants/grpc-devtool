@@ -14,7 +14,7 @@ jobs:
     - template: build/build-app.yml
       parameters:
         buildName: "MacOs"
-        extension: "zip"
+        extension: ".zip"
 
   - job: Windows
     displayName: "Windows Build - Windows Server(windows-2019)"
@@ -25,4 +25,4 @@ jobs:
       - template: build/build-app.yml
         parameters:
           buildName: "Windows"
-          extension: "exe"
+          extension: "Setup.exe"
