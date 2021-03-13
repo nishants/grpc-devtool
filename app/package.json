@@ -2,7 +2,7 @@
   "name": "grpc-devtool-app",
   "productName": "grpc-devtool-app",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "GrpcDevtool Gui app.",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
