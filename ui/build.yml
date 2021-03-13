@@ -15,5 +15,5 @@ steps:
       npm run build:prod
     displayName: 'npm run build'
 
-  - publish: $(System.DefaultWorkingDirectory)/bin/WebApp
-    artifact: WebApp
+  - publish: $(System.DefaultWorkingDirectory)/ui/dist
+    artifact: ui
