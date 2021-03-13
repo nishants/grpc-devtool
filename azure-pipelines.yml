@@ -18,6 +18,7 @@ stages:
 
   - stage: BuildUi
     displayName: "ui/build.yml"
+    dependsOn: [] # run in parallel with core build
     jobs:
       - job: BuilUI
         displayName: "Webpack build"
