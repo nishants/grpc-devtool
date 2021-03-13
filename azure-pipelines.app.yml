@@ -6,10 +6,10 @@ pr:
 
 stages:
   - stage: BuildUi
-    displayName: "Build /ui"
+    displayName: "ui/build.yml"
     jobs:
       - job: BuilUI
-        displayName: "ui/build.yml"
+        displayName: "Webpack build"
         timeoutInMinutes: 10
         pool:
           vmImage: 'ubuntu-18.04'

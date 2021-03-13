@@ -15,12 +15,12 @@ steps:
     artifact: ui
 
   - script: |
-      echo "Check in app dir"
-      ls app
+      echo "Check in /"
+      ls
       echo "*************"
 
-      echo "Check in app/ui dir"
-      ls app/ui
+      echo "Check in /ui dir"
+      ls ui
       echo "*************"
 
       echo "copy files : cp -r ui/* app/assets/"
@@ -28,7 +28,7 @@ steps:
       echo "*************"
 
       echo "Check in app/assets"
-      ls assets
+      ls app/assets
       echo "*************"
 
     displayName: 'ls app/assets'
