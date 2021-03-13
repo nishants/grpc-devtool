@@ -11,6 +11,8 @@ stages:
       - job: BuilUI
         displayName: "ui/build.yml"
         timeoutInMinutes: 10
+        pool:
+          vmImage: 'ubuntu-18.04'
         steps:
           - template: ui/build.yml
 
