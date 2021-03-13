@@ -1,7 +1,8 @@
 parameters:
   - name: buildName
     type: string
-    default: false
+  - name: extension
+    type: string
 
 steps:
   # Ensure required node version is installed
@@ -27,7 +28,7 @@ steps:
       flattenFolders: true
       cleanTargetFolder: true
       preserveTimestamp: true
-      contents: '**/*.zip'
+      contents: '**/*.${{ parameters.extension }}'
       overWrite: false
 
   - task: PublishPipelineArtifact@1
