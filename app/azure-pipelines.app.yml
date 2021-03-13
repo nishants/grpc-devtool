@@ -11,7 +11,8 @@ jobs:
     pool:
       vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
     steps:
-      # Ensure requried node version is installed - https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/node-js?view=azure-devops
+      # Ensure required node version is installed
+      # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/node-js?view=azure-devops
       - task: NodeTool@0 
         inputs:
           versionSpec: '>= 10.0.0'
@@ -25,3 +26,34 @@ jobs:
           cd app
           yarn make
         displayName: 'Build electron app'
+
+      - publish: $(System.DefaultWorkingDirectory)/app/out/make/zip/darwin/x64/GrpcDevtool-darwin-x64-1.0.0.zip
+        artifact: WebApp
+
+      - script: |
+          cd app
+          yarn make
+        displayName: 'Build electron app'
+
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(System.DefaultWorkingDirectory)/app/out'
+          targetFolder: '$(Build.ArtifactStagingDirectory)'
+          flattenFolders: true
+          cleanTargetFolder: true
+          preserveTimestamp: true
+          contents: '**/*.zip'
+          overWrite: false
+          #contents: '**/$(BuildConfiguration)/**/?(*.exe|*.dll|*.pdb)'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: drop
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          artifactName: 'Mojave' # Optional
+          targetPath: '$(Build.ArtifactStagingDirectory)' # Required
+          artifactType: 'pipeline' # Required. Options: pipeline, filepath. Default value: pipeline
+          #fileSharePath: '\server\folderName' # Required when artifactType = filepath
