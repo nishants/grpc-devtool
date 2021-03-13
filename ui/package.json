@@ -1,7 +1,7 @@
 {
-  "name": "webpack-starter",
-  "version": "1.0.0",
-  "description": "A light foundation for your next frontend project based on webpack.",
+  "name": "grpc-devtool.ui",
+  "version": "0.0.10",
+  "description": "UI for GrpcDevtool",
   "scripts": {
     "lint": "npm run lint:styles; npm run lint:scripts",
     "lint:styles": "stylelint src",
@@ -22,7 +22,7 @@
     "javascript",
     "webdev"
   ],
-  "author": "webkid.io",
+  "author": "nishants",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wbkd/webpack-starter/issues"
