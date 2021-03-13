@@ -11,8 +11,11 @@ steps:
     inputs:
       versionSpec: '>= 10.0.0'
 
-  - download: current
-    artifact: ui-assets
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: ui-assets
+      patterns: '**/*'
+      path: $(Build.SourcesDirectory)/ui-assets
 
   - script: |
       echo "Check in /"
