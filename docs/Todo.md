@@ -13,6 +13,8 @@
 
   - [x] Build for Macos and publish
 
+  - [ ] Set build icon
+
   - [ ] Build for Windows and publish
 
     - [ ] Check on windows machine
@@ -20,7 +22,7 @@
   - [ ] Create single build pipeline with stages
 
   - [ ] Publish to github packages
-
+  
     - [ ] Ensure it works
   
   - [ ] Build for Linux and publish
