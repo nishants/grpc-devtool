@@ -25,7 +25,7 @@
         "overwrite" : true,
         "appCategoryType": "app-category-type=public.app-category.developer-tools",
         "darwinDarkModeSupport": true,
-        "icon": "assets/icon.icns"
+        "icon": "assets/icons/icon"
       },
       "makers": [
         {

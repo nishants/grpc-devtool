@@ -19,8 +19,19 @@
 
     - [x] Check on windows machine
 
-  - [ ] Create ui project
+  - [x] Create ui project
 
+  - [ ] Create sketch for ui
+  
+    - [ ] Open first time
+    - [ ] Load config from path
+    - [ ] Create new config
+    - [ ] Run in recorder mode
+    - [ ] Run in proxy mode
+    - [ ] Run in player mode
+  
+    
+  
   - [ ] Create single build pipeline with stages
   
   - [ ] Publish to github packages
