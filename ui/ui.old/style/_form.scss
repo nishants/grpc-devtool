@@ -1,0 +1,57 @@
+button, .button {
+  background: var(--vscode-button-background);
+  cursor: pointer;
+  border: none;
+  padding: 0 10px;
+  line-height: $rowHeight;
+  color: $buttonColor;
+
+  &:hover{
+    background: var(--vscode-button-hoverBackground);
+  }
+}
+
+a.button{
+  text-decoration: none;
+  outline: 0;
+}
+
+a:not(.button){
+  font-style: italic;
+}
+
+a{
+  cursor: pointer;
+}
+
+button.warning{
+  background: $warningBgColor;
+}
+
+select {
+  display: block;
+  background: var(--vscode-settings-dropdownBackground);
+  border-color:  var(--vscode-settings-dropdownBorder);
+  color: var(--vscode-settings-dropdownForeground);
+  cursor: pointer;
+  padding: 0 10px;
+  line-height: $rowHeight;
+  height: $rowHeight;
+
+  font-size: $theme-font-weight;
+  font-weight: $theme-font-weight;
+  font-family: $theme-font-family;
+
+  border-radius: $border-radius;
+  -webkit-appearance: none;
+  -webkit-border-radius: $border-radius;
+}
+
+.column-label{
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+button, select{
+  min-width: $columnWidth;
+}

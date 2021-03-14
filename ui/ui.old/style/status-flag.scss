@@ -1,0 +1,21 @@
+
+.status-flag{
+  display: block;
+  width: $columnWidth;
+  line-height: $rowHeight;
+
+  a{
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  &.success{
+    color: $successColor;
+  }
+  &.error{
+    color: $errorColor;
+  }
+  &.warning{
+    color: $warningFontColor;
+  }
+}
