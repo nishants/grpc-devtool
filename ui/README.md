@@ -1,33 +1,14 @@
-# Webpack Frontend Starterkit
+[![Build Status](https://saxouniversity.visualstudio.com/stgo-vscode/_apis/build/status/nishants.stgo-vscode?branchName=master)](https://saxouniversity.visualstudio.com/stgo-vscode/_build/latest?definitionId=11&branchName=master)
 
-[![Dependabot badge](https://flat.badgen.net/dependabot/wbkd/webpack-starter?icon=dependabot)](https://dependabot.com/)
+![](./docs/images/wtfpl-badge.png)
 
-A lightweight foundation for your next webpack based frontend project.
+Development build ui (wihtout minification ): `NODE_ENV=dev yarn build:ui`
 
-### Installation
+End to end testing tool : https://github.com/redhat-developer/vscode-extension-tester
 
-```
-npm install
-```
 
-### Start Dev Server
 
-```
-npm start
-```
+Download latest build from master : https://stgovscode.z22.web.core.windows.net/downloads/branch/master/stgo-vscode.vsix
 
-### Build Prod Version
+Or, change link to download package from a specific branch: https://stgovscode.z22.web.core.windows.net/downloads/branch/{branch-name}/stgo-vscode.vsix
 
-```
-npm run build
-```
-
-### Features:
-
-- ES6 Support via [babel](https://babeljs.io/) (v7)
-- JavaScript Linting via [eslint-loader](https://github.com/MoOx/eslint-loader)
-- SASS Support via [sass-loader](https://github.com/jtangelder/sass-loader)
-- Autoprefixing of browserspecific CSS rules via [postcss](https://postcss.org/) and [autoprefixer](https://github.com/postcss/autoprefixer)
-- Style Linting via [stylelint](https://stylelint.io/)
-
-When you run `npm run build` we use the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to move the css to a separate file. The css file gets included in the head of the `index.html`.

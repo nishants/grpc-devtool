@@ -21,6 +21,12 @@
 
   - [x] Create ui project
 
+  - [x] Create single build pipeline with stages
+  
+  - [ ] Replace the react project 
+  
+    - [ ] tryp cra
+  
   - [ ] Create sketch for ui
   
     - [ ] Open first time
@@ -31,8 +37,6 @@
     - [ ] Run in player mode
   
     
-  
-  - [ ] Create single build pipeline with stages
   
   - [ ] Publish to github packages
   
