@@ -4,7 +4,9 @@
   "description": "UI for GrpcDevtool",
   "watch": {
     "build": {
-      "patterns": ["ui"],
+      "patterns": [
+        "ui"
+      ],
       "extensions": "js,scss",
       "quiet": false,
       "runOnChangeOnly": false
@@ -50,6 +52,7 @@
   },
   "dependencies": {
     "antd": "^4.13.1",
-    "npm-watch": "^0.7.0"
+    "npm-watch": "^0.7.0",
+    "react-router-dom": "^5.2.0"
   }
 }
