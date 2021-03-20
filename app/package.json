@@ -5,6 +5,7 @@
   "description": "GrpcDevtool Gui app.",
   "main": "src/index.js",
   "scripts": {
+    "test": "cucumber-js features/**/*.feature",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
@@ -22,7 +23,7 @@
       "packagerConfig": {
         "name": "GrpcDevtool",
         "out": "dist",
-        "overwrite" : true,
+        "overwrite": true,
         "appCategoryType": "app-category-type=public.app-category.developer-tools",
         "darwinDarkModeSupport": true,
         "icon": "./icons/icon"
@@ -55,6 +56,7 @@
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^7.0.0",
     "@electron-forge/cli": "^6.0.0-beta.54",
     "@electron-forge/maker-deb": "^6.0.0-beta.54",
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
