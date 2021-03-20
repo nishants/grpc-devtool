@@ -6,7 +6,8 @@ Before(function (testCase, callback) {
   const tags = testCase.pickle.name;
   const scenarioName = testCase.pickle.name;
   const stepsAsString = testCase.pickle.steps.map(s => s.text);
-  console.log({
+
+  this.setTestInfo({
     stepsAsString,
     absoluteFeatureFilePath,
     featureName,
@@ -14,6 +15,7 @@ Before(function (testCase, callback) {
     scenarioName,
     stepsAsString
   });
+
   console.log("Starting in 5 seconds...")
   this.count = 0;
   setTimeout( callback, 5000);

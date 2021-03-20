@@ -1,8 +1,9 @@
 const {Given, Then, When} = require('@cucumber/cucumber');
 
 Given(/^I open app for the first time$/, function () {
-
+  console.log(this.getTestInfo());
 });
+
 Then(/^I should see option to load existing project$/, function () {
 
 });
