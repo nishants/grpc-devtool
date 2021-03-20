@@ -5,7 +5,7 @@
   "description": "GrpcDevtool Gui app.",
   "main": "src/index.js",
   "scripts": {
-    "test": "cucumber-js features/**/*.feature",
+    "test": "cucumber-js features/**/*.feature --require features/js/index.js",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
