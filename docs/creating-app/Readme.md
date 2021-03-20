@@ -6,11 +6,11 @@ So, I will just try to add features, and later see how to connect the dots.
 
 Todo
 
-- [ ] Add app-tests
+- [x] Add app-tests
 
-- [ ] In cucumber
+- [x] In cucumber
 
-  - [ ] read annotations
+  - [x] read annotations
 
 - [ ] use puppeteer in electron
 

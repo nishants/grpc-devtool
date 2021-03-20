@@ -1,7 +1,7 @@
 @onboarding
 Feature: First time user loads an existing project. Starts, records and watches a service.
 
-  @play
+  @play @fixture("sample-one")
   Scenario: Start an existing project from ui
     Given I open app for the first time
     Then I should see option to load existing project
