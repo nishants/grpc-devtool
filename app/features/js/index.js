@@ -1,2 +1,3 @@
-require('./first-time-user');
 require('./world');
+require('./hooks');
+require('./steps/first-time-user');
