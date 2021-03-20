@@ -12,6 +12,10 @@ Todo
 
   - [x] read annotations
 
+- [ ] use spectron
+
+  - [ ] run on ci
+
 - [ ] use puppeteer in electron
 
 - [ ] run cucumber+puppeteer tests for app on ci

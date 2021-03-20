@@ -16,12 +16,23 @@ Before(function (testCase, callback) {
     stepsAsString
   });
 
-  console.log("Starting in 5 seconds...")
-  this.count = 0;
-  setTimeout( callback, 5000);
+  this.getDriver().then(async (driver) => {
+    const client = await driver.client;
+    const win = await client.windowByIndex(0);
+    const count = await client.getWindowCount();
+    const windowHandler = await client.getWindowHandle();
+    const h1 = await client.$("h1");
+    const h1Text = await h1.getText();
+    console.log(callback);
+    callback();
+  }) ;
 });
 
 After(function (testCase, callback) {
-  callback();
+  this.getDriver().then(async (driver) => {
+    const client = await driver.client;
+    await client.shutdown();
+    callback();
+  });
 });
 

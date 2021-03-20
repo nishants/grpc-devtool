@@ -1,9 +1,15 @@
 const { setWorldConstructor } = require("@cucumber/cucumber");
+const Driver = require("./driver");
 
 class CustomWorld {
   constructor() {
-    this._ = {};
-    this._.driver = {name: "electron"};
+    this._ = {
+      driver : Driver.create()
+    };
+  }
+
+  getDriver() {
+    return this._.driver;
   }
 
   setTestInfo(info) {
