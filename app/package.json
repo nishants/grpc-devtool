@@ -5,6 +5,7 @@
   "description": "GrpcDevtool Gui app.",
   "main": "src/index.js",
   "scripts": {
+    "driver": "node features/js/driver/index.js",
     "test": "cucumber-js features/**/*.feature --require features/js/index.js",
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -53,7 +54,8 @@
     }
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "tree-kill": "^1.2.2"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.0.0",
@@ -62,6 +64,8 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
-    "electron": "12.0.1"
+    "electron": "^12.0.1",
+    "puppeteer-core": "^8.0.0",
+    "puppeteer-in-electron": "^3.0.3"
   }
 }
