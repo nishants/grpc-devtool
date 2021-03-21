@@ -18,10 +18,6 @@ Before(function (testCase, callback) {
 
   this.getDriver().then(async (driver) => {
     const client = await driver.client;
-    const win = await client.windowByIndex(0);
-    const count = await client.getWindowCount();
-    const windowHandler = await client.getWindowHandle();
-    this.$ = client.$;
     this.client = client;
     callback();
   }) ;
@@ -30,7 +26,11 @@ Before(function (testCase, callback) {
 After(function (testCase, callback) {
   this.getDriver().then(async (driver) => {
     const client = await driver.client;
-    await this.client.shutdown();
+    // await this.client.shutdown();
+    await driver.stop();
+    // await this.client.close();
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    console.log("closed")
     callback();
   });
 });
