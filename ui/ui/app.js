@@ -33,11 +33,11 @@ export default function App() {
     <Router>
       <div>
         <ul>
-          <li>
-            <Link to="/welcome">Welcome</Link>
+          <li id="create-new">
+            <Link id="create-new-link" to="/welcome">Welcome</Link>
           </li>
-          <li>
-            <Link to="/projects">Projects</Link>
+          <li id="open-new">
+            <Link id="open-new-link" to="/projects">Projects</Link>
           </li>
         </ul>
 
@@ -71,11 +71,11 @@ function Welcome() {
     <div>
       <h2>Tacos</h2>
       <ul>
-        <li>
+        <li id="create-new">
           <Link to="/projects/create">Create</Link>
         </li>
-        <li>
-          <Link to="/projects/open">Open</Link>
+        <li id="open-project">
+          <Link name="open-project" to="/projects/open">Open</Link>
         </li>
       </ul>
 

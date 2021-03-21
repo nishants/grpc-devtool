@@ -54,6 +54,7 @@
     }
   },
   "dependencies": {
+    "chai": "^4.3.4",
     "electron-squirrel-startup": "^1.0.0",
     "spectron": "^14.0.0"
   },

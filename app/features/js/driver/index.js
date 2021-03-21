@@ -1,9 +1,10 @@
-var assert = require('assert')
+var electron = require('electron')
 var path = require('path')
 var Application = require('spectron').Application
 
 var app = new Application({
-  path: path.join(__dirname, '../../../', 'out/GrpcDevtool-darwin-x64/GrpcDevtool.app/Contents/MacOS/GrpcDevtool')
+  path: electron,
+  args: [path.join(__dirname, '..', '..', '..', 'src', 'index.js')]
 });
 
 module.exports = {
