@@ -7,7 +7,7 @@
   "scripts": {
     "driver": "node features/js/driver/index.js",
     "test": "cucumber-js features/**/*.feature --require features/js/index.js",
-    "start": "electron-forge start",
+    "start": "cross-env devUrl=http://localhost:9000/ electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
     "electron-squirrel-startup": "^1.0.0",
     "spectron": "^14.0.0"
   },

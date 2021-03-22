@@ -13,9 +13,13 @@ const createWindow = () => {
     height: 600,
   });
 
+  // Allow using the webpack dev server for local development
+  if(process.env.devUrl){
+    mainWindow.loadURL(process.env.devUrl);
+    return;
+  }
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname,"..", "assets", 'index.html'));
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 };
