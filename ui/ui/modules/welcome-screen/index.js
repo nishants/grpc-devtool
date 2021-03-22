@@ -1,32 +1,34 @@
-import React from "react";
-import { Form, Input, Button, Checkbox } from 'antd';
+import React from "react"
+import { connect } from "react-redux"
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
+import {
+  createProject,
+  loadProject,
+} from "../workspace/workspace.actions"
 
-const WelcomeScreenContainer = ({openProject, createNewProject}) => {
-  return <div className="welcome-screen">
-    <Form
-      {...layout}
-      name="basic"
-      initialValues={{ remember: true }}
-    ><Form.Item {...tailLayout}>
-      <Button type="primary" htmlType="submit" onClick={openProject}>
-        Open Project
-      </Button>
-      <Form.Item {...tailLayout}>
-        <Button type="secondary" htmlType="submit" onClick={createNewProject}>
-          Create Project
-        </Button>
-      </Form.Item>
-    </Form.Item>
-    </Form>
-  </div>;
+function WelcomeScreen(props) {
+  return (
+    <div className="welcome-screen">
+      {props.showCreateProject && <h1>Creating project</h1>}
+      {props.showLoadProject && <h1>Loading project</h1>}
+      <button onClick={() => props.loadProject()}>Load Existing Project</button>
+      <button onClick={() => props.createProject()}>Create New Project</button>
+    </div>
+  );
 };
 
-export default WelcomeScreenContainer;
+const mapStateToProps = state => {
+  return {
+    showCreateProject: state.workspace.showCreateProject,
+    showLoadProject: state.workspace.showLoadProject,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createProject: () => dispatch(createProject()),
+    loadProject: () => dispatch(loadProject()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeScreen);

@@ -41,6 +41,7 @@
     "jest": "^25.1.0",
     "node-sass": "^4.13.1",
     "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.7.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.13.1",
@@ -50,11 +51,12 @@
     "url-loader": "^4.1.0",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.2",
-    "npm-watch": "^0.7.0"
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
     "antd": "^4.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5"
   }
 }

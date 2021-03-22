@@ -1,4 +1,5 @@
 import React from "react";
+import WelcomeScreen from "./modules/welcome-screen";
 import {
   HashRouter as Router,
   Switch,
@@ -30,25 +31,28 @@ const routes = [
 
 export default function App() {
   return (
-    <Router>
-      <div>
-        <ul>
-          <li id="create-new">
-            <Link id="create-new-link" to="/welcome">Welcome</Link>
-          </li>
-          <li id="open-new">
-            <Link id="open-new-link" to="/projects">Projects</Link>
-          </li>
-        </ul>
-
-        <Switch>
-          {routes.map((route, i) => (
-            <RouteWithSubRoutes key={i} {...route} />
-          ))}
-        </Switch>
-      </div>
-    </Router>
+    <WelcomeScreen/>
   );
+  // return (
+  //   <Router>
+  //     <div>
+  //       <ul>
+  //         <li id="create-new">
+  //           <Link id="create-new-link" to="/welcome">Welcome</Link>
+  //         </li>
+  //         <li id="open-new">
+  //           <Link id="open-new-link" to="/projects">Projects</Link>
+  //         </li>
+  //       </ul>
+  //
+  //       <Switch>
+  //         {routes.map((route, i) => (
+  //           <RouteWithSubRoutes key={i} {...route} />
+  //         ))}
+  //       </Switch>
+  //     </div>
+  //   </Router>
+  // );
 }
 
 // A special wrapper for <Route> that knows how to
