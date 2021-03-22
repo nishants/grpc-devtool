@@ -11,8 +11,8 @@ function WelcomeScreen(props) {
     <div className="welcome-screen">
       {props.showCreateProject && <h1>Creating project</h1>}
       {props.showLoadProject && <h1>Loading project</h1>}
-      <button onClick={() => props.loadProject()}>Load Existing Project</button>
-      <button onClick={() => props.createProject()}>Create New Project</button>
+      <button name="load-project" onClick={() => props.loadProject()}>Load Existing Project</button>
+      <button name="create-project" onClick={() => props.createProject()}>Create New Project</button>
     </div>
   );
 };
