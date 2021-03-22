@@ -26,10 +26,10 @@ Before(function (testCase, callback) {
 After(function (testCase, callback) {
   this.getDriver().then(async (driver) => {
     const client = await driver.client;
+    await driver.chromeDriver.process.kill()
     // await this.client.shutdown();
     await driver.stop();
     // await this.client.close();
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     console.log("closed")
     callback();
   });

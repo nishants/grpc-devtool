@@ -6,22 +6,19 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-const createWindow = () => {
+const createWindow = async () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-  });
-
+  const mainWindow = new BrowserWindow({});
+  mainWindow.maximize();
   // Allow using the webpack dev server for local development
   if(process.env.devUrl){
     mainWindow.loadURL(process.env.devUrl);
+    mainWindow.webContents.openDevTools();
     return;
   }
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname,"..", "assets", 'index.html'));
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
