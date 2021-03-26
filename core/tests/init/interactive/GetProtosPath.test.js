@@ -1,10 +1,10 @@
-const path = require('path');
+const fixtures = require('../../fixtures');
 const GetHostConfig = require('../../../src/init/interactive/GetProtosPath');
 
 describe('GetProtosPath.js', () => {
   let state ;
-  const aValidProtsDir = path.join(__dirname, '../../fixtures/protos');
-  const aValidDirWithNoProtos = path.join(__dirname, '../../fixtures/config');
+  const aValidProtsDir = fixtures.pricesProject.protosPath;
+  const aValidDirWithNoProtos = fixtures.pricesProject.configPath;
 
   const previousConfig = {
     prevInput: 'value'

@@ -1,6 +1,6 @@
 const {createClient} = require('./helpers');
-const path = require('path');
 
+const fixtures = require('./fixtures');
 const app = require('../src/app');
 
 const host= "0.0.0.0";
@@ -9,8 +9,8 @@ const port= "50053";
 const appParameters = {
   host,
   port,
-  configPath : path.join(__dirname, './fixtures/config'),
-  protosPath : path.join(__dirname, './fixtures/protos')
+  configPath : fixtures.pricesProject.configPath,
+  protosPath : fixtures.pricesProject.protosPath
 };
 
 describe('app.js', () => {
