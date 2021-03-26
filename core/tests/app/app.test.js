@@ -1,7 +1,7 @@
-const {createClient} = require('./helpers');
+const {createClient} = require('../helpers');
 
-const fixtures = require('./fixtures');
-const app = require('../src/app');
+const fixtures = require('../fixtures');
+const app = require('../../src/app');
 
 const host= "0.0.0.0";
 const port= "50053";
