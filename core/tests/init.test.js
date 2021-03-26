@@ -197,7 +197,7 @@ describe('init project', () => {
 
   test('should correctly copy protos keeping relative path to protosPath', async () => {
     const nestedProtosPath = path.join(__dirname, './fixtures');
-    const protoFile = path.join(__dirname, 'fixtures', 'protos', 'prices.proto')
+    const protoFile = fixtures.pricesProject.protos.prices
 
     outputDir = await createTempDir('mirage-config-test');
 
