@@ -1,0 +1,14 @@
+request@ : {
+  uic: "300",
+  assetType: "Stock"
+}
+
+response@ : {
+  "stream@"  : {
+    "@repeat": "message in ['one', 'two', 'three']",
+    "quote": "300:stock-{{message}}"
+  },
+  "doNotRepeat@": true,
+  "streamInterval@": 0,
+}
+

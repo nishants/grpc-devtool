@@ -27,6 +27,17 @@ describe('app.js', () => {
       const actual = await app.client.readTwoWayStream({uic: 299, assetType: 'Stock'});
       expect(actual).toEqual(expectedFxSpot);
     });
+
+    test('should support repeat expressions', async () => {
+      const expectedFxSpot = [
+        {quote: "300:stock-one"},
+        {quote: "300:stock-two"},
+        {quote: "300:stock-three"}
+      ];
+      const actual = await app.client.readTwoWayStream({uic: 300, assetType: 'Stock'});
+      expect(actual).toEqual(expectedFxSpot);
+    });
+
   });
 
 });

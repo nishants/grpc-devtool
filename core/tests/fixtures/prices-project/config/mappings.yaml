@@ -14,7 +14,8 @@ prices.streaming.Pricing.TwoWaySubscribe : [
       "prices/stock-streams/22-fxspot.yaml",
       "prices/stock-streams/211-stock.yaml",
       "prices/stock-streams/212-stock.yaml",
-      "prices/stock-streams/299-stock-template.yaml"
+      "prices/stock-streams/299-stock-template.yaml",
+      "prices/stock-streams/300-stock-template-repeat.yaml"
   ],
   "prices/two-way-stream.js.yaml",
 ]
