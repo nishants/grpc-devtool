@@ -16,40 +16,40 @@ stages:
         steps:
           - template: core/build.yml
 
-  - stage: BuildUi
-    displayName: "ui/build.yml"
-    dependsOn: [] # run in parallel with core build
-    jobs:
-      - job: BuilUI
-        displayName: "Webpack build"
-        timeoutInMinutes: 10
-        pool:
-          vmImage: 'ubuntu-18.04'
-        steps:
-          - template: ui/build.yml
-
-  - stage: BuildApp
-    displayName: "app/build.yml"
-    dependsOn: "BuildUi"
-    jobs:
-      - job: MacOs
-        displayName: "MacOs Build - Mojave(macOS-10.14)"
-        timeoutInMinutes: 10
-        pool:
-          vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
-        steps:
-        - template: app/build.yml
-          parameters:
-            buildName: "MacOs"
-            extension: ".zip"
-
-      - job: Windows
-        displayName: "Windows Build - Windows Server(windows-2019)"
-        timeoutInMinutes: 10
-        pool:
-          vmImage: 'windows-2019'
-        steps:
-          - template: app/build.yml
-            parameters:
-              buildName: "Windows"
-              extension: "Setup.exe" # Ignore other files like standalone app/squirrel.exe
+#  - stage: BuildUi
+#    displayName: "ui/build.yml"
+#    dependsOn: [] # run in parallel with core build
+#    jobs:
+#      - job: BuilUI
+#        displayName: "Webpack build"
+#        timeoutInMinutes: 10
+#        pool:
+#          vmImage: 'ubuntu-18.04'
+#        steps:
+#          - template: ui/build.yml
+#
+#  - stage: BuildApp
+#    displayName: "app/build.yml"
+#    dependsOn: "BuildUi"
+#    jobs:
+#      - job: MacOs
+#        displayName: "MacOs Build - Mojave(macOS-10.14)"
+#        timeoutInMinutes: 10
+#        pool:
+#          vmImage: 'macOS-10.14' # Mojave(macOS-10.14) over Catalina(macOS-10.15)
+#        steps:
+#        - template: app/build.yml
+#          parameters:
+#            buildName: "MacOs"
+#            extension: ".zip"
+#
+#      - job: Windows
+#        displayName: "Windows Build - Windows Server(windows-2019)"
+#        timeoutInMinutes: 10
+#        pool:
+#          vmImage: 'windows-2019'
+#        steps:
+#          - template: app/build.yml
+#            parameters:
+#              buildName: "Windows"
+#              extension: "Setup.exe" # Ignore other files like standalone app/squirrel.exe
