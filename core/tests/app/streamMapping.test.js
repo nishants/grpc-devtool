@@ -12,6 +12,10 @@ describe('app.js', () => {
     });
   });
 
+  afterAll(async () => {
+    await app.closeApp();
+  });
+
   describe('Multiple templates for duplex stream', () => {
     test('should reply to single call', async () => {
       const expectedFxSpot = [
