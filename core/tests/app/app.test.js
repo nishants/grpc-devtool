@@ -1,39 +1,28 @@
-const {createClient} = require('../helpers');
-
+const appTestHelper = require('./appTestHelper');
 const fixtures = require('../fixtures');
-const app = require('../../src/app');
-
-const host= "0.0.0.0";
-const port= "50053";
-
-const appParameters = {
-  host,
-  port,
-  configPath : fixtures.pricesProject.configPath,
-  protosPath : fixtures.pricesProject.protosPath
-};
 
 describe('app.js', () => {
-  let closeApp;
-  let client;
+  let app;
 
   beforeAll(async () => {
-    closeApp = await app.run(appParameters);
-    client = createClient(`${host}:${port}`);
+    app = await appTestHelper.launchApp({
+      protosPath: fixtures.pricesProject.protosPath,
+      configPath: fixtures.pricesProject.configPath,
+    });
   });
 
   afterAll(async () => {
-    await closeApp();
+    await app.closeApp();
   });
 
   test('should serve a unary response', async () => {
-    const responseOne = await client.sayHelloWorld({name: "rohit"});
+    const responseOne = await app.client.sayHelloWorld({name: "rohit"});
     expect(responseOne).toEqual({message : "Hello Rohit"});
 
-    const responseTwo = await client.sayHelloWorld({name: "virat"});
+    const responseTwo = await app.client.sayHelloWorld({name: "virat"});
     expect(responseTwo).toEqual({message : "Hello virat"});
 
-    const responseThree = await client.sayHelloWorld({name: "nishant"});
+    const responseThree = await app.client.sayHelloWorld({name: "nishant"});
     expect(responseThree).toEqual({message : "Glad to meet you nishant"});
   });
 
@@ -44,7 +33,7 @@ describe('app.js', () => {
 
     const expected = [responeOne, responseTwo, responseThree];
 
-    const actual = await client.readPricesStream({uic: 211, assetType: 'Stock'});
+    const actual = await app.client.readPricesStream({uic: 211, assetType: 'Stock'});
     expect(actual).toEqual(expected);
   });
 
@@ -55,7 +44,7 @@ describe('app.js', () => {
 
     const expected = [responeOne, responseTwo, responseThree];
 
-    const actual = await client.readTwoWayStream({uic: 101, assetType: 'CfdOnStock'});
+    const actual = await app.client.readTwoWayStream({uic: 101, assetType: 'CfdOnStock'});
     expect(actual).toEqual(expected);
   });
 
@@ -67,7 +56,7 @@ describe('app.js', () => {
         {quote: "21:fxspot-two"},
         {quote: "21:fxspot-three"}
       ];
-      const actual = await client.readTwoWayStream({uic: 21, assetType: 'FxSpot'});
+      const actual = await app.client.readTwoWayStream({uic: 21, assetType: 'FxSpot'});
       expect(actual).toEqual(expectedFxSpot);
     });
 
@@ -97,7 +86,7 @@ describe('app.js', () => {
         "212:stock-three"
       ].sort();
 
-      const actual = await client.getClientStreamResponses(clientRequests, 1000);
+      const actual = await app.client.getClientStreamResponses(clientRequests, 1000);
       const actualQuotes = actual.map(m => m.quote).sort();
 
       expect(actualQuotes).toEqual(expectedQuotes);
@@ -112,7 +101,7 @@ describe('app.js', () => {
         {quote: "299:stock-two"},
         {quote: "299:stock-three"}
       ];
-      const actual = await client.readTwoWayStream({uic: 299, assetType: 'Stock'});
+      const actual = await app.client.readTwoWayStream({uic: 299, assetType: 'Stock'});
       expect(actual).toEqual(expectedFxSpot);
     });
   });
