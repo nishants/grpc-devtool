@@ -1,4 +1,5 @@
 var {After, Before} = require('@cucumber/cucumber');
+const PageHelper = require("./page-helper");
 
 Before(function (testCase, callback) {
   const absoluteFeatureFilePath = testCase.pickle.uri;
@@ -19,16 +20,18 @@ Before(function (testCase, callback) {
   this.getDriver().then(async (driver) => {
     const client = await driver.client;
     this.client = client;
+    this.assert = await PageHelper(client);
     callback();
   }) ;
 });
 
 After(function (testCase, callback) {
   this.getDriver().then(async (driver) => {
-    const client = await driver.client;
-    await driver.chromeDriver.process.kill()
+    // const client = await driver.client;
+    // await driver.chromeDriver.process.kill()
     // await this.client.shutdown();
-    await driver.stop();
+    driver.stop();
+    callback();
     // await this.client.close();
     console.log("closed")
     callback();
