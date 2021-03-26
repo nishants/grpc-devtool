@@ -1,10 +1,9 @@
 const {createClient} = require('../helpers');
+const app = require('../../src/app');
 
-let nextPort = 50053;
 
 module.exports = {
-  launchApp : async ({protosPath, configPath, port= nextPort++}) => {
-    const app = require('../../src/app');
+  launchApp : async ({protosPath, configPath, port}) => {
     const host= "0.0.0.0";
     const appParameters = {host, port, configPath, protosPath};
 
