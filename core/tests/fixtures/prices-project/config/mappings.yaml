@@ -1,0 +1,20 @@
+helloworld.greet.Greeter.SayHello : [
+  "greet/rohit.js.yaml",
+  "greet/virat.js.yaml",
+  "greet/default.js.yaml",
+]
+
+prices.streaming.Pricing.Subscribe : [
+  "prices/211-Stock.js.yaml",
+]
+
+prices.streaming.Pricing.TwoWaySubscribe : [
+  [
+      "prices/stock-streams/21-fxspot.yaml",
+      "prices/stock-streams/22-fxspot.yaml",
+      "prices/stock-streams/211-stock.yaml",
+      "prices/stock-streams/212-stock.yaml",
+      "prices/stock-streams/299-stock-template.yaml"
+  ],
+  "prices/two-way-stream.js.yaml",
+]

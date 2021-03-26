@@ -2,7 +2,9 @@ const protoLoader = require('@grpc/proto-loader');
 const path = require('path');
 var grpc = require('@grpc/grpc-js');
 
-const greetProtoFile  = path.join(__dirname, '../fixtures/protos/greet.proto');
+const fixtures = require('../fixtures');
+
+const greetProtoFile  = fixtures.pricesProject.protos.greet;
 const pricesProtoFile = path.join(__dirname, '../fixtures/protos/prices.proto');
 const helloProtoFilePath  = path.join(__dirname, '../fixtures/protos/helloworld.proto');
 
