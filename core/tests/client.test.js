@@ -1,9 +1,9 @@
 const Client = require('../src/client');
-const path = require('path');
 
 const {helloProto, pricesProto} = require('./helpers');
 
 const app = require('../src/app');
+const fixtures = require('./fixtures');
 const analyzer = require('../src/proto/proto-analyzer');
 
 const host= "0.0.0.0";
@@ -12,8 +12,8 @@ const port= "50057";
 const parameters = {
   host,
   port,
-  configPath : path.join(__dirname, './fixtures/config'),
-  protosPath : path.join(__dirname, './fixtures/protos')
+  configPath : fixtures.pricesProject.configPath,
+  protosPath : fixtures.pricesProject.protosPath
 };
 
 describe('client.js', () => {
