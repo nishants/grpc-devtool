@@ -1,0 +1,21 @@
+syntax = "proto3";
+package prices.streaming;
+
+// Code will be generated in this namespace
+option csharp_namespace = "Service";
+
+import "subdir/messages.proto";
+
+// The gRPC interface definition
+service Pricing {
+  // Note that it returns "stream" of PriceResponse
+  rpc Subscribe (PriceRequest) returns (stream PriceResponse);
+  rpc MultiSubscribe (MultiPriceRequest) returns (stream PriceResponse);
+  rpc TwoWaySubscribe (stream PriceRequest) returns (stream PriceResponse);
+}
+
+// The request message
+message MultiPriceRequest {
+  repeated PriceRequest instruments = 1;
+}
+

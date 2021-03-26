@@ -2,10 +2,11 @@ const fs = require('fs');
 const path = require('path');
 
 const init = require('../src/init/init');
+const fixtures = require('./fixtures');
 const {createTempDir, readYamlFile} = require('../src/utils/files');
 
 describe('init project', () => {
-  const protosPath = path.join(__dirname, './fixtures/protos');
+  const protosPath = fixtures.pricesProject.protosPath;
   let protosToMap;
   let outputDir;
   let expectedMappingFile;
@@ -15,7 +16,7 @@ describe('init project', () => {
       'helloworld.proto',
       'subdir/messages.proto',
       'prices.proto',
-    ].map(name => path.join(__dirname, 'fixtures', 'protos', name));
+    ].map(name => path.join(protosPath, name));
   });
 
   beforeEach(async () => {
@@ -196,7 +197,7 @@ describe('init project', () => {
 
   test('should correctly copy protos keeping relative path to protosPath', async () => {
     const nestedProtosPath = path.join(__dirname, './fixtures');
-    const protoFile = path.join(__dirname, 'fixtures', 'protos', 'prices.proto')
+    const protoFile = fixtures.pricesProject.protos.prices
 
     outputDir = await createTempDir('mirage-config-test');
 
