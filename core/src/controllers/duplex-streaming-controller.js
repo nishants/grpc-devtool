@@ -28,7 +28,9 @@ module.exports = {
 
           for(let i =0; i < responses.length || keepStreaming; i++){
             await new Promise((resolve => setTimeout(resolve, streamingDelay)));
-            callContext.write(responses[i%responses.length]);
+            const nextMessage = responses[i%responses.length];
+            console.log(`Sending response for ${endpoint.getId()} from ${responseFile} `, nextMessage);
+            callContext.write(nextMessage);
           }
         };
 
