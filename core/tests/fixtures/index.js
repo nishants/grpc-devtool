@@ -1,6 +1,7 @@
 const path = require("path");
 
 const pricesProject = {
+  root : path.join(__dirname, './prices-project'),
   configPath : path.join(__dirname, './prices-project/config'),
   protosPath : path.join(__dirname, './prices-project/protos'),
   protos: {
