@@ -14,6 +14,8 @@ module.exports = {
             if(response['stream@']){
               return {
                 stream: compiled(response['stream@'], variables),
+                context: compiled(response['context@'], variables),
+                actions: compiled(response['actions@'], variables),
                 doNotRepeat: !!response['doNotRepeat@'],
                 streamInterval: response['streamInterval@'],
               }

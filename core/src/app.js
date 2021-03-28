@@ -19,8 +19,27 @@ module.exports = {
     const dataFiles  = TemplateReader.create({configPath});
 
     const mappingResolver = await endpointDataFileResolver.createResolvers({endpoints, mappings, templates: dataFiles});
+    const globalState = {
+      streamingContexts: {}
+    };
+
+    const globalActions = {
+      "stopStreaming@": async (arg) => {
+        const contextId = arg["context@"];
+        const streamingContext = globalState.streamingContexts[contextId]
+        if(!contextId){
+          throw new Error("stopStreaming@: Please provide context@ to stop.")
+        }
+        if(!streamingContext){
+          throw new Error(`stopStreaming@: No streaming context found for context@=${contextId}`)
+        }
+        delete globalState.streamingContexts[contextId]
+        await streamingContext.stop();
+      }
+    }
+
     const controllers = await Promise.all(endpoints.map((endpoint) => {
-      return Controllers.create(endpoint, mappingResolver, dataFiles)
+      return Controllers.create(endpoint, mappingResolver, dataFiles, globalState, globalActions)
     }));
 
     const client     = recording ? await Client.create({host : remoteHost, port : remotePort, endpoints}) : null;

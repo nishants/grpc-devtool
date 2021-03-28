@@ -4,7 +4,7 @@ const ClientStreamController = require('./duplex-streaming-controller');
 const DuplexStreamController = require('./duplex-streaming-controller');
 
 module.exports = {
-  create: (endpoint, mappingResolver, dataFiles) => {
+  create: (endpoint, mappingResolver, dataFiles, globalState, globalActions) => {
     const clientStream = endpoint.isStreamingRequest();
     const serverStream = endpoint.isStreamingResponse();
 
@@ -17,13 +17,13 @@ module.exports = {
     }
 
     if(isServerStream){
-      return ServerStreamController.create({endpoint, mappingResolver, dataFiles});
+      return ServerStreamController.create({endpoint, mappingResolver, dataFiles, globalState, globalActions});
     }
 
     if(isClientStream){
-      return ClientStreamController.create({endpoint, mappingResolver, dataFiles});
+      return ClientStreamController.create({endpoint, mappingResolver, dataFiles, globalState, globalActions});
     }
 
-    return DuplexStreamController.create({endpoint, mappingResolver, dataFiles});
+    return DuplexStreamController.create({endpoint, mappingResolver, dataFiles, globalState, globalActions});
   }
 }
