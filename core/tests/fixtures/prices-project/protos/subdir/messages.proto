@@ -5,6 +5,7 @@ package prices.streaming;
 message PriceRequest {
   string uic = 1;
   string assetType = 2;
+  string requestId = 3;
 }
 
 // The response message

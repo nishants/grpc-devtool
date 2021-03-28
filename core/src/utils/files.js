@@ -33,7 +33,10 @@ const readYamlFile = (filePath) => {
 };
 
 const readYamlFileInDir = (dir, filePath) => {
-  return readTextFile(path.join(dir, filePath)).then(data => yaml.parse(data));
+  const yamlPath = path.join(dir, filePath);
+  return readTextFile(yamlPath).then(data => yaml.parse(data)).catch(e => {
+    throw `Failed to read file at ${yamlPath}: ${e.message}`
+  });
 };
 
 const writeYaml = (dir, file, content) => {

@@ -1,0 +1,15 @@
+request@ : {
+  uic: "599",
+  assetType: "any@",
+  requestId: "any@",
+}
+
+response@ : {
+  "stream@"  : [{
+    "quote": "{{request.body.requestId}} won't be streamed anymore",
+  }],
+  "actions@": {
+    "stopStreaming@": {"context@": "my-endpoint-{{request.body.requestId}}"}
+  },
+  "doNotRepeat@": true,
+}

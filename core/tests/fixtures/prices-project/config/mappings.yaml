@@ -15,7 +15,11 @@ prices.streaming.Pricing.TwoWaySubscribe : [
       "prices/stock-streams/211-stock.yaml",
       "prices/stock-streams/212-stock.yaml",
       "prices/stock-streams/299-stock-template.yaml",
-      "prices/stock-streams/300-stock-template-repeat.yaml"
+      "prices/stock-streams/300-stock-template-repeat.yaml",
+  ],
+  [
+      "streaming/stream-with-context.yml",
+      "streaming/stop-stream-by-context.yml",
   ],
   "prices/two-way-stream.js.yaml",
 ]
