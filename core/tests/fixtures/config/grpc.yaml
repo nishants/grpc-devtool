@@ -1,7 +1,0 @@
-host: 'localhost'
-port: '3009'
-remoteHost: 'localhost'
-remotePort: '3010'
-protos: ../protos
-
-trimmedStreamSize: 10

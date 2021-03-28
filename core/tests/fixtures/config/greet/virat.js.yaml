@@ -1,7 +1,0 @@
-request@ : {
-  name: "virat"
-}
-
-response@ : {
-  message : "Hello virat"
-}
