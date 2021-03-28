@@ -182,7 +182,8 @@ describe('init project', () => {
     const expectedContent = {
       'request@': {
         assetType: '@any',
-        uic: '@any'
+        uic: '@any',
+        requestId: '@any',
       },
       'response@': {
         'stream@': [{quote: 'string'}],
