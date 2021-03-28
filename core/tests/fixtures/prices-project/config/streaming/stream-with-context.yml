@@ -1,0 +1,12 @@
+request@ : {
+  uic: "501",
+  assetType: "any@",
+  requestId: "any@",
+}
+
+response@ : {
+  "stream@"  : [{"quote": "quote"}],
+  "doNotRepeat@": false,
+  "context@": "my-endpoint-{{request.body.requestId}}",
+  "streamInterval@": 10,
+}
