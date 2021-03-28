@@ -8,8 +8,8 @@ response@ : {
   "stream@"  : [{
     "quote": "{{request.body.requestId}} won't be streamed anymore",
   }],
-  "stopStreaming@": {
-    "context@": "my-endpoint-{{request.body.requestId}}",
+  "actions@": {
+    "stopStreaming@": {"context@": "my-endpoint-{{request.body.requestId}}"}
   },
   "doNotRepeat@": true,
 }

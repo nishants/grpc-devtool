@@ -83,6 +83,44 @@ module.exports = {
         setTimeout(() => call.end(), timeout);
       }),
 
+      openPriceStream : (timeout = 1000) => new Promise(async (resolve, reject) => {
+        const protoDefinition = grpc.loadPackageDefinition(pricesProto).prices.streaming;
+        const client = new protoDefinition.Pricing(url, grpc.credentials.createInsecure());
+
+        const data = [];
+        const call = client.TwoWaySubscribe();
+
+
+        call.on('data', function(response) {
+          data.push(response);
+        });
+
+        call.on('end', function() {
+          resolve(data);
+        });
+
+        call.on('error', function(error) {
+          reject({data, error});
+        });
+        // setTimeout(() => call.end(), timeout);
+        resolve({
+            stop: async () => {
+              await call.end();
+            },
+            sendMessage : (request) => {
+              call.write(request);
+            },
+            getNext : () => {
+              return new Promise(resolve => {
+                // return updates received so far and clear saved data
+                const messages = data.splice(0);
+                resolve(messages);
+              })
+            }
+          }
+        )
+      }),
+
       getClientStreamResponses : (requests, timeout = 1000) => new Promise(async (resolve, reject) => {
         const protoDefinition = grpc.loadPackageDefinition(pricesProto).prices.streaming;
         const client = new protoDefinition.Pricing(url, grpc.credentials.createInsecure());
