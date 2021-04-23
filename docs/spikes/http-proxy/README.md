@@ -84,7 +84,26 @@ Todo
     });
     ```
 
-    
+- Creating a client
+
+  - Load the proto file just like we did for sever
+  - 
+
+  ```javascript
+  const target = 'localhost:3009';
+  const client = new helloWorldPackage.Greeter(
+    target,grpc.credentials.createInsecure()
+  );
+  
+  client.sayHello({name: "foo-bar"}, function(error, response) {
+    if(error){
+      return console.error(error);
+    }
+    console.log('Greeting:', response.message);
+  });
+  ```
+
+  
 
 ### Using http scheme
 
