@@ -19,14 +19,20 @@ const packages = grpc.loadPackageDefinition(packageDefinition);
 // package helloworld;
 const helloWorldPackage = packages.helloworld;
 
-const target = 'localhost:3009';
-const client = new helloWorldPackage.Greeter(
-  target,grpc.credentials.createInsecure()
-);
 
-client.sayHello({name: "foo-bar"}, function(error, response) {
-  if(error){
-    return console.error(error);
+module.exports = {
+  sayHello : (name, target = 'localhost:3009') => {
+    const client = new helloWorldPackage.Greeter(
+      target,grpc.credentials.createInsecure()
+    );
+
+    return new Promise((resolve, reject) => {
+      client.sayHello({name}, function(error, response) {
+        if(error){
+          return reject(error);
+        }
+        resolve(response.message);
+      });
+    });
   }
-  console.log('Greeting:', response.message);
-});
+}
