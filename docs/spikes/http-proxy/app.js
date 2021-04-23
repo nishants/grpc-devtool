@@ -23,16 +23,20 @@ const sayHelloHandler = (call, callback) => {
   callback(null, {message: 'Hello ' + call.request.name});
 }
 
-const server = new grpc.Server();
-
 module.exports = {
   start: () => {
-    server.addService(helloWorldPackage.Greeter.service, {sayHello: sayHelloHandler});
-    server.bindAsync('0.0.0.0:3009', grpc.ServerCredentials.createInsecure(), (error) => {
-      if(error){
-        return console.error(error);
-      }
-      server.start();
+    const server = new grpc.Server();
+    return new Promise((resolve, reject) => {
+      server.addService(helloWorldPackage.Greeter.service, {sayHello: sayHelloHandler});
+      server.bindAsync('0.0.0.0:3009', grpc.ServerCredentials.createInsecure(), (error) => {
+        if(error){
+          return reject(error);
+        }
+        server.start();
+        resolve({
+          close: () => server.forceShutdown()
+        });
+      });
     });
   }
 }
