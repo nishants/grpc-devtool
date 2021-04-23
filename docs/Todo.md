@@ -1,5 +1,10 @@
 ### Todo
 
+- [ ] Http support
+
+  - [ ] create project with http target
+  - [ ] create client for http target
+  
 - [x] Create mono-repo
 
   > - core
