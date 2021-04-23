@@ -1,3 +1,9 @@
+Todo
+
+- [ ] Create `http://localhost:3009` server
+- [ ] is http scheme supported ? : https://github.com/grpc/grpc/blob/master/doc/naming.md
+- [ ] try env variable `grpc_proxy`
+
 
 
 - Setup project 
@@ -79,3 +85,30 @@
     ```
 
     
+
+### Using http scheme
+
+- What if we just changed above code to 
+
+  ```javascript
+  server.bindAsync('http://localhost:3009', grpc.ServerCredentials.createInsecure(), (error) => {
+    if(error){
+      return console.error(error);
+    }
+    server.start();
+  });
+  
+  ```
+
+  > Error: Name resolution failed for target dns:http://localhost:3009
+  >
+
+- So it tries to use the dns scheme for http. 
+
+- Seems like we can use env variable for this as in here : https://github.com/grpc/grpc-node/blob/bf2e5cb1dd25e43f53605d8de2b8e082072ec23e/packages/grpc-js/src/http_proxy.ts#L45
+
+  ```
+  process.env.grpc_proxy="http://localhost:3009"
+  ```
+
+  
