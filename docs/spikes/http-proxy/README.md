@@ -1,8 +1,22 @@
 Todo
 
 - [ ] Create `http://localhost:3009` server
+
 - [ ] is http scheme supported ? : https://github.com/grpc/grpc/blob/master/doc/naming.md
+
 - [ ] try env variable `grpc_proxy`
+
+- [ ] Is the problem because of `Grpc.Core ` vs `Grpc.Net.Client` : https://stackoverflow.com/questions/59439436/which-is-the-difference-between-grpc-core-channel-and-grpc-net-client-grpcchanne
+
+- [x] Can bloom connect with `http://localhost:3009` ?
+
+  - [x] run the dotnet aks service
+
+  - [x] run client with http scheme
+
+  - [x] check with bloom
+
+    > Yes, bloom can't use http scheme.
 
 
 
@@ -131,3 +145,10 @@ Todo
   ```
 
   
+
+
+
+Frame question : 
+
+I see some grpc server to have a `http://<host>:port` address while some do not have this.
+
