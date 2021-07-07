@@ -28,6 +28,11 @@ steps:
 
   - script: |
       cd app
+      yarn test
+    displayName: 'Run tests'
+
+  - script: |
+      cd app
       yarn make
     displayName: 'Build electron app'
 

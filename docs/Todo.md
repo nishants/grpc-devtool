@@ -1,5 +1,10 @@
 ### Todo
 
+- [ ] Create welcome screen
+  - [ ] Add saga
+  - [ ] Add redux
+  - [ ] 
+
 - [x] Create mono-repo
 
   > - core
@@ -7,21 +12,20 @@
   > - client
   > - app
 
-- [ ] Electron project 
+- [x] Electron project 
 
   - [x] Create boileplate
-
-  - [x] Build for Macos and publish
-
+- [x] Build for Macos and publish
   - [x] Set build icon
-
-  - [x] Build for Windows and publish
-
-    - [x] Check on windows machine
-
+- [x] Build for Windows and publish
+  
+  - [x] Check on windows machine
   - [x] Create ui project
+- [x] Create single build pipeline with stages
+  
 
-  - [x] Create single build pipeline with stages
+  
+
   
   - [ ] Replace the react project 
   
